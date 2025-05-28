@@ -1,0 +1,4 @@
+live location broadcasting of food truck.
+Order ahead with estimated pickup times.
+Use of QR codes 
+Loyalty program
