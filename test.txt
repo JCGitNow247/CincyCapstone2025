@@ -1,0 +1,156 @@
+[33mcommit bdd7ea632b974f67c3f03a01ed2d67d52dbea091[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Jason Cope <JCGitNow247@gmail.com>
+Date:   Mon Jun 9 18:37:53 2025 -0400
+
+    Testing my ablity to update github though gitkracken
+
+[33mcommit 951e20553448b39005d642e3cf7c9f0cd16ee006[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Sun Jun 8 19:55:29 2025 -0400
+
+    Add files via upload
+
+[33mcommit 3ef6c2ab645414c731bbc46e61d329859213e3f9[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Wed Jun 4 18:50:06 2025 -0400
+
+    Add files via upload
+
+[33mcommit cde8575e687a2fa3d24dbbd15c817f9bceef31ef[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Tue Jun 3 20:10:30 2025 -0400
+
+    Add files via upload
+
+[33mcommit 3f1c7455956eb7c720bcb2a22f382a0831f5bb8a[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Mon Jun 2 19:31:05 2025 -0400
+
+    Add files via upload
+
+[33mcommit 55984c076dba0dc20ba17145a3f71a786642554e[m
+Author: Adam <88917056+FChopin135@users.noreply.github.com>
+Date:   Sat May 31 15:39:51 2025 -0400
+
+    Status Report
+
+[33mcommit 8b92727559d34ca34830513a9b40dc7e2c2e8209[m
+Author: ColeW96 <135039107+ColeW96@users.noreply.github.com>
+Date:   Sat May 31 15:09:07 2025 -0400
+
+    Add files via upload
+    
+    Bi weekly status report draft CW
+
+[33mcommit f34083d8557557ab6137c7d748792afdbe1a00c1[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Sat May 31 09:56:39 2025 -0400
+
+    Add files via upload
+
+[33mcommit d33c5818d0aefb82ebefff73a6c97f59710045ba[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Fri May 30 16:55:11 2025 -0400
+
+    Add files via upload
+
+[33mcommit 1e8a9aa67836c726a7977c9f37fe4aac791cfce9[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Thu May 29 21:01:41 2025 -0400
+
+    Add files via upload
+
+[33mcommit 0e621484da859634854229b1a569dd695874a298[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Wed May 28 18:18:10 2025 -0400
+
+    Added week3 assignment template
+
+[33mcommit b161d86077abd894d9366361db99c0efa7a7c751[m
+Author: ColeW96 <135039107+ColeW96@users.noreply.github.com>
+Date:   Sat May 24 14:06:23 2025 -0400
+
+    Added fixed final draft
+    
+    Removed (working title) from project name
+
+[33mcommit ab5b3d1cd1459dd9d32f13dbc8614678ba174793[m
+Author: ColeW96 <135039107+ColeW96@users.noreply.github.com>
+Date:   Sat May 24 14:05:27 2025 -0400
+
+    Delete Fitness Application.docx
+    
+    Deleted for fixed upload of final draft
+
+[33mcommit d6273d85f0035e8ba24d631d25e51af31925a2e9[m
+Author: ColeW96 <135039107+ColeW96@users.noreply.github.com>
+Date:   Sat May 24 14:03:30 2025 -0400
+
+    Added final draft
+    
+    Updated the tech stack question
+
+[33mcommit c277af8b2884d9bd948b3734d2f7f2bee5877c7e[m
+Author: ColeW96 <135039107+ColeW96@users.noreply.github.com>
+Date:   Sat May 24 14:02:47 2025 -0400
+
+    Delete Fitness Application.docx
+    
+    Deleting for re-upload of final draft
+
+[33mcommit 48ec5bf14393b44079915be4645240ead3cd2da9[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Sat May 24 12:28:01 2025 -0400
+
+    Add files via upload
+    
+    Added a period to the end of a sentence.
+
+[33mcommit be6bb239505dd6a6b8b82479bd8be59006123ada[m
+Merge: 26eccb2 6e778ff
+Author: Adam <88917056+FChopin135@users.noreply.github.com>
+Date:   Fri May 23 00:26:58 2025 -0400
+
+    Merge pull request #1 from JCGitNow247/Landscaping-Services-Application
+    
+    Landscaping Services Application
+
+[33mcommit 6e778ff43231148c326b448b402324681cdb41f7[m
+Author: Adam <88917056+FChopin135@users.noreply.github.com>
+Date:   Fri May 23 00:26:09 2025 -0400
+
+    Add files via upload
+
+[33mcommit 26eccb25f28a7fd7d445c926bd85d65e8b5264a6[m
+Author: ColeW96 <135039107+ColeW96@users.noreply.github.com>
+Date:   Wed May 21 21:23:14 2025 -0400
+
+    Added 2nd project idea
+    
+    I put in 3 options for the technologies used. These are just based on what I think would work well for the app but feedback is appreciated on what you guys would want.
+
+[33mcommit 641d71f27decd4bc1206eb803740769e70e41152[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Wed May 21 21:23:07 2025 -0400
+
+    Add files via upload
+    
+    revision 2
+
+[33mcommit 079f20ca3385126720ff0cbb97ce2692bb4a47f3[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Wed May 21 19:12:38 2025 -0400
+
+    Add files via upload
+
+[33mcommit ee567fde037cc91116bbdb37c58d098bd86b260d[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Wed May 21 18:13:19 2025 -0400
+
+    Add files via upload
+
+[33mcommit 4410f5f22aa26e145dcd0ea2ea9be56125872f30[m
+Author: JCGitNow247 <JCGitNow247@gmail.com>
+Date:   Wed May 21 17:21:22 2025 -0400
+
+    Initial commit
