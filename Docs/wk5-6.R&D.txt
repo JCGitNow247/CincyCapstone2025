@@ -1,0 +1,75 @@
+~~Txt when order is completed?
+
+During the Requirements/Design phase, based on your project, you are to collect and analyze reqmirements that would represent your project and then design. 
+For Requirements
+Again, this could be different based on your project.   For example: 
+
+    For a project for a specific business, you are to meet with the representatives of that business to: 
+        Discuss the processes that you will be automating.
+				~~We will be automating order taking and inventory tracking
+        Discuss their current processes, what problems they have. 
+				~~Their current processes are to take orders by hand, either tell the food preparer what to make or write it down
+				~~visually identify what items/ingredients they are low on or out of.
+				~~people may not know where they will be located on a specific day.
+				~~a lack of digital presence
+        Observe their work if you can
+        Conduct surveys
+        Note how their processes work to date
+        Note any ineffienent processes they have and make recommendations on how to do it better
+				~~A major issue is that lines form and typically only one person can take an order.  This is a bottleneck
+				~~Sometimes this person is also handing out food.  If there is still a line for ordering, this very ineffienent
+        Have good discussions.  In doing so, dive deeper to really understand their problem and determine how technology might help them. 
+        When collecting requirements for processes: 
+            Note all inputs
+				~~Order taker
+				~~People asking questions about the menu that could be easily answered, slows down the process
+            All outputs 
+				~~Order makers
+				
+            Step-by-step processes
+            contraints
+            etc. 
+    
+
+Once complete with the above, develop a powerpoint presenations that will summary the following: 
+1)  Background on client or audience you are developing the application. 
+		~~Food truck opperators who would like to spend more time completing sales and less time taking orders	
+		~~A major portion of opperating cost is employee wages.
+2)  The overall need for the client
+		~~ A solution to quicken order taking and cut total employee hours.
+		~~ An efficent way to track items sold
+3)  A synopsis of the requirements and data flow
+4)  A discussion on the current data flow/processes....are they good..can they be improved.
+		~~ Current flow is someone looks at a hand written chalk board menu or something hardcopied
+				~~This could be improved by makeing the menu easier to read than handwritten and easily editable instead of hardcopied
+		~~ they then either ask basic questions or initiate an order with an employee
+				~~This could be improved by providing basic answers to common questions about items.
+		~~ Order fufiller then must remember the order or read handwriting on paper
+				~~It is easier to read a digital display than to remember everything or read someone's handwriting
+		~~ Items are handed out the truck window
+				~~This is typically done by the order taker or an additional person staffed to the truck.
+		~~ Items become sold out and no longer available
+				~~better forcasting though analytics could mitigate this risk
+5)  Your recommended solution.  It is assumed that your original idea may change based on this step.  State the changes.
+			~~Solution hasnt changed much from our presentation	
+			
+6)  Your recommendations for moving forward.  What is it you  are going to implement this semester
+			~~RE-STATE our basic plan
+			~~Restate our presentation (ADD MORE HERE)
+For Design
+For this phase you are to develop your design document.  This includes the prototypes of the screens (GUI), the database schematic, and a proposed architecture.
+
+For the prototype, you need to develop the screens (either window forms or HTML Forms) that show how your system is going to look and flow.  Also if your solution is proposing reports, you should have them laid out too for review.  This is a prototype....do not write code at this time.  Just show the picture. 
+  
+The prototype  is very important to your client as it gives them a picture of what they are going to get.  However, expect feedback, changes, and possible enhancements.....so doing any coding could be a waste of time until you receive all feedback and an ok to move forward.
+  
+For the prototype develop the screens and do a print screen and paste them to a WORD document.  Under each screen, provide the detail on how the screen is going to work.  Make sure your detail is suited for a non technical person.  (i.e....don't tell me you are going to use a stored procedure).
+  
+You are then to develop the database schematic for your system.  A schematic is a picture showing the tables and the relationships between those tables (primary and foriegn keys) that will ultimately make up your database.  Your schematic should show a perfectly normalized database.  You can develop your database in SQL Server and copy and paste the schematic to the WORD document that contains the prototype above.
+  
+Finally, provide details on the architecture that is required to run your application.  Is it going to be web based or client/server based?  What kind of servers are required?  What kind of technology does your client need?  Do they need to buy any supporting software, etc. etc. etc.....Again, this information should be added to the document containing your prototype and database schematic.  This will complete your design document.
+  
+  
+This will be a document (WORD, etc) that you will submit with your requirements presentation.   
+  
+Once complete with both, you are to contact the instructor and plan a time for review. 
