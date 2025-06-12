@@ -33,25 +33,25 @@ Again, this could be different based on your project.   For example:
 
 Once complete with the above, develop a powerpoint presenations that will summary the following: 
 1)  Background on client or audience you are developing the application. 
-		~~Food truck opperators who would like to spend more time completing sales and less time taking orders	
-		~~A major portion of opperating cost is employee wages.
+		~~Food truck operators who would like to spend more time completing sales and less time taking orders	
+		~~A major portion of operating cost is employee wages.
 2)  The overall need for the client
 		~~ A solution to quicken order taking and cut total employee hours.
-		~~ An efficent way to track items sold
+		~~ An efficient way to track items sold
 3)  A synopsis of the requirements and data flow
 4)  A discussion on the current data flow/processes....are they good..can they be improved.
 		~~ Current flow is someone looks at a hand written chalk board menu or something hardcopied
-				~~This could be improved by makeing the menu easier to read than handwritten and easily editable instead of hardcopied
+				~~This could be improved by making the menu easier to read than handwritten and easily editable instead of hardcopied
 		~~ they then either ask basic questions or initiate an order with an employee
 				~~This could be improved by providing basic answers to common questions about items.
-		~~ Order fufiller then must remember the order or read handwriting on paper
+		~~ Order fulfiller then must remember the order or read handwriting on paper
 				~~It is easier to read a digital display than to remember everything or read someone's handwriting
 		~~ Items are handed out the truck window
 				~~This is typically done by the order taker or an additional person staffed to the truck.
 		~~ Items become sold out and no longer available
-				~~better forcasting though analytics could mitigate this risk
+				~~better forecasting though analytics could mitigate this risk
 5)  Your recommended solution.  It is assumed that your original idea may change based on this step.  State the changes.
-			~~Solution hasnt changed much from our presentation	
+			~~Solution hasn't changed much from our presentation	
 			
 6)  Your recommendations for moving forward.  What is it you  are going to implement this semester
 			~~RE-STATE our basic plan
