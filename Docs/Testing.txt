@@ -1,1 +1,7 @@
 Yooooooooooooooooooooooo
+<<<<<<< HEAD
+=======
+
+
+yoooooooooooooooooooooooooooooooooooooo x2
+>>>>>>> origin/main
