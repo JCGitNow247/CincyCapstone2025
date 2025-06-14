@@ -1,5 +1,10 @@
 # For TKinter Documentation, here is a link https://docs.python.org/3/library/tkinter.html#packer-options
 
+# ttkthemes can be installed using py -m pip install git+https://github.com/RedFantom/ttkthemes
+# Must have git installed for the command to work
+
+# Linux install: pip install ttkthemes
+
 # Imports everything releated to tkinter
 from tkinter import *
 
