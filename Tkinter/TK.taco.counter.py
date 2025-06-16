@@ -23,13 +23,13 @@ def Click():
 
 Window = Tk() #Instantiate an instance of a window
 Window.title("TruckBytes POS System") #Adds a title to the title bar
-# Window.geometry("1250x1250") #Sets the height and width of the default state of the window
+Window.geometry("1250x1250") #Sets the height and width of the default state of the window
 
 #Icon = PhotoImage(file=r"images/our.logos/TruckBytes.png") #Creates a variable linking the variable to a specified image
 #Window.iconphoto(True, Icon) #Sets the icon to the window, if true is selected then the icon applies to the main window and any child windows. (there seems to be a bit of nuance to this command)
 Window.config(background="#5cfcff") #Sets the background color of the window to the specified color.
 
-# Photo = PhotoImage(file=r"images/our.logos/TruckBytes.POS.Blue.png")
+#Photo = PhotoImage(file=r"images/our.logos/TruckBytes.POS.Blue.png")
 
 # Option are key word arguments that we can pass in to the constructor for this widget
 #The parenthisis acts as a constructor for the label which can then pass in arguments to modify the label.
