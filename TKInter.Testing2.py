@@ -6,6 +6,7 @@
 # Linux install: pip install ttkthemes
 
 # Imports everything releated to tkinter
+import os
 from tkinter import *
 
 # widgets = GUI elements: buttons, textboxes, labels, images.
@@ -25,11 +26,15 @@ Window = Tk() #Instantiate an instance of a window
 Window.title("Adam's GUI Program") #Adds a title to the title bar
 # Window.geometry("1250x1250") #Sets the height and width of the default state of the window
 
-Icon = PhotoImage(file=r"images/our.logos/TruckBytes.png") #Creates a variable linking the variable to a specified image
+
+base_dir = os.path.dirname(__file__)
+image_path = os.path.join(base_dir, "images", "our.logos", "TruckBytes.png")
+Icon = PhotoImage(file=image_path)
+#Icon = PhotoImage(file=r"images/our.logos/TruckBytes.png") #Creates a variable linking the variable to a specified image
 Window.iconphoto(True, Icon) #Sets the icon to the window, if true is selected then the icon applies to the main window and any child windows. (there seems to be a bit of nuance to this command)
 Window.config(background="#5cfcff") #Sets the background color of the window to the specified color.
 
-Photo = PhotoImage(file=r"images/our.logos/TruckBytes.POS.Blue.png")
+#Photo = PhotoImage(file=r"images/our.logos/TruckBytes.POS.Blue.png")
 
 # Option are key word arguments that we can pass in to the constructor for this widget
 #The parenthisis acts as a constructor for the label which can then pass in arguments to modify the label.
@@ -42,7 +47,7 @@ label = Label(Window, #the container
               bd=10, #This is the boarder width.
               padx=20, #This allows for padding between the text and the boarder in the x axis.
               pady=20, #This allows for padding between the text and the boarder in the y axis.
-              image=Photo, #This adds the photo image to the label.
+              image=Icon, #This adds the photo image to the label.
               compound="bottom") #Sets a direction for where the image is supposed to be placed relative to the text that it is tied to.
 
 button = Button(Window, text='Click Me!!!!') #instance of a button
