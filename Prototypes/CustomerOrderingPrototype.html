@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <title>Customer Menu Prototype</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body { font-family: Arial, sans-serif; background: #faf7f2; margin: 0; padding: 0; }
+        .container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #0001; padding: 32px; }
+        .menu-header { text-align: center; margin-bottom: 32px; }
+        .menu-items { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
+        .menu-card { background: #f9f9f9; border-radius: 10px; box-shadow: 0 1px 4px #0001; width: 260px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .menu-card img { width: 180px; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 16px; }
+        .menu-card h2 { margin: 0 0 8px 0; font-size: 1.3em; }
+        .menu-card p { margin: 0 0 12px 0; color: #555; }
+        .ingredients { font-size: 0.97em; color: #333; margin-bottom: 10px; }
+        .upcharge { font-size: 0.95em; color: #a67c00; }
+        .extra-menu { text-align: center; margin-bottom: 32px; }
+    </style>
+    <body>
+        <div class="container">
+            <div class="menu-header">
+                <h1>Build Your Meal</h1>
+                <p>Choose from our menu items and cusomize with extra ingredients</p>
+                <strong>(note, anything included here will not be an accurate depiction of the finished product. </strong> <br>
+                <strong> Menu cards will open up a pop up window to add additional ingredients</strong> <br>
+                <strong> and allow to add more than 1 item, this is just a prototype.)</strong> 
+            </div>
+        </div>
+        
+        <div class="menu-items">
+            <!-- Cheeseburger -->
+            <div class="menu-card">
+                <img src="https://images.eatthismuch.com/med/2788337_elm333_e4300991-3dde-4193-81cc-67b59f21ef22.jpg" alt="Cheeseburger">
+                <h2>Cheeseburger</h2>
+                <p>A cheeseburger that has lettuce, onions and tomatoes</p>
+                <div class="ingredients">
+                    <strong>Additional Ingredients </strong>
+                    
+                    <ul>
+                        <label><input type="checkbox" name="extra" value="pickles">Pickles (+$0.50)</label> <br>
+                        <label><input type="checkbox" name="extra" value="cheese">Extra Cheese (+$1.00)</label> <br>
+                        <label><input type="checkbox" name="extra" value="bacon">Bacon (+2.00)</label> <br>
+                    </ul>
+                </div>
+                <div class="upcharge">Base Price: $7.99</div>
+            </div>
+
+            <!-- Taco -->
+            <div class="menu-card">
+                <img src="https://img.taste.com.au/w_-0kcUJ/taste/2016/11/aussie-style-beef-and-salad-tacos-86525-1.jpeg" alt="Taco">
+                <h2>Taco</h2>
+                <p>A taco that contains a protein and cheese of your choice, lettuce and diced tomatoes</p>
+                <div class="ingredients">
+                    <strong>Additional Ingredients</strong>
+                    
+                    <ul>
+                        <label><input type="checkbox" name="extra" value="Sour Cream">Sour Cream (+$0.50)</label> <br>
+                        <label><input type="checkbox" name="extra" value="cheese">Extra Cheese (+$1.00)</label> <br>
+                        <label><input type="checkbox" name="extra" value="bacon">Crumbled Bacon (+2.00)</label> <br>
+                    </ul>
+                </div>
+                <div class="upcharge">Base Price: $5.99</div>
+            </div>
+
+            <!-- Pizza -->
+            <div class="menu-card">
+                <img src="https://www.thanx.com/wp-content/uploads/2021/01/IMG_7564-copy-1-scaled.jpg" alt="Pizza">
+                <h2>Pizza</h2>
+                <p>A pizza with red sauce and mozzerella and 3 toppings of your choice</p>
+                <div class="ingredients">
+                    <strong>Additional Ingredients</strong>
+                    
+                    <ul>
+                        <label><input type="checkbox" name="extra" value="black olives">Black Olives(+$0.50)</label> <br>
+                        <label><input type="checkbox" name="extra" value="pepperoni">Pepperoni(+$1.00)</label> <br>  
+                        <label><input type="checkbox" name="extra" value="cheese">Extra Cheese (+$1.00)</label> <br>
+                        <label><input type="checkbox" name="extra" value="onions">Onions(+$1.50)</label> <br> 
+                        <label><input type="checkbox" name="extra" value="bacon">Crumbled Bacon (+2.00)</label> <br>
+                    </ul>
+                </div>
+                <div class="upcharge">Base Price: $10.25</div>
+            </div>
+
+            <!-- Hot dog -->
+            <div class="menu-card">
+                <img src="https://www.carolynscooking.com/wp-content/uploads/2024/04/Club-Hot-Dogs-9.jpg" alt="Hot Dog">
+                <h2>Hot Dog</h2>
+                <p>A hot dog with mustard, onions and cheese</p>
+                <div class="ingredients">
+                    <strong>Additional Ingredients</strong>
+                    <ul>
+                        <label><input type="checkbox" name="extra" value="Ketchup">Ketchup(+$0.50)</label> <br>
+                        <label><input type="checkbox" name="extra" value="cheese">Extra Cheese (+$1.00)</label> <br>
+                        <label><input type="checkbox" name="extra" value="lettuce">Lettuce(+1.50)</label> <br>
+                        <label><input type="checkbox" name="extra" value="bacon">Crumbled Bacon (+2.00)</label> <br>
+                    </ul>
+                </div>
+                <div class="upcharge">Base Price: $4.49</div>
+            </div>
+        </div>
+    </body>
+</html>
