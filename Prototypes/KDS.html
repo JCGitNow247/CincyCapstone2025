@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang ="en">
+	<meta charset="UTF-8">
+	<title>KDS</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<style>
+		.kds-menu {
+			display: flex;
+			flex-direction: column;
+			background: #d3d3d3;
+			padding: 10px 20px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+			font-family: sans-serif;
+			position: sticky;
+			top: 0;
+			z-index: 100;
+		}
+		
+		.kds-menu .title {
+			font-size: 1.5rem;
+			font-weight: bold;
+			margin-right: 20px;
+		}
+		
+		.logo-title {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		
+		.logo {
+			height: 60px;
+			width: auto;
+		}
+		
+		.controls {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			margin-top: 10px;
+		}
+		
+		.left-controls,
+		.center-controls,
+		.right-controls {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			margin-top: 10px;
+		}
+		
+		.left-controls {
+			justify-content: flex-start;
+			gap: 20px;
+		}
+		
+		.center-controls {
+			justify-content: center;
+		}
+		
+		.right-controls {
+			justify-content: flex-end;
+		}
+		
+		.kds-menu select,
+		.kds-menu button {
+			padding: 6px 12px;
+			font-size: 1rem;
+			border-radius: 5px;
+			border: none;
+			cursor: pointer;
+			background: #f0f0f0;
+		}
+		
+		.kds-menu button:hover {
+			background-color: #c0c0c0;
+		}
+		
+		@media (max-height: 500px), (max-width: 500px) {
+			.kds-menu {
+				position: static;
+			}
+		}
+	
+		.ticket-display {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: flex-start;
+			gap: 20px;
+			max-height: 90vh;
+			overflow-y: auto;
+			padding: 20px;
+		}
+	
+		.ticket {
+			border-radius: 10px;
+			width: 260px;
+			background: #f9f9f9;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.40);
+		}
+		
+		.ticket-header {
+			margin-top: 0;
+			background: #d3d3d3;
+			border-radius: 10px 10px 0 0;
+			padding: 10px;
+		}
+		
+		.customer-name {
+			padding: 10px;
+		}
+		
+		.ticket-items {
+			padding-left: 10px;
+			padding-top: 0;
+		}
+		
+		.time {
+			padding: 10px;
+			display: block;
+			margin-bottom: 10px;
+		}
+	</style>
+	
+	<body>
+		<div class="kds-menu">
+			<div class="logo-title">
+				<img src="../images/our.logos/TruckBytes.png" alt="Logo" class="logo">
+				<div class="title">Kitchen Display System</div>
+			</div>
+			
+			<div class="controls">
+				<div class="left-controls">
+					<button>Analytics</button>
+				</div>
+				
+				<div class="center-controls">
+					<select>
+						<option>In Progress</option>
+						<option>Completed</option>
+					</select>
+				</div>
+				
+				<div class="right-controls">
+					<button onclick="location.reload()">Refresh</button>
+				</div>
+			</div>
+		</div>
+	
+		<div class="ticket-display">
+		
+			<!-- Order 1 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 001</h2>
+				<strong class="customer-name">Customer: Cole</strong>
+				<div class="ticket-items">
+					<p>Cheeseburger x1</p>
+					<p>Comment: no pickles</p>
+				</div>
+				<strong class="time">2:57</strong>
+			</div>
+			
+			<!-- Order 2 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 002</h2>
+				<strong class="customer-name">Customer: Adam</strong>
+				<div class="ticket-items">
+					<p>Taco x2</p>
+					<ul>
+						<li>Hard Shell</li>
+						<li>Beef</li>
+						<li>Lettuce</li>
+						<li>Tomato</li>
+						<li>Pepper Jack</li>
+						<li>Hot Sauce</li>
+					</ul>
+				</div>
+				<strong class="time">1:43</strong>
+			</div>
+			
+			<!-- Order 3 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 003</h2>
+				<strong class="customer-name">Customer: Jason</strong>
+				<div class="ticket-items">
+					<p>Pizza x1</p>
+					<ul>
+						<li>Classic Sauce</li>
+						<li>Mozzarella</li>
+						<li>Pepperoni</li>
+						<li>Bacon</li>
+						<li>Red Onion</li>
+					</ul>
+					<p>Comment: Well done</p>
+				</div>
+				<strong class="time">0:38</strong>
+			</div>
+			
+			<!-- Order 4 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 004</h2>
+				<strong class="customer-name">Customer: Bob</strong>
+				<div class="ticket-items">
+					<p>Cheeseburger x1</p>
+					<p>Fries x1</p>
+					<p>Drink x1</p>
+						<ul>
+							<li>Blue Powerade</li>
+						</ul>
+				</div>
+				<strong class="time">0:24</strong>
+			</div>
+			
+			<!-- Order 5 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 005</h2>
+				<strong class="customer-name">Customer: John</strong>
+				<div class="ticket-items">
+					<p>Pizza x1</p>
+					<ul>
+						<li>Spicy Sauce</li>
+						<li>No Cheese</li>
+						<li>Sausage</li>
+						<li>Mushrooms</li>
+					</ul>
+					<p>Pizza x1</p>
+					<ul>
+						<li>White Sauce</li>
+						<li>Mozzarella</li>
+						<li>Bacon</li>
+						<li>Red Onion</li>
+						<li>Garlic</li>
+					</ul>
+				</div>
+				<strong class="time">0:15</strong>
+			</div>
+			
+			<!-- Order 6 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 006</h2>
+				<strong class="customer-name">Customer: Amy</strong>
+				<div class="ticket-items">
+					<p>Pizza x1</p>
+					<ul>
+						<li>Classic Sauce</li>
+						<li>Ricotta</li>
+						<li>Bell Peppers</li>
+						<li>Red Onion</li>
+						<li>Pepperoni</li>
+						<li>Salami</li>
+						<li>Oregano</li>
+					</ul>
+					<p>Comment: Light bake
+					<p>Pizza x1</p>
+					<ul>
+						<li>White Sauce</li>
+						<li>Mozzarella</li>
+						<li>Chicken</li>
+						<li>Red Onion</li>
+						<li>BBQ Drizzle</li>
+					</ul>
+					<p>Comment: Well done</p>
+					<p>Drink x2</p>
+					<ul>
+						<li>Coca-Cola</li>
+					</ul>
+					<p>Comment: No ice</p>
+				</div>
+				<strong class="time">0:10</strong>
+			</div>
+			
+			<!-- Order 7 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 007</h2>
+				<strong class="customer-name">Customer: Brad</strong>
+				<div class="ticket-items">
+					<p>Cheeseburger x2</p>
+				</div>
+				<strong class="time">0:05</strong>
+			</div>
+			
+			<!-- Order 8 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 008</h2>
+				<strong class="customer-name">Customer: Bruce</strong>
+				<div class="ticket-items">
+					<p>Taco x1</p>
+					<ul>
+						<li>Soft Shell</li>
+						<li>Chicken</li>
+						<li>Lettuce</li>
+						<li>Corn Salsa</li>
+						<li>Tomato</li>
+						<li>Cheddar</li>
+						<li>Aioli Sauce</li>
+					</ul>
+				</div>
+				<strong class="time">0:01</strong>
+			</div>
+			
+			<!-- Order 9 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 009</h2>
+				<strong class="customer-name">Customer: Sarah</strong>
+				<div class="ticket-items">
+					<p>Taco x1</p>
+					<ul>
+						<li>Soft Shell</li>
+						<li>Chicken</li>
+						<li>Lettuce</li>
+						<li>Tomato</li>
+						<li>Cheddar</li>
+					</ul>
+					<p>Taco x2</p>
+					<ul>
+						<li>Hard Shell</li>
+						<li>Beef</li>
+						<li>Cheddar</li>
+						<li>Crema</li>
+					</ul>
+					<p>Drink x1</p>
+					<ul>
+						<li>Water</li>
+					</ul>
+				</div>
+				<strong class="time">0:01</strong>
+			</div>
+			
+			<!-- Order 10 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 010</h2>
+				<strong class="customer-name">Customer: Gary</strong>
+				<div class="ticket-items">
+					<p>Pizza x1</p>
+					<ul>
+						<li>Spicy Sauce</li>
+						<li>Mozzarella</li>
+						<li>Pepperoni</li>
+						<li>Garlic</li>
+						<li>Red Onion</li>
+					</ul>
+					<p>Comment: 8 slices</p>
+				</div>
+				<strong class="time">0:38</strong>
+			</div>
+			
+			<!-- Order 11 -->
+			<div class="ticket">
+				<h2 class="ticket-header"> Order# 011</h2>
+				<strong class="customer-name">Customer: Roberta</strong>
+				<div class="ticket-items">
+					<p>Pizza x1</p>
+					<ul>
+						<li>Classic Sauce</li>
+						<li>Mozzarella</li>
+						<li>Sausage</li>
+						<li>Bell Peppers</li>
+						<li>Red Onion</li>
+						<li>Oregano</li>
+					</ul>
+					<p>Comment: Well done</p>
+					<p>Cheeseburger x1</p>
+					<p>Drink x1</p>
+					<ul>
+						<li>Dr. Pepper</li>
+					</ul>
+					<p>Drink x1</p>
+					<ul>
+						<li>Red Powerade</li>
+					</ul>
+				</div>
+				<strong class="time">0:38</strong>
+			</div>
+		</div>
+	</body>
+</html>
