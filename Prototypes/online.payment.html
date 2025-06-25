@@ -5,25 +5,41 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<style>
+	
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+	
+		html {
+			background-color: #f9f7f1;
+		}
+		
+		.payment-container {
+			width: 70%;
+			margin: 0 auto;
+		}
+		
 		.menu-bar {
-			background-color: #d3d3d3;
-			width: 100%;
+			background-color: #f9f9f9;
 			text-align: center;
 			font-size: 2em;
 			font-weight: bold;
-			padding: 1em 0;
-			border-bottom-left-radius: .5em;
-			border-bottom-right-radius: .5em;
+			padding: 1em;
+			border-radius: 0.5em;
 			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+			width: 100%;
+			margin: 0;
 		}
 		
 		.payment-form {
 			background-color: white;
 			border-radius: .5em;
 			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-			padding: 1.5em;
-			margin: 1em auto;
-			width: 70%;
+			padding: 2em;
+			margin: 1em 0;
+			width: 100%;
 			display: flex;
 			flex-direction: column;
 		}
@@ -35,13 +51,13 @@
 
 		.card-info label,
 		.loyalty-info label {
-			text-align: center; /* Optional: remove if switching to left-aligned labels */
+			text-align: center;
 		}
 
 		.small-textbox-row {
 			display: flex;
 			justify-content: center;
-			gap: 3.5em;
+			gap: 3.7em;
 			margin-bottom: 10px;
 		}
 
@@ -53,7 +69,12 @@
 		.loyalty-info {
 			display: flex;
 			flex-direction: column;
-			margin: 10px 0; /* combines top and bottom margins */
+			border-radius: .5em;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+			padding-bottom: 20px;
+			width: 50%;
+			margin: 10px auto;
+			background-color: #f9f9f9;
 		}
 
 		.form-separator {
@@ -74,7 +95,7 @@
 
 		.tip-option-group {
 			display: flex;
-			gap: 1em;
+			gap: .5em;
 			margin-top: 10px;
 		}
 
@@ -83,7 +104,8 @@
 		}
 
 		.signup-button,
-		.submit-button {
+		.submit-button,
+		.cancel-button	{
 			display: block;
 			margin: 10px auto 0 auto;
 			height: 3em;
@@ -92,10 +114,12 @@
 
 		.signup-button {
 			width: 25%;
+			height: 2em;
 		}
 
-		.submit-button {
-			width: 50%;
+		.submit-button,
+		.cancel-button {
+			width: 30%;
 		}
 
 		.textbox,
@@ -113,56 +137,85 @@
 		.small-textbox {
 			max-width: 120px;
 		}
+		
+		@media (max-width:600px) {
+			.payment-container {
+				width: 90%;
+			}
+			
+			.small-textbox-row {
+				gap: 1.5em;
+			}
+			
+			.loyalty-info {
+				width: 100%;
+				padding: 1em;
+			}
+			
+			.submit-button,
+			.cancel-button,
+			.signup-button {
+				width: 100%;
+				font-size: 1.1em;
+			}
+			
+			.tip-option-group {
+				display: block;
+			}
+		}
+		
 	</style>
 	
 	<body>
-		<div class="menu-bar">
-		Payment
-		</div>
 		<form name="frmPayment" action="" method="post">
-			<div class="payment-form">
-				<div class="card-info">
-					<label for="txtFullName">Name on card</label>
-					<input type="text" name="txtFullName" class="textbox" required>
-					<label for="txtCardNumber">Card Number</label>
-					<input type="text" name="txtCardNumber" class="textbox" required>
-				
-					<div class="small-textbox-row">
-						<div class="small-textbox-group">
-							<label for="txtExpirationDate">Expiration Date</label>
-							<input type="text" name="txtExpirationDate" class="small-textbox" required>
+			<div class="payment-container">
+				<div class="menu-bar">Payment</div>
+				<div class="payment-form">			
+					<div class="card-info">
+						<label for="txtFullName">Name on card</label>
+						<input type="text" name="txtFullName" class="textbox" required>
+						<label for="txtCardNumber">Card Number</label>
+						<input type="text" name="txtCardNumber" class="textbox" required>
+					
+						<div class="small-textbox-row">
+							<div class="small-textbox-group">
+								<label for="txtExpirationDate">Expiration Date</label>
+								<input type="text" name="txtExpirationDate" class="small-textbox" required>
+							</div>
+					
+							<div class="small-textbox-group">
+								<label for="txtSecurityCode">Security Code</label>
+								<input type="text" name="txtSecurityCode" class="small-textbox" required>
+							</div>
 						</div>
-				
-						<div class="small-textbox-group">
-							<label for="txtSecurityCode">Security Code</label>
-							<input type="text" name="txtSecurityCode" class="small-textbox" required>
-						</div>
+					
+						<label for="txtZipCode">Zip Code</label>
+						<input type="text" name="txtZipCode" class="textbox" required>
+					</div>
+					
+					<div class="loyalty-info">
+						<h2 class="form-separator">Loyalty Rewards</h2>
+						<label for="txtLoyaltyEmail">Email</label>
+						<input type="text" name="txtLoyaltyEmail" class="textbox">
+						<label for="txtLoyaltyNumber">Phone Number</label>
+						<input type="text" name="txtLoyaltyNumber" class="textbox">
+						<label for="btnSignUp">No account?</label>
+						<button name="btnSignUp" class="signup-button" formaction="" formnovalidate>Sign Up</button>
 					</div>
 				
-					<label for="txtZipCode">Zip Code</label>
-					<input type="text" name="txtZipCode" class="textbox" required>
-				</div>
-				
-				<div class="loyalty-info">
-					<h2 class="form-separator">Loyalty Rewards</h2>
-					<label for="txtLoyaltyEmail">Email</label>
-					<input type="text" name="txtLoyaltyEmail" class="textbox">
-					<label for="txtLoyaltyNumber">Phone Number</label>
-					<input type="text" name="txtLoyaltyNumber" class="textbox">
-					<button name="btnSignUp" class="signup-button" formaction="" formnovalidate>Sign Up</button>
-				</div>
-			
-				<div class="payment-controls">
-					<div class="tip-options">
-						<label for="optTips" class="form-separator">Optional Tip</label>
-						<div class="tip-option-group">
-							<input type="radio" name="optTip" class="tip-option" value="10">10%
-							<input type="radio" name="optTip" class="tip-option" value="15">15%
-							<input type="radio" name="optTip" class="tip-option" value="20">20%
-							<input type="radio" name="optTip" class="tip-option" value="0">None
+					<div class="payment-controls">
+						<div class="tip-options">
+							<label for="optTips" class="form-separator">Optional Tip</label>
+							<div class="tip-option-group">
+								<input type="radio" name="optTip" class="tip-option" value="10">10%
+								<input type="radio" name="optTip" class="tip-option" value="15">15%
+								<input type="radio" name="optTip" class="tip-option" value="20">20%
+								<input type="radio" name="optTip" class="tip-option" value="0">None
+							</div>
 						</div>
+						<button name="btnSubmit" class="submit-button">Pay</button>
+						<button name="btnCancel" class="cancel-button" formaction="" formnovalidate>Cancel</button>
 					</div>
-					<button name="btnSubmit" class="submit-button">Pay</button>
 				</div>
 			</div>
 		</form>
