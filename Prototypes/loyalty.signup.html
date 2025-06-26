@@ -169,51 +169,21 @@
 	<body>
 		<form name="frmPayment" action="" method="post">
 			<div class="payment-container">
-				<div class="menu-bar">Payment</div>
+				<div class="menu-bar">Loyalty Sign Up</div>
 				<div class="payment-form">			
 					<div class="card-info">
-						<label for="txtFullName">Name on card</label>
-						<input type="text" name="txtFullName" class="textbox" placeholder="Enter Name" required>
-						<label for="txtCardNumber">Card Number</label>
-						<input type="text" name="txtCardNumber" class="textbox" placeholder="Enter Card Number" required>
-					
-						<div class="small-textbox-row">
-							<div class="small-textbox-group">
-								<label for="txtExpirationDate">Expiration Date</label>
-								<input type="text" name="txtExpirationDate" class="small-textbox" placeholder="XX/XX" required>
-							</div>
-					
-							<div class="small-textbox-group">
-								<label for="txtSecurityCode">Security Code</label>
-								<input type="text" name="txtSecurityCode" class="small-textbox" placeholder="XXX" required>
-							</div>
-						</div>
-					
-						<label for="txtZipCode">Zip Code</label>
-						<input type="text" name="txtZipCode" class="textbox" placeholder="XXXXX" required>
-					</div>
-					
-					<div class="loyalty-info">
-						<h2 class="form-separator">Loyalty Rewards</h2>
-						<label for="txtLoyaltyEmail">Email</label>
-						<input type="text" name="txtLoyaltyEmail" class="textbox" placeholder="Enter Loyalty Email">
-						<label for="txtLoyaltyNumber">Phone Number</label>
-						<input type="text" name="txtLoyaltyNumber" class="textbox" placeholder="Enter Loyalty Phone Number">
-						<label for="btnSignUp">No account?</label>
-						<button name="btnSignUp" class="signup-button" formaction="" formnovalidate>Sign Up</button>
+						<label for="txtFullName">First Name</label>
+						<input type="text" name="txtFullName" class="textbox" placeholder="Enter First Name" required>
+						<label for="txtCardNumber">Last Name</label>
+						<input type="text" name="txtCardNumber" class="textbox" placeholder="Enter Last Name" required>
+						<label for="txtExpirationDate">Email</label>
+						<input type="text" name="txtExpirationDate" class="textbox" placeholder="Enter Email" required>
+						<label for="txtSecurityCode">Phone Number</label>
+						<input type="text" name="txtSecurityCode" class="textbox" placeholder="XXX-XXX-XXX" required>
 					</div>
 				
 					<div class="payment-controls">
-						<div class="tip-options">
-							<label for="optTips" class="form-separator">Optional Tip</label>
-							<div class="tip-option-group">
-								<input type="radio" name="optTip" class="tip-option" value="10">10%
-								<input type="radio" name="optTip" class="tip-option" value="15">15%
-								<input type="radio" name="optTip" class="tip-option" value="20">20%
-								<input type="radio" name="optTip" class="tip-option" value="0">None
-							</div>
-						</div>
-						<button name="btnSubmit" class="submit-button">Pay</button>
+						<button name="btnSubmit" class="submit-button">Submit</button>
 						<button name="btnCancel" class="cancel-button" formaction="" formnovalidate>Cancel</button>
 					</div>
 				</div>
