@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta charset="UTF-8">
+	<title>Online Payment</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<style>
+	
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+	
+		html {
+			background-color: #f9f7f1;
+		}
+		
+		.payment-container {
+			width: 70%;
+			margin: 0 auto;
+		}
+		
+		.menu-bar {
+			background-color: #f9f9f9;
+			text-align: center;
+			font-size: 2em;
+			font-weight: bold;
+			padding: 1em;
+			border-radius: 0.5em;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+			width: 100%;
+			margin: 0;
+		}
+		
+		.payment-form {
+			background-color: white;
+			border-radius: .5em;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+			padding: 2em;
+			margin: 1em 0;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.card-info {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.card-info label,
+		.loyalty-info label {
+			text-align: center;
+		}
+
+		.small-textbox-row {
+			display: flex;
+			justify-content: center;
+			gap: 3.7em;
+			margin-bottom: 10px;
+		}
+
+		.small-textbox-group {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.loyalty-info {
+			display: flex;
+			flex-direction: column;
+			border-radius: .5em;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+			padding-bottom: 20px;
+			width: 50%;
+			margin: 10px auto;
+			background-color: #f9f9f9;
+		}
+
+		.form-separator {
+			text-align: center;
+		}
+
+		.payment-controls {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.tip-options {
+			display: flex;
+			flex-direction: column;
+			margin-top: 10px;
+		}
+
+		.tip-option-group {
+			display: flex;
+			gap: .5em;
+			margin-top: 10px;
+		}
+
+		.tip-option {
+			margin: 0;
+		}
+
+		.signup-button,
+		.submit-button,
+		.cancel-button	{
+			display: block;
+			margin: 10px auto 0 auto;
+			height: 3em;
+			font-size: 1em;
+		}
+
+		.signup-button {
+			width: 25%;
+			height: 2em;
+		}
+
+		.submit-button,
+		.cancel-button {
+			width: 30%;
+		}
+
+		.textbox,
+		.small-textbox {
+			display: block;
+			margin: 0 auto 10px auto;
+			height: 2em;
+			width: 100%;
+		}
+
+		.textbox {
+			max-width: 300px;
+		}
+
+		.small-textbox {
+			max-width: 120px;
+		}
+		
+		@media (max-width:600px) {
+			.payment-container {
+				width: 90%;
+			}
+			
+			.small-textbox-row {
+				gap: 1.5em;
+			}
+			
+			.loyalty-info {
+				width: 100%;
+				padding: 1em;
+			}
+			
+			.submit-button,
+			.cancel-button,
+			.signup-button {
+				width: 100%;
+				font-size: 1.1em;
+			}
+			
+			.tip-option-group {
+				display: block;
+			}
+		}
+		
+	</style>
+	
+	<body>
+		<form name="frmPayment" action="" method="post">
+			<div class="payment-container">
+				<div class="menu-bar">Loyalty Sign Up</div>
+				<div class="payment-form">			
+					<div class="card-info">
+						<label for="txtFullName">First Name</label>
+						<input type="text" name="txtFullName" class="textbox" placeholder="Enter First Name" required>
+						<label for="txtCardNumber">Last Name</label>
+						<input type="text" name="txtCardNumber" class="textbox" placeholder="Enter Last Name" required>
+						<label for="txtExpirationDate">Email</label>
+						<input type="text" name="txtExpirationDate" class="textbox" placeholder="Enter Email" required>
+						<label for="txtSecurityCode">Phone Number</label>
+						<input type="text" name="txtSecurityCode" class="textbox" placeholder="XXX-XXX-XXX" required>
+					</div>
+				
+					<div class="payment-controls">
+						<button name="btnSubmit" class="submit-button">Submit</button>
+						<button name="btnCancel" class="cancel-button" formaction="" formnovalidate>Cancel</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</body>
+</html>
