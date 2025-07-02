@@ -1,0 +1,23 @@
+body {
+    background-color: rgb(182, 182, 182);
+    font-style: italic;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: flex;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.centered {
+  text-align: center;
+}
+
+button {
+  font-size: 2rem;
+  height: 3em;
+}
+
+.button-container {
+    margin-top: 40px;
+    text-align: center;
+}
