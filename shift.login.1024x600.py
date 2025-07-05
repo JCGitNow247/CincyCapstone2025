@@ -1,13 +1,11 @@
-from tkinter import *
-from customtkinter import * #pip install customtkinter & pip install customtkinter --upgrade
-from PIL import Image
+from our_display import *
 
-set_appearance_mode('light')
+Create_Window()
+Create_Menubar()
 
-Window = CTk()
-Window.title("<CompanyName>"+" Powered by TruckBytes")
-Window.iconbitmap("images/our.logos/TruckBytes.ico")
-Window.geometry("1024x600")
+
+
+
 
 lblTitle = CTkLabel(Window,
                     text="Employee Login",
