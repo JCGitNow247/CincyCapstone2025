@@ -6,13 +6,12 @@ from customtkinter import *
 #Import To Display Images
 from PIL import Image
 
+from tkinter import messagebox
+
+
+
 #Instantiate a window
 Window = CTk()
-
-
-
-
-from tkinter import messagebox
 
 
 def Create_Window():
@@ -30,18 +29,6 @@ def Create_Window():
 
     #Forces light mode
     set_appearance_mode('light')
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -73,11 +60,8 @@ def Create_Menubar():
         messagebox.showinfo("Truckbytes", "Thank You For Choosing TruckBytes")
  
 
-
-
-
     #Define a Menubar
-    menuBar = Menu(Window)
+    menuBar = Menu(Window, background='blue')
     Window.config(menu=menuBar)
 
 
@@ -102,43 +86,6 @@ def Create_Menubar():
 
     #Define Log Out Menu's submenus
     Log_Out_Menu.add_command(label="Logout", font=14,command=Log_Out)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -2,8 +2,6 @@
 from our_display import *
 
 
-
-
 #Intantiate UI options
 Create_Window()
 Create_Menubar()
@@ -24,8 +22,6 @@ btnAnalytics.place(x=222,y=268)
 
 btnMenuBuilder = CTkButton(Window, font=('Arial', 24), text="Menu Builder", width=300, height=80)
 btnMenuBuilder.place(x=222,y=415)
-
-
 
 
 #Create mainloop to run program
