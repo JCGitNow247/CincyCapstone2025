@@ -1,25 +1,31 @@
 from tkinter import *
 
-#To istall, run the following on terminal: pip install customtkinter & pip install customtkinter --upgrade
-from customtkinter import * 
+#For some reason messagebox is not included in the import *??
+from tkinter import messagebox
 
+#To istall, run the following on terminal:
+# pip install Pillow
 #Import To Display Images
 from PIL import Image
 
-from tkinter import messagebox
-
+#To istall, run the following on terminal:
+# pip install customtkinter & pip install customtkinter --upgrade
+from customtkinter import * 
 
 
 #Instantiate a window
 Window = CTk()
 
+#Variable to link back to SQL
+SQLCompanyName = "<SQLCompanyName>"
+
 
 def Create_Window():
-    #Create size of window 
+    #Create size of window
     Window.geometry("1024x600")
 
     #Display Titlebar Message
-    Window.title("<CompanyName>"+" Powered by TruckBytes")
+    Window.title(SQLCompanyName+" Powered by TruckBytes")
 
     #Display Titlebar Icon
     Window.iconbitmap("images/our.logos/TruckBytes.ico")
@@ -61,11 +67,11 @@ def Create_Menubar():
  
 
     #Define a Menubar
-    menuBar = Menu(Window, background='blue')
+    #Need to change menubars color, Neither of these worked
+    menuBar = Menu(Window)# , background='blue')
     Window.config(menu=menuBar)
+    #Window.configure(background="#c80d0d")
 
-
-    #Define menuBar menus
     file_menu = Menu(menuBar)
     Log_Out_Menu = Menu(menuBar)
 
