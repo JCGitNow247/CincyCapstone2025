@@ -1,4 +1,4 @@
-from our_display import *
+from OurDisplay import *
 from customtkinter import CTkCheckBox
 
 
