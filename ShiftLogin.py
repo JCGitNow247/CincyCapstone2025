@@ -1,4 +1,4 @@
-from our_display import *
+from OurDisplay import *
 
 Create_Window()
 Create_Menubar()
