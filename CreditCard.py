@@ -1,5 +1,5 @@
 #Import TruckBytes Standard UI options
-from our_display import *
+from OurDisplay import *
 
 
 
