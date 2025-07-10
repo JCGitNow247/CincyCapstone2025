@@ -8,10 +8,18 @@
 
     <body>
         <div class="page-wrapper">
+            <div class="Top-Banner">
+                <div class="Top-Buttons">
+                    <Button onclick="history.back()" id="headerBackButton"> Back </Button>
+                    <label> Food Truck Name here</label>
+                    <Button onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')" id="headerCartButton"> Cart (0) </Button>
+                </div>
+            </div>
+
             <h1 class="title">Order Now</h1>
             
             <!-- This is the pop up menu for the MODIFICATIONS pop up menu-->
-            <div class="overlay" id="overlay">
+            <div class="overlay" id="Modification-overlay">
                 <div class="Modification-Menu">
                     <h2>Modify Item</h2>
 
@@ -33,9 +41,52 @@
                             <span>Item</span>
                         </label>
                     </div>
-                    <button type="submit" onclick="ToggleModificationMenu(this)">Close</button>
+                    <button type="submit" onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')">Close</button>
                 </div>
             </div>
+            <!------------------------------------------------------------------>
+
+            <!-- This is the pop up menu for the CART and whatever items a user has added into their cart-->
+            <div class="overlay" id="Cart-overlay">
+                <div class="Cart-Menu">
+                    <h2>Cart Items</h2>
+
+                    <div class="Cart-Item-Grid">
+                        
+                        <div class="Cart-Item" id="1">
+                            <button> 
+                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
+                            </button>
+                            <span>Item In Cart</span>
+                        </div>
+
+                        <div class="Cart-Item" id="2">
+                            <button> 
+                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
+                            </button>
+                            <span>Item In Cart</span>
+                        </div>
+                        <div class="Cart-Item" id="3">
+                            <button> 
+                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
+                            </button>
+                            <span>Item In Cart</span>
+                        </div>
+                        <div class="Cart-Item" id="4">
+                            <button> 
+                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
+                            </button>
+                            <span>Item In Cart</span>
+                        </div>
+                    </div>
+
+                    <div class="Cart-Buttons">
+                        <button type="submit" onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')">Close</button>
+                        <button type="submit" onclick="ProceedToCheckout()">Proceed To Checkout</button>
+                    </div>
+                </div>
+            </div>
+            <!------------------------------------------------------------------>
 
             <!-- This is code for all the menu cards. -->
             <div class="menu-container">
@@ -43,13 +94,13 @@
                     <h2> Bronx Bomber </h2>
 
                     <p> 
-                        I delicious Pizza with our special red sauce and mozzerella, 
+                        A delicious Pizza with our special red sauce and mozzerella, 
                         topped with pepperoni, white onions, green peppers, black olives
                         and sausage.
                     </p>
 
-                    <button type="submit" onclick="ToggleModificationMenu(this)"> Modify Pizza </button> <br>
-                    <button onclick="AddToCart()"> Add To Cart </button>
+                    <button onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')"> Modify Pizza </button> <br>
+                    <button onclick="AddToCart('Bronx Bomber')"> Add To Cart </button>
                 </div>
 
                 <div class="menu-card">
@@ -58,11 +109,12 @@
                     <p> 
                         Item Description
                     </p>
-                    <button type="submit" onclick="ToggleModificationMenu(this)"> Modify Item </button> <br>
-                    <button onclick="AddToCart()"> Add To Cart </button>
+                    <button onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')"> Modify Item </button> <br>
+                    <button onclick="AddToCart('Item Name')"> Add To Cart </button>
                 </div>
             </div>
         </div>
-        <script src="OrderScript.js"></script>
+        <!------------------------------------------------------------------>
     </body>
+    <script src="OrderScript.js"></script>
 </html>
