@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Online Ordering</title>
+    </head>
+
+    <body>
+        <div class="page-wrapper">
+            <div class="Top-Banner">
+                <div class="Top-Buttons">
+                    <Button onclick="history.back()" id="headerBackButton"> Back </Button>
+                    <label> Food Truck Name here</label>
+                    <Button onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')" id="headerCartButton"> Cart (0) </Button>
+                </div>
+            </div>
+
+            <h1 class="title">Order Now</h1>
+            
+            <!-- This is the pop up menu for the MODIFICATIONS pop up menu-->
+            <div class="overlay" id="Modification-overlay">
+                <div class="Modification-Menu">
+                    <h2>Modify Item</h2>
+
+                    <div class="option-grid">
+                        <label class="option-box">
+                            <input type="checkbox" name="item" value="item" />
+                            <span>Item</span>
+                        </label>
+                        <label class="option-box">
+                            <input type="checkbox" name="item" value="item" />
+                            <span>Item</span>
+                        </label>
+                        <label class="option-box">
+                            <input type="checkbox" name="item" value="item" />
+                            <span>Item</span>
+                        </label>
+                        <label class="option-box">
+                            <input type="checkbox" name="item" value="item" />
+                            <span>Item</span>
+                        </label>
+                    </div>
+                    <button type="submit" onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')">Close</button>
+                </div>
+            </div>
+            <!------------------------------------------------------------------>
+
+            <!-- This is the pop up menu for the CART and whatever items a user has added into their cart-->
+            <div class="overlay" id="Cart-overlay">
+                <div class="Cart-Menu">
+                    <h2>Cart Items</h2>
+
+                    <div class="Cart-Item-Grid">
+                        
+                        <div class="Cart-Item" id="1">
+                            <button> 
+                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
+                            </button>
+                            <span>Item In Cart</span>
+                        </div>
+
+                        <div class="Cart-Item" id="2">
+                            <button> 
+                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
+                            </button>
+                            <span>Item In Cart</span>
+                        </div>
+                        <div class="Cart-Item" id="3">
+                            <button> 
+                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
+                            </button>
+                            <span>Item In Cart</span>
+                        </div>
+                        <div class="Cart-Item" id="4">
+                            <button> 
+                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
+                            </button>
+                            <span>Item In Cart</span>
+                        </div>
+                    </div>
+
+                    <div class="Cart-Buttons">
+                        <button type="submit" onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')">Close</button>
+                        <button type="submit" onclick="ProceedToCheckout()">Proceed To Checkout</button>
+                    </div>
+                </div>
+            </div>
+            <!------------------------------------------------------------------>
+
+            <!-- This is code for all the menu cards. -->
+            <div class="menu-container">
+                <div class="menu-card">
+                    <h2> Bronx Bomber </h2>
+
+                    <p> 
+                        A delicious Pizza with our special red sauce and mozzerella, 
+                        topped with pepperoni, white onions, green peppers, black olives
+                        and sausage.
+                    </p>
+
+                    <button onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')"> Modify Pizza </button> <br>
+                    <button onclick="AddToCart('Bronx Bomber')"> Add To Cart </button>
+                </div>
+
+                <div class="menu-card">
+                    <h2> Item Name </h2>
+
+                    <p> 
+                        Item Description
+                    </p>
+                    <button onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')"> Modify Item </button> <br>
+                    <button onclick="AddToCart('Item Name')"> Add To Cart </button>
+                </div>
+            </div>
+        </div>
+        <!------------------------------------------------------------------>
+    </body>
+    <script src="OrderScript.js"></script>
+</html>
