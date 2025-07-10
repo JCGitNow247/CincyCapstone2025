@@ -1,6 +1,6 @@
 #Import TruckBytes Standard UI options
-from our_display import *
-
+from OurDisplay import *
+from OrderingPage import *
 
 #Intantiate UI options
 Create_Window()
@@ -14,7 +14,7 @@ lblTitle.place(x=235,y=45)
 
 
 #Create Buttons
-btnOrder = CTkButton(Window, font=('Arial', 24), text="Truckbytes Ordering", width=300, height=80)
+btnOrder = CTkButton(Window, font=('Arial', 24), text="Truckbytes Ordering", width=300, height=80, command="") #OrderingPage.Window.mainloop()
 btnOrder.place(x=222,y=119)
 
 btnAnalytics = CTkButton(Window, font=('Arial', 24), text="Analytics", width=300, height=80)

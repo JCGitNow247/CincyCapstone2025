@@ -13,7 +13,7 @@ lblTitle = CTkLabel(Window,
 lblTitle.place(x=400,y=50)
 
 lblUsername = CTkLabel(Window,
-                       text="Username:", 
+                       text="Last Name:", 
                        font=('Arial',20))
 lblUsername.place(x=240,y=170)
 

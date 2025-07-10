@@ -11,7 +11,7 @@ def CreateLabels():
     lblTitle = CTkLabel(Window, text="Customer Loyalty", font=('Arial', 32))
     lblTitle.place(x=235,y=45)
     
-    #Create Label & Textbox For "Phone Number"
+    #Create Label For "Phone Number"
     lblPhoneNumb = CTkLabel(Window, text="Phone Number", font=('Arial',24))
     lblPhoneNumb.place(x=150,y=150)
 
@@ -22,10 +22,13 @@ def CreateLabels():
 
 def CreateFields():
     #Create Textbox For "Phone Number"
-    txtPhoneNumbField = CTkTextbox(Window, width=250,height=40)
+
+
+    txtPhoneNumbField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
     txtPhoneNumbField.place(x=360,y=148)
+
     #Create Textbox for "Email Address"
-    txtEmailAddyField = CTkTextbox(Window, width=250,height=40)
+    txtEmailAddyField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
     txtEmailAddyField.place(x=360,y=195)
 
 
