@@ -20,6 +20,13 @@ Window = CTk()
 SQLCompanyName = "<SQLCompanyName>"
 
 
+"""
+def Create_Window(geometry, title, iconbitmap):
+    #Create size of window
+    WindowA = OurDisplay.Create_Window("1024x600", SQLCompanyName+" Powered by TruckBytes", "images/our.logos/TruckBytes.ico")
+"""
+
+
 def Create_Window():
     #Create size of window
     Window.geometry("1024x600")
