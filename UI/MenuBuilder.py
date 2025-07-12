@@ -2,6 +2,17 @@ from OurDisplay import *
 from customtkinter import CTkCheckBox
 
 
+#SQL Variables
+SQLItem1 = "SQL item1"
+SQLItem2 = "SQL item2"
+SQLItem3 = "SQL item3"
+
+SQLSubMenu1 = "SQL Sub Menu1"
+SQLSubMenu2 = "SQL Sub Menu2"
+SQLSubMenu3 = "SQL Sub Menu3"
+
+
+
 
 
 def DisplayLabels():
@@ -30,20 +41,15 @@ def DisplayFields():
     txtItemNameField = CTkTextbox(Window, width=250,height=40)
     txtItemNameField.place(x=200,y=90)
 
-
     txtItemPriceField = CTkTextbox(Window, width=250,height=40)
     txtItemPriceField.place(x=200,y=220)
 
     txtItemDescriptionField = CTkTextbox(Window, width=250,height=150)
     txtItemDescriptionField.place(x=200,y=345)
-    #txtItemDescriptionField.insert(0,"Enter Description Here")
-
-
 
 
 
 def DisplayButtons():
-
     btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Image", width=200, height=50)
     btnAddImage.place(x=690,y=30)
 
@@ -52,16 +58,9 @@ def DisplayButtons():
 
 
 
-
-
-
-SQLItem1 = "SQL item1"
-SQLItem2 = "SQL item2"
-SQLItem3 = "SQL item3"
-
-SQLSubMenu1 = "SQL Sub Menu1"
-SQLSubMenu2 = "SQL Sub Menu2"
-SQLSubMenu3 = "SQL Sub Menu3"
+#CheckBox 
+ChkBxIsTaxable = CTkCheckBox(Window, text= "Is This Item Taxable?",font= ('Arial', 24),    checkbox_height=25, checkbox_width=25)
+ChkBxIsTaxable.place(x=200,y=270)
 
 
 
@@ -96,10 +95,6 @@ def DisplayComboBoxes():
     cboAddSubMenu.set('Link Sub Menu')
 
 
-
-
-
-
     #Display "Food.Image.png" file
     original_logo = Image.open("images/our.logos/FoodImage.png")
     resized_logo = original_logo.resize((250,250),Image.Resampling.LANCZOS)
@@ -115,39 +110,11 @@ def DisplayComboBoxes():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ChkBxIsTaxable = CTkCheckBox(Window, text= "Is This Item Taxable?",font= ('Arial', 24),    checkbox_height=25, checkbox_width=25)
-ChkBxIsTaxable.place(x=200,y=270)
-
-
-
-
-
+#Intantiate UI options
 Create_Window()
 Create_Menubar()
 
+#Intantiate UI specific to this page
 DisplayComboBoxes()
 DisplayLabels()
 DisplayFields()

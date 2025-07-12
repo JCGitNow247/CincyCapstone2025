@@ -23,11 +23,8 @@ Window = CTk()
 SQLCompanyName = "<SQLCompanyName>"
 
 
-"""
-def Create_Window(geometry, title, iconbitmap):
-    #Create size of window
-    WindowA = OurDisplay.Create_Window("1024x600", SQLCompanyName+" Powered by TruckBytes", "images/our.logos/TruckBytes.ico")
-"""
+
+
 
 
 
@@ -39,14 +36,14 @@ def open_ordering_ui():
     #This closes the current page
     Window.destroy()
 
+
+
+
 def open_login_ui():
     subprocess.Popen(['python', 'ShiftLogin.py'])
     Window.destroy()
 
 
-def open_loyality_ui():
-    subprocess.Popen(['python', 'Loyalty.py'])
-    Window.destroy()
 
 
 def open_credit_ui():
@@ -54,7 +51,11 @@ def open_credit_ui():
     Window.destroy()
 
 
-
+def open_loyalty_ui():
+    #This subprocess allows you to specify a program to open a specific file
+    subprocess.Popen(['python', 'Loyalty.py'])
+    #This closes the current page
+    Window.destroy()
 
 
 
@@ -135,7 +136,7 @@ def Create_Menubar():
     Employee_Menu.add_command(label="Log In", font=14,command=open_login_ui)
     
     #Define Log Out Menu's submenus
-    Employee_Menu.add_command(label="Logout", font=14,command=open_loyality_ui)
+    Employee_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
 
 
 

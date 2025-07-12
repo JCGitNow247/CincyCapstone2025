@@ -1,6 +1,31 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 
+#Import to validate email address 
+import re
+
+import subprocess
+
+
+
+#User input validation
+def validate_fields():
+
+    phone = txtPhoneNumbField.get("1.0", "end").strip()
+    email = txtEmailAddyField.get("1.0", "end").strip()
+
+    if not (phone.isdigit() and len(phone) == 10):
+        messagebox.showerror("Invalid Phone Number", "Phone number must be 10 digits.")
+        return False
+
+
+    email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    if not re.match(email_regex, email):
+       messagebox.showerror("Invalid Email", "Please enter a valid email address.")
+       return False
+    
+    return True
+
 
 
 def CreateLabels():
@@ -19,22 +44,43 @@ def CreateLabels():
 
 
 def CreateFields():
+    global txtPhoneNumbField, txtEmailAddyField
+
     #Create Entry For "Phone Number"
-    txtPhoneNumbField = CTkEntry(Window, width=250,height=40, font=('Arial',24))
+    txtPhoneNumbField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
     txtPhoneNumbField.place(x=360,y=148)
 
     #Create  for "Email Address"
-    txtEmailAddyField = CTkEntry(Window, width=250,height=40, font=('Arial',24))
+    txtEmailAddyField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
     txtEmailAddyField.place(x=360,y=195)
 
 
 
 def CreateButtons():
-    btnCheckLoyal = CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80, command=open_ordering_ui,)
+    btnCheckLoyal = CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80, command=open_ordering_w_v_ui)
     btnCheckLoyal.place(x=222,y=270)
 
     btnMenuBuilder = CTkButton(Window, font=('Arial', 24), text="Skip Loyalty\n Order Food", width=300, height=80, command=open_ordering_ui)
     btnMenuBuilder.place(x=222,y=415)
+
+
+
+#Used to open OrderingPage.py
+def open_ordering_ui():
+    #This subprocess allows you to specify a program to open a specific file
+    subprocess.Popen(['python', 'OrderingPage.py'])
+    #This closes the current page
+    Window.destroy()
+
+
+
+#Used to open OrderingPage.py with validation
+def open_ordering_w_v_ui():
+    if validate_fields():
+        #This subprocess allows you to specify a program to open a specific file
+        subprocess.Popen(['python', 'OrderingPage.py'])
+        #This closes the current page
+        Window.destroy()
 
 
 

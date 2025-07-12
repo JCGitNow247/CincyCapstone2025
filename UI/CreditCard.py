@@ -1,6 +1,6 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
-
+import re
 
 
 #Variable placeholders to link to db
@@ -34,18 +34,20 @@ def CreateLabels():
 
 
 def CreateFields():
+    global txtCustomerName, txtCardNumberField, txtZipCodeField, txtSecurityCodeField, txtExpiration_DateField
+
     #Create Textbox for "Customer Name"
-    txtPhoneNumbField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    txtPhoneNumbField.place(x=61,y=90)
-    txtPhoneNumbField.focus_set()
+    txtCustomerName = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
+    txtCustomerName.place(x=61,y=90)
+    txtCustomerName.focus_set()
     
     #Create Textbox for "Card Number"
     txtCardNumberField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
     txtCardNumberField.place(x=372,y=90)
 
     #Create Textbox For "Expiration Date"
-    txtExperation_DateField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
-    txtExperation_DateField.place(x=61,y=240)
+    txtExpiration_DateField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
+    txtExpiration_DateField.place(x=61,y=240)
 
     #Create Textbox For "Zip Code"
     txtZipCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
@@ -56,6 +58,40 @@ def CreateFields():
     #Create Textbox For "Security Code"
     txtSecurityCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
     txtSecurityCodeField.place(x=211,y=240)
+
+
+
+# User Input Validation
+def validate_fields():
+    card_number = txtCardNumberField.get("1.0", "end").strip()
+    zip_code = txtZipCodeField.get("1.0", "end").strip()
+    security_code = txtSecurityCodeField.get("1.0", "end").strip()
+    expiration_date = txtExpiration_DateField.get("1.0", "end").strip()
+    name_on_card = txtCustomerName.get("1.0", "end").strip()
+
+    name_regex = r"^[A-Za-z\s\-']{2,50}$"
+    if not re.match(name_regex, name_on_card):
+        messagebox.showerror("Invalid Name", "Please enter a valid name (letters, spaces, hyphens, apostrophes only).")
+        return False
+    
+    if not (card_number.isdigit() and len(card_number) == 16):
+        messagebox.showerror("Invalid Card", "Card number must be 16 digits.")
+        return False
+
+    if not (expiration_date.isdigit() and len(expiration_date) == 4):
+        messagebox.showerror("Invalid Code", "Expiration Date must be 555 digits.")
+        return False
+
+    if not (security_code.isdigit() and len(security_code) == 3):
+        messagebox.showerror("Invalid Code", "Security Code must be 3 digits.")
+        return False
+
+    if not (zip_code.isdigit() and len(zip_code) == 5):
+        messagebox.showerror("Invalid Zip", "Zip Code must be 5 digits.")
+        return False
+    
+    return True
+
 
 
 
@@ -71,8 +107,19 @@ def CreateButtons():
     bthTipOption3.place(x=493,y=360)
 
     #This command= is imported from OrderingPage.py
+    #bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80)
     bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyality_ui)
     bthTPayNow.place(x=241,y=490)
+
+
+
+
+#Use to open Loyalty.py
+def open_loyality_ui():
+    if validate_fields():
+        #import subprocess
+        subprocess.Popen(['python', 'loyalty.py'])
+        Window.destroy()
 
 
 
