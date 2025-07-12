@@ -12,7 +12,7 @@ tipOpt3= "20%"
 
 def CreateLabels():
     #Create Label for "Customer Name"
-    lblCustomerName = CTkLabel(Window, text="Name On Card", font=('Arial',24))
+    lblCustomerName = CTkLabel(Window, text="Name On Card", font=('Arial',24),)
     lblCustomerName.place(x=61,y=50)
 
     #Create Label "Card Number"
@@ -53,7 +53,6 @@ def CreateFields():
     txtZipCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
     txtZipCodeField.place(x=372,y=240)
     #txtZipCodeField.insert("0.0","00000")
-
 
     #Create Textbox For "Security Code"
     txtSecurityCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
@@ -107,8 +106,8 @@ def CreateButtons():
     bthTipOption3.place(x=493,y=360)
 
     #This command= is imported from OrderingPage.py
-    #bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80)
-    bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyality_ui)
+    bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80)
+    #bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyality_ui)
     bthTPayNow.place(x=241,y=490)
 
 

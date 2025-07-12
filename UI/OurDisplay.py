@@ -24,32 +24,23 @@ SQLCompanyName = "<SQLCompanyName>"
 
 
 
-
-
-
-
-
-
 def open_ordering_ui():
     #This subprocess allows you to specify a program to open a specific file
     subprocess.Popen(['python', 'OrderingPage.py'])
     #This closes the current page
     Window.destroy()
 
-
-
+def open_about_ui():
+    subprocess.Popen(['python', 'about.py'])
+    #Window.destroy()
 
 def open_login_ui():
     subprocess.Popen(['python', 'ShiftLogin.py'])
     Window.destroy()
 
-
-
-
 def open_credit_ui():
     subprocess.Popen(['python', 'CreditCard.py'])
     Window.destroy()
-
 
 def open_loyalty_ui():
     #This subprocess allows you to specify a program to open a specific file
@@ -58,9 +49,7 @@ def open_loyalty_ui():
     Window.destroy()
 
 
-
-
-
+#Intantiate UI
 def Create_Window():
     #Create size of window
     Window.geometry("1024x600")
@@ -79,6 +68,7 @@ def Create_Window():
 
 
 
+#Intantiate Menubar
 def Create_Menubar():
     """
     Instead of a dedicated management page. 
@@ -86,48 +76,28 @@ def Create_Menubar():
     to people with management codes
     """
 
-    def Log_Out():
-        #Add commands to log out
-        exit
-
-    def About_Truckbytes():
-        #Display popup info about 
-        #What version, etc.
-        pop_button = Button(Window, command=popup_about, text="Project by Cole, Adam & Jason", font=100)
-        pop_button.pack(pady=220)
-
-
-        #how do I close pop_button? This does not work
-        #pop_button.quit
-        exit
-
-
-
-    def popup_about():
-        messagebox.showinfo("Truckbytes", "Thank You For Choosing TruckBytes")
- 
-
     #Define a Menubar
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
-    Window.config(menu=menuBar)
-    #Window.configure(background="#c80d0d")
+    Window.config(menu=menuBar) #,bg_color="#c80d0d")
+    #menuBar.configure(bg_color="#c80d0d")
+
 
     file_menu = Menu(menuBar)
-    Log_Out_Menu = Menu(menuBar)
+  
 
     #File Menu options
     menuBar.add_cascade(label="File", font=14, menu=file_menu)
 
     #Define File Menu's submenus
-    file_menu.add_command(label="About", font=14, command=About_Truckbytes)
+    file_menu.add_command(label="About", font=14, command=open_about_ui)
     file_menu.add_command(label="Close Program", font=14, command=Window.quit)
 
 
     #Adds a separator bar
     #file_menu.add_separator()
 
-    #Logout Menu Options
+    #Employee Menu Options
     Employee_Menu = Menu(menuBar)
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
 
@@ -159,14 +129,12 @@ def Display_Logos23():
     imgLogo.place(x=744,y=33)
 
 
+def Display_Logo_Center():
+    
+    #Display Logo
+    original_logo = Image.open("images/our.logos/TruckBytes.png")
+    resized_logo = original_logo.resize((200,200),Image.Resampling.LANCZOS)
+    truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(200,200))
 
-
-"""
-Copy This code for other UI pages:
-
-from our_display import *
-
-Create_Window()
-Create_Menubar()
-Display_Logos23()
-"""
+    imgLogo = CTkLabel(Window,image=truck_logo, text="")
+    imgLogo.place(x=412,y=340)

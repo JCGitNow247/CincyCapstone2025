@@ -5,15 +5,6 @@ import re
 
 
 
-
-
-
-
-
-
-
-
-
 lblTitle = CTkLabel(Window, text="Employee Login", font=('Arial', 32))
 lblTitle.place(x=400,y=50)
 
@@ -65,30 +56,10 @@ btnSubmit.place(x=412,y=270)
 
 
 
-#Display Logo
-original_logo = Image.open("images/our.logos/TruckBytes.png")
-resized_logo = original_logo.resize((200,200),Image.Resampling.LANCZOS)
-truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(200,200))
-
-imgLogo = CTkLabel(Window,image=truck_logo, text="")
-imgLogo.place(x=412,y=340)
-
-
-
-
-
-
-
-
-
-
-
-
-
 #Intantiate UI options
 Create_Window()
 Create_Menubar()
-
+Display_Logo_Center()
 
 
 Window.mainloop()
