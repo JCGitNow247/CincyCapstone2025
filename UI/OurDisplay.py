@@ -12,6 +12,9 @@ from PIL import Image
 # pip install customtkinter & pip install customtkinter --upgrade
 from customtkinter import * 
 
+#Used to open new .py files
+import subprocess
+
 
 #Instantiate a window
 Window = CTk()
@@ -25,6 +28,36 @@ def Create_Window(geometry, title, iconbitmap):
     #Create size of window
     WindowA = OurDisplay.Create_Window("1024x600", SQLCompanyName+" Powered by TruckBytes", "images/our.logos/TruckBytes.ico")
 """
+
+
+
+
+
+def open_ordering_ui():
+    #This subprocess allows you to specify a program to open a specific file
+    subprocess.Popen(['python', 'OrderingPage.py'])
+    #This closes the current page
+    Window.destroy()
+
+def open_login_ui():
+    subprocess.Popen(['python', 'ShiftLogin.py'])
+    Window.destroy()
+
+
+def open_loyality_ui():
+    subprocess.Popen(['python', 'Loyalty.py'])
+    Window.destroy()
+
+
+def open_credit_ui():
+    subprocess.Popen(['python', 'CreditCard.py'])
+    Window.destroy()
+
+
+
+
+
+
 
 
 def Create_Window():
@@ -94,11 +127,15 @@ def Create_Menubar():
     #file_menu.add_separator()
 
     #Logout Menu Options
-    Log_Out_Menu = Menu(menuBar)
-    menuBar.add_cascade(label="Logout", menu=Log_Out_Menu)
+    Employee_Menu = Menu(menuBar)
+    menuBar.add_cascade(label="Employee", menu=Employee_Menu)
+
 
     #Define Log Out Menu's submenus
-    Log_Out_Menu.add_command(label="Logout", font=14,command=Log_Out)
+    Employee_Menu.add_command(label="Log In", font=14,command=open_login_ui)
+    
+    #Define Log Out Menu's submenus
+    Employee_Menu.add_command(label="Logout", font=14,command=open_loyality_ui)
 
 
 

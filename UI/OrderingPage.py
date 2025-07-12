@@ -1,7 +1,7 @@
+#Import TruckBytes Standard UI options
 from OurDisplay import *
 
-Create_Window()
-Create_Menubar()
+
 
 #Variables to link to SQL
 SQLItemOrdered = "SQL Item Ordered"
@@ -12,27 +12,13 @@ Item3 = "SQL Item3"
 Item4 = "SQL Item4"
 Item5 = "SQL Item5"
 Item6 = "SQL Item6"
-
 SQLSubMenuName= "SQL Sub Menu Name"
-
-
-#Label of the page
-lblTitle = CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold'))
-lblTitle.place(x=98,y=40)
-
-
-#Label to Show What Has Been Ordered
-lblOrdered = CTkLabel(Window, text=SQLItemOrdered, font=('Arial',20))
-lblOrdered.place(x=708,y=125)
-
-
-#Label to display Total
-lblTotal = CTkLabel(Window, text=SQLTotal, font=('Arial',20))
-lblTotal.place(x=735,y=525)
 
 
 
 #Do we need to create geometery based on number of items in the menu?
+
+
 
 def open_sub_menu():
     PopUpMenu = Toplevel()
@@ -46,11 +32,26 @@ def open_sub_menu():
 
 
 
+def CreateLabel():
+
+    #Label of the page
+    lblTitle = CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold'))
+    lblTitle.place(x=98,y=40)
+
+    #Label to Show What Has Been Ordered
+    lblOrdered = CTkLabel(Window, text=SQLItemOrdered, font=('Arial',20))
+    lblOrdered.place(x=708,y=125)
+
+    #Label to display Total
+    lblTotal = CTkLabel(Window, text=SQLTotal, font=('Arial',20))
+    lblTotal.place(x=735,y=525)
+
+
 
 def CreateButtons():
     #Button
-    btnSubmit = CTkButton(Window, text="Submit", font=('Arial',20), width=200, height=50)
-    btnSubmit.place(x=735,y=45)
+    btnPlaceOrder = CTkButton(Window, text="Place Order", font=('Arial',20), width=200, height=50, command=open_credit_ui)
+    btnPlaceOrder.place(x=735,y=45)
 
     btnSubmit = CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50)
     btnSubmit.place(x=735,y=445)
@@ -73,10 +74,17 @@ def CreateButtons():
     btnItem6 = CTkButton(Window, font=('Arial', 20), text=Item6, width=200, height=80, command= open_sub_menu)
     btnItem6.place(x=388,y=415)
 
+
+
+#Intantiate UI options
+Create_Window()
+Create_Menubar()
+
+#Intantiate UI specific to this page
 CreateButtons()
+CreateLabel()
 
 
 
-
-
+#Create mainloop to run program
 Window.mainloop()

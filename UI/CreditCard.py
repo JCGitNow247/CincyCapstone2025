@@ -3,7 +3,10 @@ from OurDisplay import *
 
 
 
-
+#Variable placeholders to link to db
+tipOpt1= "15%"
+tipOpt2= "18%"
+tipOpt3= "20%"
 
 
 
@@ -29,6 +32,7 @@ def CreateLabels():
     lblSecurityCode.place(x=211,y=180)
 
 
+
 def CreateFields():
     #Create Textbox for "Customer Name"
     txtPhoneNumbField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
@@ -44,33 +48,15 @@ def CreateFields():
     txtExperation_DateField.place(x=61,y=240)
 
     #Create Textbox For "Zip Code"
-    txtZipCodeField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
+    txtZipCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
     txtZipCodeField.place(x=372,y=240)
-    txtZipCodeField.insert("0.0","00000")
+    #txtZipCodeField.insert("0.0","00000")
 
 
     #Create Textbox For "Security Code"
     txtSecurityCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
     txtSecurityCodeField.place(x=211,y=240)
 
-
-
-ZipCodeEntry = "their entry"
-
-def ValidateZipCode():
-    if ZipCodeEntry.isnumeric():
-        print("This is numeric")
-    else:
-        print ("Please enter numbers only for zipcode")
-        
-
-
-
-
-#These should be SQL fields
-tipOpt1= "15%"
-tipOpt2= "18%"
-tipOpt3= "20%"
 
 
 def CreateButtons():
@@ -84,8 +70,10 @@ def CreateButtons():
     bthTipOption3 = CTkButton(Window, font=('Arial', 24), text=tipOpt3, width=80, height=80)
     bthTipOption3.place(x=493,y=360)
 
-    bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80)
+    #This command= is imported from OrderingPage.py
+    bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyality_ui)
     bthTPayNow.place(x=241,y=490)
+
 
 
 #Intantiate UI options
@@ -93,8 +81,8 @@ Create_Window()
 Create_Menubar()
 Display_Logos23()
 
+#Intantiate UI specific to this page
 CreateFields()
-
 CreateLabels()
 CreateButtons()
 

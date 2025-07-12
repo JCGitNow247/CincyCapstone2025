@@ -1,11 +1,6 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
-from OrderingPage import *
 
-#Intantiate UI options
-Create_Window()
-Create_Menubar()
-Display_Logos23()
 
 
 #Label of the page
@@ -13,8 +8,9 @@ lblTitle = CTkLabel(Window, text="Management Page", font=('Arial', 32))
 lblTitle.place(x=235,y=45)
 
 
+
 #Create Buttons
-btnOrder = CTkButton(Window, font=('Arial', 24), text="Truckbytes Ordering", width=300, height=80, command="") #OrderingPage.Window.mainloop()
+btnOrder = CTkButton(Window, font=('Arial', 24), text="Truckbytes Ordering", width=300, height=80, command=open_ordering_ui)
 btnOrder.place(x=222,y=119)
 
 btnAnalytics = CTkButton(Window, font=('Arial', 24), text="Analytics", width=300, height=80)
@@ -22,6 +18,14 @@ btnAnalytics.place(x=222,y=268)
 
 btnMenuBuilder = CTkButton(Window, font=('Arial', 24), text="Menu Builder", width=300, height=80)
 btnMenuBuilder.place(x=222,y=415)
+
+
+
+#Intantiate UI options
+Create_Window()
+Create_Menubar()
+Display_Logos23()
+
 
 
 #Create mainloop to run program
