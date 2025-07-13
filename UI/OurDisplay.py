@@ -48,6 +48,13 @@ def open_loyalty_ui():
     #This closes the current page
     Window.destroy()
 
+def open_menu_builder_ui():
+    #This subprocess allows you to specify a program to open a specific file
+    subprocess.Popen(['python', 'MenuBuilder.py'])
+    #This closes the current page
+    Window.destroy()
+
+
 
 #Intantiate UI
 def Create_Window():
@@ -68,44 +75,45 @@ def Create_Window():
 
 
 
-#Intantiate Menubar
+    #Intantiate Menubar
+    """
+    Instead of a dedicated management page, maybe we should 
+    just give extra dropdown options to people with management codes
+    """
 def Create_Menubar():
-    """
-    Instead of a dedicated management page. 
-    Maybe we should just give extra dropdown options
-    to people with management codes
-    """
-
-    #Define a Menubar
+   
+   
+  
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
     Window.config(menu=menuBar) #,bg_color="#c80d0d")
     #menuBar.configure(bg_color="#c80d0d")
 
-
+    #Define a Menubar
     file_menu = Menu(menuBar)
-  
 
     #File Menu options
     menuBar.add_cascade(label="File", font=14, menu=file_menu)
 
-    #Define File Menu's submenus
+    #Define File Menu's submenu "About"
     file_menu.add_command(label="About", font=14, command=open_about_ui)
+
+     #Define File Menu's submenu "Close Program"
     file_menu.add_command(label="Close Program", font=14, command=Window.quit)
 
-
-    #Adds a separator bar
-    #file_menu.add_separator()
 
     #Employee Menu Options
     Employee_Menu = Menu(menuBar)
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
 
 
-    #Define Log Out Menu's submenus
+    #Define Employee menu's submenu "Log In"
     Employee_Menu.add_command(label="Log In", font=14,command=open_login_ui)
     
-    #Define Log Out Menu's submenus
+    #Adds a separator bar
+    file_menu.add_separator()
+    
+    #Define Employee menu's submenu "Log Out"
     Employee_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
 
 

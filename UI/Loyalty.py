@@ -4,8 +4,6 @@ from OurDisplay import *
 #Import to validate email address 
 import re
 
-import subprocess
-
 
 
 #User input validation
@@ -57,7 +55,9 @@ def CreateFields():
 
 
 def CreateButtons():
-    btnCheckLoyal = CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80, command=open_ordering_w_v_ui)
+    #WILL BE REMOVED IN FINAL || SKIPS Validation
+    btnCheckLoyal = CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80)
+    #btnCheckLoyal = CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80, command=open_ordering_w_v_ui)
     btnCheckLoyal.place(x=222,y=270)
 
     btnMenuBuilder = CTkButton(Window, font=('Arial', 24), text="Skip Loyalty\n Order Food", width=300, height=80, command=open_ordering_ui)

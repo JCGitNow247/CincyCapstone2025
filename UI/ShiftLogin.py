@@ -51,7 +51,10 @@ def open_ordering_ui():
 
 
 
-btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui)
+#btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui)
+btnSubmit = CTkButton(Window, text="Login", width=200, height=40)
+
+
 btnSubmit.place(x=412,y=270)
 
 

@@ -93,7 +93,6 @@ def validate_fields():
 
 
 
-
 def CreateButtons():
 
     bthTipOption1 = CTkButton(Window, font=('Arial', 24), text=tipOpt1, width=80, height=80)
@@ -105,17 +104,18 @@ def CreateButtons():
     bthTipOption3 = CTkButton(Window, font=('Arial', 24), text=tipOpt3, width=80, height=80)
     bthTipOption3.place(x=493,y=360)
 
-    #This command= is imported from OrderingPage.py
+    
+     #WILL BE REMOVED IN FINAL || SKIPS Validation
     bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80)
+    #This command= is imported from OrderingPage.py
     #bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyality_ui)
     bthTPayNow.place(x=241,y=490)
 
 
 
-
 #Use to open Loyalty.py
 def open_loyality_ui():
-    if validate_fields():
+   if validate_fields():
         #import subprocess
         subprocess.Popen(['python', 'loyalty.py'])
         Window.destroy()

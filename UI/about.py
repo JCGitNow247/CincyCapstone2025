@@ -25,8 +25,8 @@ set_appearance_mode('light')
 
 
 #Create Label 
-lblAbout = CTkLabel(about, text="Project by Cole, Adam & Jason", font=('Arial',24), justify="center")
-lblAbout.place(x=61, y=100)
+lblAbout = CTkLabel(about, text="Project by Cole Whitaker\nAdam Broderick\n&\nJason Cope\n2025 Summer Capstone", font=('Arial',24), justify="center")
+lblAbout.place(x=125, y=65)
 
 
 about.mainloop()
