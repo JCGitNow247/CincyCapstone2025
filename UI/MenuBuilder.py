@@ -1,11 +1,11 @@
 from OurDisplay import *
 from customtkinter import CTkCheckBox
-
+from tkinter import filedialog
 
 #SQL Variables
-SQLItem1 = "SQL item1"
-SQLItem2 = "SQL item2"
-SQLItem3 = "SQL item3"
+SQLItem1 = "SQL SubMenu1"
+SQLItem2 = "SQL SubMenu2"
+SQLItem3 = "SQL SubMenu3"
 
 SQLSubMenu1 = "SQL Sub Menu1"
 SQLSubMenu2 = "SQL Sub Menu2"
@@ -15,7 +15,43 @@ SQLSubMenu3 = "SQL Sub Menu3"
 
 
 
+
+
+
+
+
+
+
+
+#May need to check this on linux.  This may only work on Windows
+def save_as_png():
+        #This Prompts to save a filename, in the listed directory, as a specific file type - You must include an option for all files??
+        result_file = filedialog.asksaveasfilename(initialdir="images", filetypes=(("PNG Files", "*.png"), ("all files", "*.*")))
+        
+
+        #result_label = Label(Window,text=result_file)
+        result_label = CTkLabel(Window,text=result_file)
+
+        #result_label.pack(pady=30)
+        #result_label.place(x=200, y=200)
+        result_label.pack()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def DisplayLabels():
+
+  
 
     #Label of the page
     lblTitle = CTkLabel(Window, text="Menu Builder", font=('Arial', 32, 'bold'))
@@ -38,6 +74,9 @@ def DisplayLabels():
 
 
 def DisplayFields():
+
+    global txtItemNameField, txtItemPriceField, txtItemDescriptionField
+
     txtItemNameField = CTkTextbox(Window, width=250,height=40)
     txtItemNameField.place(x=200,y=90)
 
@@ -49,11 +88,17 @@ def DisplayFields():
 
 
 
+
+
+
+
+
+
 def DisplayButtons():
-    btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Image", width=200, height=50)
+    btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Image", width=200, height=50, command=save_as_png)
     btnAddImage.place(x=690,y=30)
 
-    btnCreateNew = CTkButton(Window, font=('Arial', 24), text="Create New Item", width=200, height=50)
+    btnCreateNew = CTkButton(Window, font=('Arial', 24), text="Create New Item", width=200, height=50, command=clear_fields)
     btnCreateNew.place(x=690,y=525)
 
 
@@ -67,18 +112,21 @@ ChkBxIsTaxable.place(x=200,y=270)
 #### I may need to move this up so the drop down menu does not fall off screen.
 def DisplayComboBoxes():
 
+    global cboMenu, cboAddSubMenu
+
+
     cboMenu = CTkComboBox(Window, values=[
         SQLItem1,
         SQLItem2,
         SQLItem3],
-        font=('Arial', 24),
+        font=('Arial', 18),
      
         justify="center", 
         width=250, 
         height=40)
     
     cboMenu.place(x=200,y=140)
-    cboMenu.set('Add To Menu')
+    cboMenu.set('Add To Existing Menu')
 
 
     cboAddSubMenu = CTkComboBox(Window,
@@ -86,13 +134,13 @@ def DisplayComboBoxes():
         SQLSubMenu1,
         SQLSubMenu2,
         SQLSubMenu3], 
-        font=('Arial', 24),
+        font=('Arial', 14),
         justify="center",
         width=250, 
         height=40)
 
     cboAddSubMenu.place(x=200,y=510)  
-    cboAddSubMenu.set('Link Sub Menu')
+    cboAddSubMenu.set('Prompt Existing Sub Menu?')
 
 
     #Display "Food.Image.png" file
@@ -105,7 +153,15 @@ def DisplayComboBoxes():
 
 
 
+def clear_fields():
+    txtItemNameField.delete(0.0, 'end')
+    txtItemPriceField.delete(0.0, 'end')
+    txtItemDescriptionField.delete(0.0, 'end')
 
+    ChkBxIsTaxable.deselect()
+    cboAddSubMenu.set("Prompt Existing Sub Menu?")
+    cboMenu.set('Add To Existing Menu')
+    pass
 
 
 

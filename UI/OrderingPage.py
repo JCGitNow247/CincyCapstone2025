@@ -4,7 +4,7 @@ from OurDisplay import *
 
 
 #Variables to link to SQL
-SQLItemOrdered = "SQL Item Ordered"
+
 SQLTotal = "Your Total"
 Item1 = "SQL Item1"
 Item2 = "SQL Item2"
@@ -16,9 +16,44 @@ SQLSubMenuName= "SQL Sub Menu Name"
 
 
 
+
+
+
+
+
+
+
+
+
+
+CurrentOrder = "$: "
+
+"This needs to display which buttons were pushed"
+SQLItemOrdered = "SQL Item Ordered"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #Do we need to create geometery based on number of items in the menu?
-
-
 
 def open_sub_menu():
     PopUpMenu = Toplevel()

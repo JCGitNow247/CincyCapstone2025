@@ -7,7 +7,11 @@ about = CTk()
 
 
 #Create size of "about"
-about.geometry("512x300")
+#about.geometry("512x300")
+#Creates geometry of "about". 1st & 2nd arguements are size, 3rd & 4th are screen location
+about.geometry("512x300+560+490")
+
+
 
 #Display Titlebar Message
 about.title("Powered by TruckBytes")
