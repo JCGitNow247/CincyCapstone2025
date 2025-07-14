@@ -1,4 +1,5 @@
 from tkinter import *
+import os
 
 #For some reason messagebox is not included in the import *??
 from tkinter import messagebox
@@ -65,7 +66,11 @@ def Create_Window():
     Window.title(SQLCompanyName+" Powered by TruckBytes")
 
     #Display Titlebar Icon
-    Window.iconbitmap("images/our.logos/TruckBytes.ico")
+    icon_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "TruckBytes.ico")
+    if os.path.exists(icon_path):
+        Window.iconbitmap(icon_path)
+    else:
+        print(f"Warning: Icon not found at {icon_path}. Skipping icon set.")
 
     #Prevents the resizing of hte window
     Window.resizable(False, False)

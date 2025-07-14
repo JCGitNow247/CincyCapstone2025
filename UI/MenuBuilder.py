@@ -1,6 +1,7 @@
 from OurDisplay import *
 from customtkinter import CTkCheckBox
 from tkinter import filedialog
+import os
 
 #SQL Variables
 SQLItem1 = "SQL SubMenu1"
@@ -144,9 +145,15 @@ def DisplayComboBoxes():
 
 
     #Display "Food.Image.png" file
-    original_logo = Image.open("images/our.logos/FoodImage.png")
-    resized_logo = original_logo.resize((250,250),Image.Resampling.LANCZOS)
-    truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
+    img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "FoodImage.png")
+    if os.path.exists(img_path):
+        original_logo = Image.open(img_path)
+        resized_logo = original_logo.resize((250, 250), Image.Resampling.LANCZOS)
+        truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250, 250))
+        imgLogo = CTkLabel(Window, image=truck_logo, text="")
+        imgLogo.place(x=683, y=115)
+    else:
+        print(f"Warning: Could not find image at {img_path}")
 
     imgLogo = CTkLabel(Window,image=truck_logo, text="")
     imgLogo.place(x=683,y=115)
