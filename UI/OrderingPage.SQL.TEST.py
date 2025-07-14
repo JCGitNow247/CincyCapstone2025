@@ -16,10 +16,13 @@ Item6 = "SQL Item6"
 SQLSubMenuName= "SQL Sub Menu Name"
 
 
-# Connecting to the DB
+"""
+Connecting to the DB section
+"""
 MenuItems = {}
 intMenuItemIndex = 0
 
+# Add SQL connection credentials for your SQL Server stuff
 conn = connect(
 
     'Driver={ODBC Driver 17 for SQL Server};'
@@ -31,7 +34,6 @@ conn = connect(
 
 cursor = conn.cursor()
 
-
 cursor.execute('SELECT MenuItemName FROM VMenuItems')
 
 rows = cursor.fetchall()
@@ -39,7 +41,6 @@ rows = cursor.fetchall()
 for row in rows:
     MenuItems[intMenuItemIndex] = row[0]
     intMenuItemIndex += 1
-#
 
 
 CurrentOrder = "$: "
