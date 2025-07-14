@@ -122,6 +122,29 @@ def Create_Menubar():
     Employee_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
 
 
+    '''
+    #Mgmt Menu Options
+    Mgmt_Menu = Menu(menuBar)
+    menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
+
+    #Define Mgmt menu's submenu "Menu Builder"
+    Mgmt_Menu.add_command(label="Menu Builder", font=14,command=open_menu_builder_ui)
+    
+    #Adds a separator bar
+    file_menu.add_separator()
+    
+    #Define Mgmt menu's submenu "Log Out"
+    Mgmt_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
+    '''
+
+
+
+
+
+
+
+
+
 
 def Display_Logos23():
 
