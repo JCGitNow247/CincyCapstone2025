@@ -235,20 +235,20 @@ VALUES	( 'Mains' ),			-- 1
 		( 'Sides' ),			-- 2
 		( 'Drinks' )			-- 3
 
-INSERT INTO MenuItems ( strMenuItemName, imgMenuItemImage, intMenuItemTypeID )
-VALUES	( 'Burger', NULL, 1 ),							-- 1
-		( 'Chicken Taco', NULL, 1 ),					-- 2
-		( 'Beef Taco', NULL, 1 ),						-- 3
-		( 'Fries', NULL, 2 ),							-- 4
-		( 'Cheese Pizza', NULL, 1 ),					-- 5
-		( 'Veggie Pizza', NULL, 1 ),					-- 6
-		( 'Sausage & Pepperoni Pizza', NULL, 1 ),		-- 7
-		( 'Hotdog', NULL, 1 ),							-- 8
-		( 'Coca-Cola', NULL, 3 ),						-- 9
-		( 'Dr. Pepper', NULL, 3 ),						-- 10
-		( 'Lemonade', NULL, 3 ),						-- 11
-		( 'Water', NULL, 3 ),							-- 12
-		( 'Blue Powerade', NULL, 3 )					-- 13
+INSERT INTO MenuItems ( strMenuItemName, imgMenuItemImage, intMenuItemTypeID, strDescription, dblPrice )
+VALUES	( 'Burger', NULL, 1, 'Burger bun, hamburger patty, cheese, lettuce, onion, mayo, ketchup, and mustard', 9.00 ),							-- 1
+		( 'Chicken Taco', NULL, 1, 'Taco with tortilla, chicken, lettuce, tomato, cheese', 3.25 ),					-- 2
+		( 'Beef Taco', NULL, 1, 'Taco with tortilla, beef, lettuce, tomato, cheese', 3.00 ),						-- 3
+		( 'Fries', NULL, 2, 'Side of fries', 1.50 ),							-- 4
+		( 'Cheese Pizza', NULL, 1, 'Pizza with dough, sauce, and cheese', 7.00 ),					-- 5
+		( 'Veggie Pizza', NULL, 1, 'Pizza with dough, sauce, cheese, tomato, and onion', 9.00 ),					-- 6
+		( 'Sausage & Pepperoni Pizza', NULL, 1, 'Pizza with dough, sauce, cheese, sausage, and pepperoni', 11.00 ),		-- 7
+		( 'Hotdog', NULL, 1, 'Hotdog bun, hotdog, ketchup, mustard', 3.50 ),							-- 8
+		( 'Coca-Cola', NULL, 3, NULL, 1.50 ),						-- 9
+		( 'Dr. Pepper', NULL, 3, NULL, 1.50 ),						-- 10
+		( 'Lemonade', NULL, 3, NULL, 1.75 ),						-- 11
+		( 'Water', NULL, 3, NULL, 1.25 ),							-- 12
+		( 'Blue Powerade', NULL, 3, NULL, 1.50 )					-- 13
 
 INSERT INTO MenuItemsFoods ( intMenuItemID, intFoodID, dblFoodWeight )
 VALUES

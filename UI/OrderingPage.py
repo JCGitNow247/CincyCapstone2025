@@ -1,6 +1,8 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 
+from pyodbc import *
+
 
 
 #Variables to link to SQL
@@ -13,6 +15,8 @@ Item4 = "SQL Item4"
 Item5 = "SQL Item5"
 Item6 = "SQL Item6"
 SQLSubMenuName= "SQL Sub Menu Name"
+
+
 
 
 

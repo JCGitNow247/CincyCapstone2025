@@ -48,6 +48,8 @@ CREATE TABLE MenuItems
 	strMenuItemName				VARCHAR(255)		NOT NULL,
 	imgMenuItemImage			VARBINARY(MAX),
 	intMenuItemTypeID			INTEGER				NOT NULL,
+	strDescription				VARCHAR(1000),
+	dblPrice					DECIMAL(10,2)		NOT NULL,
 	CONSTRAINT MenuItems_PK PRIMARY KEY (intMenuItemID)
 )
 
