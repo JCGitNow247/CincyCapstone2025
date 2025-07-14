@@ -126,7 +126,7 @@ def Create_Menubar():
 def Display_Logos23():
 
     #Display "TruckBytes.png" file
-    original_logo = Image.open("images/our.logos/TruckBytes.png")
+    original_logo = Image.open("images/our_logos/TruckBytes.png")
     resized_logo = original_logo.resize((200,200),Image.Resampling.LANCZOS)
     truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
 
@@ -134,7 +134,7 @@ def Display_Logos23():
     imgLogo.place(x=744,y=320)
 
     #Display "their.logo.png" file
-    their_logo = Image.open("images/our.logos/their.logo.png")
+    their_logo = Image.open("images/our_logos/their.logo.png")
     resized_logo = their_logo.resize((200,200),Image.Resampling.LANCZOS)
     truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
 
@@ -145,7 +145,7 @@ def Display_Logos23():
 def Display_Logo_Center():
     
     #Display Logo
-    original_logo = Image.open("images/our.logos/TruckBytes.png")
+    original_logo = Image.open("images/our_logos/TruckBytes.png")
     resized_logo = original_logo.resize((200,200),Image.Resampling.LANCZOS)
     truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(200,200))
 
