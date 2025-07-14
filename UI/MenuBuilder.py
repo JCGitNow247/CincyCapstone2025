@@ -27,9 +27,10 @@ SQLSubMenu3 = "SQL Sub Menu3"
 #May need to check this on linux.  This may only work on Windows
 def save_as_png():
         #This Prompts to save a filename, in the listed directory, as a specific file type - You must include an option for all files??
-        result_file = filedialog.asksaveasfilename(initialdir="images", filetypes=(("PNG Files", "*.png"), ("all files", "*.*")))
+        #result_file = filedialog.asksaveasfile(initialdir="images", filetypes=(("PNG Files", ".png"), ("all files", "*.*")))
         
-
+        result_file = filedialog.asksaveasfilename(title="Save Your Food Photo", initialfile="Company_Logo.png", initialdir="images", filetypes=(("PNG Files", ".png"), ("all files", "*.*")))
+        
         #result_label = Label(Window,text=result_file)
         result_label = CTkLabel(Window,text=result_file)
 
