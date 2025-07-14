@@ -19,42 +19,79 @@
             <h1 class="title">Checkout</h1>
             
 
+            <div class="Checkout-Form">
+                <div class="General-Information">
+                    <div class="Input-Row">
+                        <div class="Form-Field">
+                            <label>First Name</label> <br>
+                            <input type="text">
+                        </div>
+                        <div class="Form-Field">
+                            <label>Last Name</label> <br>
+                            <input type="text">
+                        </div>                        
+                    </div>
 
+                    <div class="Input-Row">
+                        <div class="Form-Field">
+                            <label>Phone Number</label> <br>
+                            <input type="text">
+                        </div>
+                        <div class="Form-Field">
+                            <label>Email Address</label> <br>
+                            <input type="text">
+                        </div> 
+                                              
+                    </div>
+                    <br>
+                </div>
+
+
+                <div class="Card-Information">
+                    <div class="Input-Row">
+                        <div class="Form-Field">
+                            <label>Card Number</label> <br>
+                            <input type="text">
+                        </div>
+                        <div class="Form-Field">
+                            <label>Security Code</label> <br>
+                            <input type="text">
+                        </div>                        
+                    </div>
+
+                    <div class="Input-Row">
+                        <div class="Form-Field">
+                            <label>Expiration Date</label> <br>
+                            <input type="text">
+                        </div>
+                        <div class="Form-Field">
+                            <label>Zipcode</label> <br>
+                            <input type="text">
+                        </div>                        
+                    </div>
+                </div>
+
+                <div class="Tip-Options">
+                    <div class="Tip-Label">Add a tip</div> 
+                    <div class="Tip-Radios">
+                        <input type="radio" name="TipOption">
+                        <input type="radio" name="TipOption">
+                        <input type="radio" name="TipOption">
+                        <input type="radio" name="TipOption">
+                    </div>
+                </div>
+
+                <div class="Total">
+                    
+                    <label>Total: $0.00</label>
+                </div>
+            </div>
 
 
             <!-- This is the pop up menu for the CART and whatever items a user has added into their cart-->
             <div class="overlay" id="Cart-overlay">
                 <div class="Cart-Menu">
                     <h2>Cart Items</h2>
-
-                    <div class="Cart-Item-Grid">
-                        
-                        <div class="Cart-Item" id="1">
-                            <button> 
-                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
-                            </button>
-                            <span>Item In Cart</span>
-                        </div>
-
-                        <div class="Cart-Item" id="2">
-                            <button> 
-                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
-                            </button>
-                            <span>Item In Cart</span>
-                        </div>
-                        <div class="Cart-Item" id="3">
-                            <button> 
-                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
-                            </button>
-                            <span>Item In Cart</span>
-                        </div>
-                        <div class="Cart-Item" id="4">
-                            <button> 
-                                <img src="../Images/TrashIcon.png" alt="TrashIcon">
-                            </button>
-                            <span>Item In Cart</span>
-                        </div>
-                    </div>
 
                     <div class="Cart-Buttons">
                         <button type="submit" onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')">Close</button>

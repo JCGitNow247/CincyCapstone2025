@@ -33,15 +33,11 @@ function AddToCart(ItemText = "Item In Cart") {
         cartItem.remove();
         updateCartCount();
 
-        //Stored Procedures?
-
     });
 
     // Create the item label
     const span = document.createElement('span');
     span.textContent = ItemText;
-
-
 
     // Append everything together
     cartItem.appendChild(button);
@@ -67,6 +63,7 @@ function updateCartCount() {
 // This is a setup function for if someone already has something inside their cart that they want saved.
 function SetupCartItemDeletion() {
     const cartItem = document.querySelectorAll('.Cart-Item');
+    const headerCartButton = document.querySelector('#headerCartButton');
 
     if (cartItem.length === 0) {
         console.log("Cart is empty");
@@ -80,10 +77,37 @@ function SetupCartItemDeletion() {
             if (cartItem) {
                 cartItem.remove();
                 updateCartCount();
-
-                //Stored Procedures?
             }
         });
+    });
+
+    updateCartCount();
+}
+
+function LoadMenuCards() {
+    fetch('http://localhost:5000/get-menu')
+    .then(response => response.json())
+    .then(menuItems => {
+        const container = document.querySelector('.menu-container');
+
+        menuItems.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'menu-card';
+
+            card.innerHTML = `
+                <h2> ${item.name} </h2>
+                <p>
+                    ${item.description}
+                </p>
+                <button onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')">Modify Item</button><br>
+                <button onclick="AddToCart('${item.name}')">Add To Cart</button>
+            `;
+
+            container.appendChild(card);
+        });
+    })
+    .catch(err => {
+        console.error("Error fetching menu data", err)
     });
 }
 
@@ -91,4 +115,7 @@ function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"
 }
 
+if (document.querySelector('.menu-container')){
+    LoadMenuCards();
+}
 SetupCartItemDeletion();
