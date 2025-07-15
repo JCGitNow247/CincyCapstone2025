@@ -34,12 +34,6 @@ conn = connect(
 
 cursor = conn.cursor()
 
-cursor.execute('SELECT TruckName FROM VTruckName')
-
-TruckNameRow = cursor.fetchall()
-
-TruckName = TruckNameRow[0][0]
-
 cursor.execute('SELECT MenuItemName FROM VMenuItems')
 
 dictMenuItemsRows = cursor.fetchall()
@@ -145,7 +139,7 @@ def CreateButtons():
 
 
 #Intantiate UI options
-Create_Window(TruckName)
+Create_Window()
 Create_Menubar()
 
 #Intantiate UI specific to this page
