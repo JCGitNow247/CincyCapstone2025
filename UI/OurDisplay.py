@@ -16,6 +16,9 @@ from customtkinter import *
 #Used to open new .py files
 import subprocess
 
+#pip3 install pyodbc
+from pyodbc import *
+
 
 #Instantiate a window
 Window = CTk()
@@ -55,14 +58,35 @@ def open_menu_builder_ui():
     #This closes the current page
     Window.destroy()
 
+def Get_Company_Name():
 
+    conn = connect(
+
+    'Driver={ODBC Driver 17 for SQL Server};'
+    'SERVER=localhost;'
+    'DATABASE=dbTruckBytes;'
+    'UID=sa;'
+    'PWD='
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT TruckName FROM VTruckName')
+
+    TruckNameRow = cursor.fetchall()
+
+    TruckName = TruckNameRow[0][0]
+
+    return TruckName
 
 #Intantiate UI
-def Create_Window(CompanyName=None):
+def Create_Window():
     #Create size of window
     Window.geometry("1024x600")
 
-    TitleName = CompanyName if CompanyName else CompanyPlaceholder
+    TitleName = Get_Company_Name()
+    if TitleName == None:
+        TitleName = CompanyPlaceholder
 
     #Display Titlebar Message
     Window.title(TitleName+" Powered by TruckBytes")
