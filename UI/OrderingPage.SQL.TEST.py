@@ -26,10 +26,10 @@ intMenuItemIndex = 0
 conn = connect(
 
     'Driver={ODBC Driver 17 for SQL Server};'
-    'SERVER=your_server;'
-    'DATABASE=your_database;'
-    'UID=your_UID;'
-    'PWD=your_password'
+    'SERVER=localhost;'
+    'DATABASE=dbTruckBytes;'
+    'UID=sa;'
+    'PWD='
 )
 
 cursor = conn.cursor()
@@ -101,19 +101,6 @@ def CreateLabel():
 
 
 def CreateButtons():
-
-    # Iterative buttons dimensions
-    button_width = 200
-    button_height = 80
-    y_padding = 25
-
-    # Iterative buttons placement
-    x_positions = [94, 388]  # column 1 and column 2
-    y_start = 119
-    y_step = button_height + y_padding
-
-    buttons = []  # Store buttons in case you want to reference or destroy them later
-
     #Button
     btnPlaceOrder = CTkButton(Window, text="Place Order", font=('Arial',20), width=200, height=50, command=open_credit_ui)
     btnPlaceOrder.place(x=735,y=45)
@@ -121,17 +108,32 @@ def CreateButtons():
     btnSubmit = CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50)
     btnSubmit.place(x=735,y=445)
 
+    # Iterative buttons dimensions
+    button_width = 200
+    button_height = 120
+    y_padding = 25
+
+    #scrollable frame for menu items
+    scroll_frame = CTkScrollableFrame(Window, width=600, height=450)
+    scroll_frame.place(x=50, y=100)
+
+    # Iterative buttons placement
+    x_positions = [0, 300]  # column 1 and column 2
+    y_step = button_height + y_padding
+
+    buttons = []  # Store buttons in case you want to reference or destroy them later
+
     # Iterative MenuItems buttons
     for index, name in MenuItems.items():
         col = index % 2       # 0 or 1 (left/right column)
         row = index // 2      # increases every 2 items
 
         x = x_positions[col]
-        y = y_start + (y_step * row)
+        y = row * y_step
 
-        button = CTkButton(Window, font=('Arial', 20), text=name, width=button_width, height=button_height)
+        button = CTkButton(scroll_frame, font=('Arial', 20), text=name, width=button_width, height=button_height)
         
-        button.place(x=x, y=y)
+        button.grid(row=row, column=col, padx=15, pady=15)
         buttons.append(button)
 
 
