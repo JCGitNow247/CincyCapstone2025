@@ -19,7 +19,7 @@ SQLSubMenuName= "SQL Sub Menu Name"
 """
 Connecting to the DB section
 """
-MenuItems = {}
+dictMenuItems = {}
 intMenuItemIndex = 0
 
 # Add SQL connection credentials for your SQL Server stuff
@@ -34,12 +34,18 @@ conn = connect(
 
 cursor = conn.cursor()
 
+cursor.execute('SELECT TruckName FROM VTruckName')
+
+TruckNameRow = cursor.fetchall()
+
+TruckName = TruckNameRow[0][0]
+
 cursor.execute('SELECT MenuItemName FROM VMenuItems')
 
-rows = cursor.fetchall()
+dictMenuItemsRows = cursor.fetchall()
 
-for row in rows:
-    MenuItems[intMenuItemIndex] = row[0]
+for row in dictMenuItemsRows:
+    dictMenuItems[intMenuItemIndex] = row[0]
     intMenuItemIndex += 1
 
 
@@ -123,8 +129,8 @@ def CreateButtons():
 
     buttons = []  # Store buttons in case you want to reference or destroy them later
 
-    # Iterative MenuItems buttons
-    for index, name in MenuItems.items():
+    # Iterative dictMenuItems buttons
+    for index, name in dictMenuItems.items():
         col = index % 2       # 0 or 1 (left/right column)
         row = index // 2      # increases every 2 items
 
@@ -139,7 +145,7 @@ def CreateButtons():
 
 
 #Intantiate UI options
-Create_Window()
+Create_Window(TruckName)
 Create_Menubar()
 
 #Intantiate UI specific to this page
