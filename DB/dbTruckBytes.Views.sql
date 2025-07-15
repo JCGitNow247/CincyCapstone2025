@@ -31,6 +31,18 @@ FROM
 	
 GO
 
-SELECT * FROM VMenuItems
+-- SELECT * FROM VMenuItems
 
-IF OBJECT_ID('VMenuItems') IS NOT NULL DROP VIEW VMenuItems
+CREATE VIEW VTruckName
+(
+	TruckName
+)
+AS
+SELECT
+	strTruckName
+FROM
+	Trucks
+
+GO
+
+-- SELECT * FROM VTruckName
