@@ -21,7 +21,7 @@ import subprocess
 Window = CTk()
 
 #Variable to link back to SQL
-SQLCompanyName = "<SQLCompanyName>"
+CompanyPlaceholder = "<SQLCompanyName>"
 
 
 
@@ -58,12 +58,14 @@ def open_menu_builder_ui():
 
 
 #Intantiate UI
-def Create_Window():
+def Create_Window(CompanyName=None):
     #Create size of window
     Window.geometry("1024x600")
 
+    TitleName = CompanyName if CompanyName else CompanyPlaceholder
+
     #Display Titlebar Message
-    Window.title(SQLCompanyName+" Powered by TruckBytes")
+    Window.title(TitleName+" Powered by TruckBytes")
 
     #Display Titlebar Icon
     icon_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "TruckBytes.ico")
@@ -80,15 +82,12 @@ def Create_Window():
 
 
 
-    #Intantiate Menubar
-    """
-    Instead of a dedicated management page, maybe we should 
-    just give extra dropdown options to people with management codes
-    """
+#Intantiate Menubar
+"""
+Instead of a dedicated management page, maybe we should 
+just give extra dropdown options to people with management codes
+"""
 def Create_Menubar():
-   
-   
-  
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
     Window.config(menu=menuBar) #,bg_color="#c80d0d")
