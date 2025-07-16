@@ -46,8 +46,8 @@ VALUES	( 1, 1, '2025-07-01 08:00:00', '2025-07-01 16:00:00' ),		-- 1
 		( 6, 3, '2025-07-03 08:00:00', '2025-07-03 16:00:00' ),		-- 8
 		( 8, 3, '2025-07-03 08:00:00', '2025-07-03 16:00:00' )		-- 9
 
-INSERT INTO Trucks ( intTruckNumber, strTruckName )
-VALUES	( 1, 'SuperTruck' )		-- 1
+INSERT INTO Trucks ( intTruckNumber, strTruckName, imgCompanyLogo )
+VALUES	( 1, 'SuperTruck', NULL )		-- 1
 
 INSERT INTO TrucksShifts ( intShiftID, intTruckID )
 VALUES	( 1, 1 ),	-- 1
@@ -171,6 +171,12 @@ VALUES	( 'Meats' ),			-- 1
 		( 'Condiments' ),		-- 8
 		( 'Other' )				-- 9
 
+INSERT INTO SubMenus ( strSubMenuName )
+VALUES  ( 'Burgers' ),		-- 1
+		( 'Tacos' ),		-- 2
+		( 'Pizzas' ),		-- 3
+		( 'Hotdogs' )		-- 4
+
 INSERT INTO Foods ( strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFoodTypeID )
 VALUES	( 'Chicken', 20, 100, 1.88, 1 ),							-- 1
 		( 'Ground Beef', 20, 60, 1.13, 1 ),							-- 2
@@ -201,6 +207,44 @@ VALUES	( 'Chicken', 20, 100, 1.88, 1 ),							-- 1
 		( 'Bottled Water (16.9oz)', 24, 10, 1.00, 3 ),				-- 27
 		( 'Blue Powerade Mix (1 gal)', 128, 9, 0.10, 3 );			-- 28
 
+INSERT INTO SubMenusFoods ( intSubMenuID, intFoodID )
+VALUES	
+		-- Burger Toppings
+		( 1, 10 ),
+		( 1, 8 ),
+		( 1, 13 ),
+		( 1, 6 ),
+		( 1, 19 ),
+		( 1, 20 ),
+		( 1, 21 ),
+		( 1, 22 ),
+		( 1, 23 ),
+
+		-- Taco Toppings
+		( 2, 12 ),
+		( 2, 1 ),
+		( 2, 2 ),
+		( 2, 5 ),
+		( 2, 7 ),
+		( 2, 13 ),
+		( 2, 19 ),
+
+		-- Pizza Toppings
+		( 3, 15 ),
+		( 3, 16 ),
+		( 3, 14 ),
+		( 3, 2 ),
+		( 3, 17 ),
+		( 3, 18 ),
+		( 3, 8 ),
+		( 3, 19 ),
+
+		-- Hotdog toppings
+		( 4, 11 ),
+		( 4, 4 ),
+		( 4, 21 ),
+		( 4, 22 )
+ 
 INSERT INTO TrucksFoods ( intTruckID, intFoodID )
 VALUES	( 1, 1 ),		-- 1
 		( 1, 2 ),		-- 2
@@ -235,90 +279,90 @@ VALUES	( 'Mains' ),			-- 1
 		( 'Sides' ),			-- 2
 		( 'Drinks' )			-- 3
 
-INSERT INTO MenuItems ( strMenuItemName, imgMenuItemImage, intMenuItemTypeID, strDescription, dblPrice )
-VALUES	( 'Burger', NULL, 1, 'Burger with bun, patty, cheese, lettuce, tomato, onion, ketchup, mustard, and mayonnaise', 9.50 ),							-- 1
-		( 'Chicken Taco', NULL, 1, 'Taco with tortialla, chicken, lettuce, and tomato', 3.25 ),					-- 2
-		( 'Beef Taco', NULL, 1, 'Taco with tortilla, beef, lettuce, and tomato', 3.00 ),						-- 3
-		( 'Fries', NULL, 2, NULL, 1.50 ),							-- 4
-		( 'Cheese Pizza', NULL, 1, 'Pizza with dough, sauce, and cheese', 7.00 ),					-- 5
-		( 'Veggie Pizza', NULL, 1, 'Pizza with dough, sauce, cheese, tomato, and onion', 9.00 ),					-- 6
-		( 'Sausage & Pepperoni Pizza', NULL, 1, 'Pizza with dough, sauce, cheese, sausage, and pepperoni', 11.00 ),		-- 7
-		( 'Hotdog', NULL, 1, 'Hotdog bun, hotdog, ketchup, and mustard', 3.50 ),							-- 8
-		( 'Coca-Cola', NULL, 3, NULL, 1.50 ),						-- 9
-		( 'Dr. Pepper', NULL, 3, NULL, 1.50 ),						-- 10
-		( 'Lemonade', NULL, 3, NULL, 1.75 ),						-- 11
-		( 'Water', NULL, 3, NULL, 1.25 ),							-- 12
-		( 'Blue Powerade', NULL, 3, NULL, 1.50 )					-- 13
+INSERT INTO MenuItems ( strMenuItemName, imgMenuItemImage, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID )
+VALUES	( 'Burger', NULL, 1, 'Burger with bun, patty, cheese, lettuce, tomato, onion, ketchup, mustard, and mayonnaise', 9.50, 1 ),		-- 1
+		( 'Chicken Taco', NULL, 1, 'Taco with tortialla, chicken, lettuce, and tomato', 3.25, 2 ),										-- 2
+		( 'Beef Taco', NULL, 1, 'Taco with tortilla, beef, lettuce, and tomato', 3.00, 2 ),												-- 3
+		( 'Fries', NULL, 2, NULL, 1.50, NULL ),																							-- 4
+		( 'Cheese Pizza', NULL, 1, 'Pizza with dough, sauce, and cheese', 7.00, 3 ),													-- 5
+		( 'Veggie Pizza', NULL, 1, 'Pizza with dough, sauce, cheese, tomato, and onion', 9.00, 3 ),										-- 6
+		( 'Sausage & Pepperoni Pizza', NULL, 1, 'Pizza with dough, sauce, cheese, sausage, and pepperoni', 11.00, 3 ),					-- 7
+		( 'Hotdog', NULL, 1, 'Hotdog bun, hotdog, ketchup, and mustard', 3.50, 4 ),														-- 8
+		( 'Coca-Cola', NULL, 3, NULL, 1.50, NULL ),																						-- 9
+		( 'Dr. Pepper', NULL, 3, NULL, 1.50, NULL ),																					-- 10
+		( 'Lemonade', NULL, 3, NULL, 1.75, NULL ),																						-- 11
+		( 'Water', NULL, 3, NULL, 1.25, NULL ),																							-- 12
+		( 'Blue Powerade', NULL, 3, NULL, 1.50, NULL )																					-- 13
 
 INSERT INTO MenuItemsFoods ( intMenuItemID, intFoodID, dblFoodWeight )
 VALUES
-    -- Burger (MenuItemID 1)
-    ( 1, 3, 0.25 ),			-- 1 -- Hamburger Patty (4 oz)
-    ( 1, 10, 0.25 ),		-- 2 -- Burger Bun (~0.25 lb)
-    ( 1, 6, 0.05 ),			-- 3 -- Lettuce Leaf (0.75 oz)
-    ( 1, 8, 0.06 ),			-- 4 -- Sliced Tomato (1 oz)
-    ( 1, 13, 0.06 ),		-- 5 -- Cheddar Cheese (1 oz)
-    ( 1, 20, 0.03 ),		-- 6 -- Pickles (0.5 oz)
-    ( 1, 21, 0.02 ),		-- 7 -- Ketchup (0.25 oz)
-    ( 1, 22, 0.02 ),		-- 8 -- Mustard (0.25 oz)
-    ( 1, 23, 0.02 ),		-- 9 -- Mayonnaise (0.25 oz)
+		-- Burger (MenuItemID 1)
+		( 1, 3, 0.25 ),			-- 1 -- Hamburger Patty (4 oz)
+		( 1, 10, 0.25 ),		-- 2 -- Burger Bun (~0.25 lb)
+		( 1, 6, 0.05 ),			-- 3 -- Lettuce Leaf (0.75 oz)
+		( 1, 8, 0.06 ),			-- 4 -- Sliced Tomato (1 oz)
+		( 1, 13, 0.06 ),		-- 5 -- Cheddar Cheese (1 oz)
+		( 1, 20, 0.03 ),		-- 6 -- Pickles (0.5 oz)
+		( 1, 21, 0.02 ),		-- 7 -- Ketchup (0.25 oz)
+		( 1, 22, 0.02 ),		-- 8 -- Mustard (0.25 oz)
+		( 1, 23, 0.02 ),		-- 9 -- Mayonnaise (0.25 oz)
 
-    -- Chicken Taco (MenuItemID 2)
-    ( 2, 1, 0.13 ),			-- 10 -- Chicken (2 oz)
-    ( 2, 12, 0.25 ),		-- 11 -- Tortilla (~0.25 lb)
-    ( 2, 5, 0.031 ),		-- 12 -- Shredded Lettuce (0.5 oz)
-    ( 2, 7, 0.031 ),		-- 13 -- Diced Tomato (0.5 oz)
-    ( 2, 13, 0.05 ),		-- 14 -- Cheddar Cheese (0.75 oz)
+		-- Chicken Taco (MenuItemID 2)
+		( 2, 1, 0.13 ),			-- 10 -- Chicken (2 oz)
+		( 2, 12, 0.25 ),		-- 11 -- Tortilla (~0.25 lb)
+		( 2, 5, 0.031 ),		-- 12 -- Shredded Lettuce (0.5 oz)
+		( 2, 7, 0.031 ),		-- 13 -- Diced Tomato (0.5 oz)
+		( 2, 13, 0.05 ),		-- 14 -- Cheddar Cheese (0.75 oz)
 
-    -- Beef Taco (MenuItemID 3)
-    ( 3, 2, 0.13 ),			-- 15 -- Ground Beef (2 oz)
-    ( 3, 12, 0.25 ),		-- 16 -- Tortilla (~0.25 lb)
-    ( 3, 5, 0.031 ),		-- 17 -- Shredded Lettuce (0.5 oz)
-    ( 3, 7, 0.031 ),		-- 18 -- Diced Tomato (0.5 oz)
-    ( 3, 13, 0.05 ),		-- 19 -- Cheddar Cheese (0.75 oz)
+		-- Beef Taco (MenuItemID 3)
+		( 3, 2, 0.13 ),			-- 15 -- Ground Beef (2 oz)
+		( 3, 12, 0.25 ),		-- 16 -- Tortilla (~0.25 lb)
+		( 3, 5, 0.031 ),		-- 17 -- Shredded Lettuce (0.5 oz)
+		( 3, 7, 0.031 ),		-- 18 -- Diced Tomato (0.5 oz)
+		( 3, 13, 0.05 ),		-- 19 -- Cheddar Cheese (0.75 oz)
 
-    -- Fries (MenuItemID 4)
-    ( 4, 9, 0.31 ),			-- 20 -- Potatoes (5 oz)
+		-- Fries (MenuItemID 4)
+		( 4, 9, 0.31 ),			-- 20 -- Potatoes (5 oz)
 
-    -- Cheese Pizza (MenuItemID 5)
-    ( 5, 15, 0.25 ),		-- 21 -- Pizza Dough Ball (~0.25 lb)
-    ( 5, 16, 0.19 ),		-- 22 -- Pizza Sauce (3 oz)
-    ( 5, 14, 0.19 ),		-- 23 -- Mozzarella Cheese (3 oz)
+		-- Cheese Pizza (MenuItemID 5)
+		( 5, 15, 0.25 ),		-- 21 -- Pizza Dough Ball (~0.25 lb)
+		( 5, 16, 0.19 ),		-- 22 -- Pizza Sauce (3 oz)
+		( 5, 14, 0.19 ),		-- 23 -- Mozzarella Cheese (3 oz)
 
-    -- Veggie Pizza (MenuItemID 6)
-    ( 6, 15, 0.25 ),		-- 24 -- Pizza Dough Ball (~0.25 lb)
-    ( 6, 16, 0.19 ),		-- 25 -- Pizza Sauce (3 oz)
-    ( 6, 14, 0.16 ),		-- 26 -- Mozzarella Cheese (2.5 oz)
-    ( 6, 7, 0.06 ),			-- 27 -- Diced Tomato (1 oz)
-    ( 6, 19, 0.06 ),		-- 28 -- Onions (1 oz)
+		-- Veggie Pizza (MenuItemID 6)
+		( 6, 15, 0.25 ),		-- 24 -- Pizza Dough Ball (~0.25 lb)
+		( 6, 16, 0.19 ),		-- 25 -- Pizza Sauce (3 oz)
+		( 6, 14, 0.16 ),		-- 26 -- Mozzarella Cheese (2.5 oz)
+		( 6, 7, 0.06 ),			-- 27 -- Diced Tomato (1 oz)
+		( 6, 19, 0.06 ),		-- 28 -- Onions (1 oz)
 
-    -- Sausage & Pepperoni Pizza (MenuItemID 7)
-    ( 7, 15, 0.25 ),		-- 29 -- Pizza Dough Ball (~0.25 lb)
-    ( 7, 16, 0.19 ),		-- 30 -- Pizza Sauce (3 oz)
-    ( 7, 14, 0.19 ),		-- 31 -- Mozzarella Cheese (3 oz)
-    ( 7, 17, 0.13 ),		-- 32 -- Pepperoni (2 oz)
-    ( 7, 18, 0.13 ),		-- 33 -- Sausage Crumble (2 oz)
+		-- Sausage & Pepperoni Pizza (MenuItemID 7)
+		( 7, 15, 0.25 ),		-- 29 -- Pizza Dough Ball (~0.25 lb)
+		( 7, 16, 0.19 ),		-- 30 -- Pizza Sauce (3 oz)
+		( 7, 14, 0.19 ),		-- 31 -- Mozzarella Cheese (3 oz)
+		( 7, 17, 0.13 ),		-- 32 -- Pepperoni (2 oz)
+		( 7, 18, 0.13 ),		-- 33 -- Sausage Crumble (2 oz)
 
-    -- Hotdog (MenuItemID 8)
-    ( 8, 11, 0.25 ),		-- 34 -- Hot Dog Bun (~0.25 lb)
-	( 8, 4, 0.15 ),			-- 35 -- Hotdog (~0.15 lb)
-    ( 8, 21, 0.02 ),		-- 35 -- Ketchup (0.25 oz)
-    ( 8, 22, 0.02 ),		-- 36 -- Mustard (0.25 oz)
+		-- Hotdog (MenuItemID 8)
+		( 8, 11, 0.25 ),		-- 34 -- Hot Dog Bun (~0.25 lb)
+		( 8, 4, 0.15 ),			-- 35 -- Hotdog (~0.15 lb)
+		( 8, 21, 0.02 ),		-- 35 -- Ketchup (0.25 oz)
+		( 8, 22, 0.02 ),		-- 36 -- Mustard (0.25 oz)
 
-    -- Coca-Cola (MenuItemID 9)
-    ( 9, 24, 0.75 ),		-- 37 -- Coca-Cola Syrup (12 oz)
+		-- Coca-Cola (MenuItemID 9)
+		( 9, 24, 0.75 ),		-- 37 -- Coca-Cola Syrup (12 oz)
 
-    -- Dr. Pepper (MenuItemID 10)
-    ( 10, 25, 0.75 ),		-- 38 -- Dr. Pepper Syrup (12 oz)
+	    -- Dr. Pepper (MenuItemID 10)
+		( 10, 25, 0.75 ),		-- 38 -- Dr. Pepper Syrup (12 oz)
 
-    -- Lemonade (MenuItemID 11)
-    ( 11, 26, 0.5 ),		-- 39 -- Lemonade Mix (8 oz)
+		-- Lemonade (MenuItemID 11)
+		( 11, 26, 0.5 ),		-- 39 -- Lemonade Mix (8 oz)
 
-    -- Water (MenuItemID 12)
-    ( 12, 27, 1.00 ),		-- 40 -- Bottled Water (16 oz bottle)
+		-- Water (MenuItemID 12)
+		( 12, 27, 1.00 ),		-- 40 -- Bottled Water (16 oz bottle)
 
-    -- Blue Powerade (MenuItemID 13)
-    ( 13, 28, 1.25 );		-- 41 -- Blue Powerade Mix (20 oz)
+		-- Blue Powerade (MenuItemID 13)
+		( 13, 28, 1.25 );		-- 41 -- Blue Powerade Mix (20 oz)
 
 INSERT INTO TrucksMenuItems ( intTruckID, intMenuItemID )
 VALUES	( 1, 1 ),	-- 1
