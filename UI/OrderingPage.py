@@ -1,8 +1,6 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 
-from pyodbc import *
-
 
 
 #Variables to link to SQL
