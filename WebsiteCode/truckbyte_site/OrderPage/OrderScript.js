@@ -99,6 +99,7 @@ function LoadMenuCards() {
                 <p>
                     ${item.description}
                 </p>
+                <p> $${item.price} </p>
                 <button onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')">Modify Item</button><br>
                 <button onclick="AddToCart('${item.name}')">Add To Cart</button>
             `;

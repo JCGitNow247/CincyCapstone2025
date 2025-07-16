@@ -10,10 +10,9 @@ CORS(app)  # This enables access from file:// and any other origins
 def get_menu():
     conn = pyodbc.connect(
         'DRIVER={ODBC Driver 17 for SQL Server};'
-        'SERVER=CWBR001;'
+        'SERVER=localhost;'
         'DATABASE=dbTruckBytes;'
-        'UID=sa;'
-        'PWD='
+        'Trusted_Connection=yes;'
     )
     cursor = conn.cursor()
     cursor.execute("SELECT MenuItemID, MenuItemName, MenuItemDescription, MenuItemPrice FROM VMenuItems")
