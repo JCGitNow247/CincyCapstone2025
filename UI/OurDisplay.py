@@ -16,12 +16,15 @@ from customtkinter import *
 #Used to open new .py files
 import subprocess
 
+#pip3 install pyodbc
+from pyodbc import *
+
 
 #Instantiate a window
 Window = CTk()
 
 #Variable to link back to SQL
-SQLCompanyName = "<SQLCompanyName>"
+CompanyPlaceholder = "<SQLCompanyName>"
 
 
 
@@ -55,15 +58,38 @@ def open_menu_builder_ui():
     #This closes the current page
     Window.destroy()
 
+def Get_Company_Name():
 
+    conn = connect(
+
+    'Driver={ODBC Driver 17 for SQL Server};'
+    'SERVER=localhost;'
+    'DATABASE=dbTruckBytes;'
+    'UID=sa;'
+    'PWD='
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT TruckName FROM VTruckName')
+
+    TruckNameRow = cursor.fetchall()
+
+    TruckName = TruckNameRow[0][0]
+
+    return TruckName
 
 #Intantiate UI
 def Create_Window():
     #Create size of window
     Window.geometry("1024x600")
 
+    TitleName = Get_Company_Name()
+    if TitleName == None:
+        TitleName = CompanyPlaceholder
+
     #Display Titlebar Message
-    Window.title(SQLCompanyName+" Powered by TruckBytes")
+    Window.title(TitleName+" Powered by TruckBytes")
 
     #Display Titlebar Icon
     icon_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "TruckBytes.ico")
@@ -80,15 +106,12 @@ def Create_Window():
 
 
 
-    #Intantiate Menubar
-    """
-    Instead of a dedicated management page, maybe we should 
-    just give extra dropdown options to people with management codes
-    """
+#Intantiate Menubar
+"""
+Instead of a dedicated management page, maybe we should 
+just give extra dropdown options to people with management codes
+"""
 def Create_Menubar():
-   
-   
-  
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
     Window.config(menu=menuBar) #,bg_color="#c80d0d")
