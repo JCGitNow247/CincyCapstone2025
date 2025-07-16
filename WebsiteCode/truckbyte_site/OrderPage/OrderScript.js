@@ -98,7 +98,7 @@ function restoreCartFromStorage() {
     savedItems.forEach(name => AddToCart(name));
 }
 
-// Loadts the menu cards for the specified food truck.
+// Loads the menu cards for the specified food truck.
 function LoadMenuCards() {
     fetch('http://localhost:5000/get-menu')
     .then(response => response.json())
