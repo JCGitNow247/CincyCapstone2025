@@ -45,6 +45,7 @@ function AddToCart(ItemText = "Item In Cart") {
     cartGrid.appendChild(cartItem);
 
     updateCartCount();
+    SaveCartToStorage();
 
 };
 
@@ -58,6 +59,11 @@ function updateCartCount() {
         //console.log("Updated")
         headerCartButton.textContent = `Cart (${itemCount})`;
     }
+}
+
+function SaveCartToStorage() {
+    const items = Array.from(document.querySelectorAll('.Cart-Item span')).map(span => span.textContent);
+    localStorage.setItem('cart', JSON.stringify(items));
 }
 
 // This is a setup function for if someone already has something inside their cart that they want saved.
@@ -77,11 +83,17 @@ function SetupCartItemDeletion() {
             if (cartItem) {
                 cartItem.remove();
                 updateCartCount();
+                SaveCartToStorage();
             }
         });
     });
 
     updateCartCount();
+}
+
+function restoreCartFromStorage() {
+    const savedItems = JSON.parse(localStorage.getItem('cart')) || [];
+    savedItems.forEach(name => AddToCart(name));
 }
 
 function LoadMenuCards() {
@@ -119,4 +131,5 @@ function ProceedToCheckout() {
 if (document.querySelector('.menu-container')){
     LoadMenuCards();
 }
+restoreCartFromStorage();
 SetupCartItemDeletion();
