@@ -1,3 +1,4 @@
+// creates and adds the cart items to the cart once the checkout page is loaded.
 function loadCartFromStorage() {
     const cartGrid = document.querySelector('.Cart-Item-Grid');
     const savedItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -14,13 +15,4 @@ function loadCartFromStorage() {
     });
 }
 
-function restoreCartFromStorage() {
-    const savedItems = JSON.parse(localStorage.getItem('cart')) || [];
-    savedItems.forEach(name => AddToCart(name));
-}
-
 window.addEventListener('DOMContentLoaded', loadCartFromStorage);
-
-
-
-restoreCartFromStorage();

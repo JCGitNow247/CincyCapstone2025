@@ -61,6 +61,7 @@ function updateCartCount() {
     }
 }
 
+// This function will make an array, items that will store the cart data for the user to persist across pages.
 function SaveCartToStorage() {
     const items = Array.from(document.querySelectorAll('.Cart-Item span')).map(span => span.textContent);
     localStorage.setItem('cart', JSON.stringify(items));
@@ -91,6 +92,7 @@ function SetupCartItemDeletion() {
     updateCartCount();
 }
 
+// Restores the cart data 
 function restoreCartFromStorage() {
     const savedItems = JSON.parse(localStorage.getItem('cart')) || [];
     savedItems.forEach(name => AddToCart(name));
