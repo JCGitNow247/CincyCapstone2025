@@ -92,12 +92,13 @@ function SetupCartItemDeletion() {
     updateCartCount();
 }
 
-// Restores the cart data 
+// Restores the cart data for the user so they see it in their cart. 
 function restoreCartFromStorage() {
     const savedItems = JSON.parse(localStorage.getItem('cart')) || [];
     savedItems.forEach(name => AddToCart(name));
 }
 
+// Loadts the menu cards for the specified food truck.
 function LoadMenuCards() {
     fetch('http://localhost:5000/get-menu')
     .then(response => response.json())
@@ -126,6 +127,7 @@ function LoadMenuCards() {
     });
 }
 
+// proceeds to the checkout page.
 function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"
 }
