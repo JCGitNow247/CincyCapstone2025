@@ -45,6 +45,7 @@ function AddToCart(ItemText = "Item In Cart") {
     cartGrid.appendChild(cartItem);
 
     updateCartCount();
+    SaveCartToStorage();
 
 };
 
@@ -58,6 +59,12 @@ function updateCartCount() {
         //console.log("Updated")
         headerCartButton.textContent = `Cart (${itemCount})`;
     }
+}
+
+// This function will make an array, items that will store the cart data for the user to persist across pages.
+function SaveCartToStorage() {
+    const items = Array.from(document.querySelectorAll('.Cart-Item span')).map(span => span.textContent);
+    localStorage.setItem('cart', JSON.stringify(items));
 }
 
 // This is a setup function for if someone already has something inside their cart that they want saved.
@@ -77,6 +84,7 @@ function SetupCartItemDeletion() {
             if (cartItem) {
                 cartItem.remove();
                 updateCartCount();
+                SaveCartToStorage();
             }
         });
     });
@@ -84,6 +92,13 @@ function SetupCartItemDeletion() {
     updateCartCount();
 }
 
+// Restores the cart data for the user so they see it in their cart. 
+function restoreCartFromStorage() {
+    const savedItems = JSON.parse(localStorage.getItem('cart')) || [];
+    savedItems.forEach(name => AddToCart(name));
+}
+
+// Loadts the menu cards for the specified food truck.
 function LoadMenuCards() {
     fetch('http://localhost:5000/get-menu')
     .then(response => response.json())
@@ -99,6 +114,7 @@ function LoadMenuCards() {
                 <p>
                     ${item.description}
                 </p>
+                <p> $${item.price} </p>
                 <button onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')">Modify Item</button><br>
                 <button onclick="AddToCart('${item.name}')">Add To Cart</button>
             `;
@@ -111,6 +127,7 @@ function LoadMenuCards() {
     });
 }
 
+// proceeds to the checkout page.
 function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"
 }
@@ -118,4 +135,5 @@ function ProceedToCheckout() {
 if (document.querySelector('.menu-container')){
     LoadMenuCards();
 }
+restoreCartFromStorage();
 SetupCartItemDeletion();
