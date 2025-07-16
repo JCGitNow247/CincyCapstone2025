@@ -34,12 +34,21 @@ conn = connect(
 
 cursor = conn.cursor()
 
-cursor.execute('SELECT MenuItemName FROM VMenuItems')
+cursor.execute('SELECT MenuItemID, MenuItemName FROM VMenuItems ORDER BY MenuType')
 
 dictMenuItemsRows = cursor.fetchall()
 
 for row in dictMenuItemsRows:
-    dictMenuItems[intMenuItemIndex] = row[0]
+
+    MenuItemID = row[0]
+    MenuItemName = row[1]
+
+    dictMenuItems[intMenuItemIndex] = {
+
+        "id": MenuItemID,
+        "name": MenuItemName
+    }
+
     intMenuItemIndex += 1
 
 
@@ -67,20 +76,65 @@ SQLItemOrdered = "SQL Item Ordered"
 
 
 
-
-
-
 #Do we need to create geometery based on number of items in the menu?
 
-def open_sub_menu():
+def open_sub_menu(ItemID):
     PopUpMenu = Toplevel()
     PopUpMenu.geometry("1200x1000")
     PopUpMenu.title(SQLSubMenuName)
-    PopUpMenu.minsize(width=300, height=200)
-    PopUpMenu.maxsize(width=350, height=250)
+    PopUpMenu.minsize(width=300, height=300)
+    PopUpMenu.maxsize(width=350, height=315)
 
+    # Force layout update to get correct width and height
+    PopUpMenu.update_idletasks()
+    Window.update_idletasks()
+
+    # Get sizes
+    main_width = Window.winfo_width()
+    main_height = Window.winfo_height()
+    main_x = Window.winfo_x()
+    main_y = Window.winfo_y()
+
+    popup_width = PopUpMenu.winfo_width()
+    popup_height = PopUpMenu.winfo_height()
+
+    # Calculate centered position relative to main window
+    x = main_x + (main_width // 2) - (popup_width // 2)
+    y = main_y + (main_height // 2) - (popup_height // 2)
+
+    PopUpMenu.geometry(f"+{x}+{y}")
+
+    # Scrollable frame for checkboxes
+    scroll_frame = CTkScrollableFrame(PopUpMenu, width=300, height=60)
+    scroll_frame.place(x=15, y=20)
+
+    # Fetch submenu items
+    cursor.execute('SELECT SubMenuItem FROM VSubMenuItems WHERE MenuItem = ?', (ItemID,))
+    rows = cursor.fetchall()
+
+    checkboxes = []
+    for i, row in enumerate(rows):
+        item_name = row[0]
+        checkbox = CTkCheckBox(scroll_frame, text=item_name)
+        
+        row_num = i // 2   # Every two items, start a new row
+        col_num = i % 2    # 0 or 1 (column 1 or column 2)
+
+        checkbox.grid(row=row_num, column=col_num, padx=10, pady=5, sticky="w")
+        checkboxes.append(checkbox)
+
+    # Close button
     my_button = CTkButton(PopUpMenu, text="close", font=('Arial',20), width=200, height=50, command=PopUpMenu.destroy)
-    my_button.place(x=135,y=145)
+    my_button.place(x=75,y=250)
+
+    # Update sub menu name
+    cursor.execute('SELECT SubMenu FROM VSubMenuName WHERE MenuItem = ?', (ItemID,))
+
+    row = cursor.fetchone()
+
+    sub_menu_name = row[0]
+
+    PopUpMenu.title(sub_menu_name)
 
 
 
@@ -124,14 +178,17 @@ def CreateButtons():
     buttons = []  # Store buttons in case you want to reference or destroy them later
 
     # Iterative dictMenuItems buttons
-    for index, name in dictMenuItems.items():
+    for index, item in dictMenuItems.items():
         col = index % 2       # 0 or 1 (left/right column)
         row = index // 2      # increases every 2 items
+
+        ItemID = item["id"]
+        ItemName = item["name"]
 
         x = x_positions[col]
         y = row * y_step
 
-        button = CTkButton(scroll_frame, font=('Arial', 20), text=name, width=button_width, height=button_height)
+        button = CTkButton(scroll_frame, font=('Arial', 20), text=ItemName, width=button_width, height=button_height, command=lambda i=ItemID: open_sub_menu(i))
         
         button.grid(row=row, column=col, padx=15, pady=15)
         buttons.append(button)
