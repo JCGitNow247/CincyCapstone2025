@@ -25,6 +25,7 @@ Window = CTk()
 
 #Variable to link back to SQL
 CompanyPlaceholder = "<SQLCompanyName>"
+use_pyodbc = 0
 
 
 
@@ -84,9 +85,13 @@ def Create_Window():
     #Create size of window
     Window.geometry("1024x600")
 
-    TitleName = Get_Company_Name()
-    if TitleName == None:
-        TitleName = CompanyPlaceholder
+
+    if use_pyodbc == 1:
+        TitleName = Get_Company_Name()
+        if TitleName == None:
+            TitleName = CompanyPlaceholder
+    else:
+        TitleName="Placeholder Name"
 
     #Display Titlebar Message
     Window.title(TitleName+" Powered by TruckBytes")
