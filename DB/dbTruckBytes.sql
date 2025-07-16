@@ -14,9 +14,11 @@ IF OBJECT_ID('TrucksMenuItems')			IS NOT NULL DROP TABLE TrucksMenuItems
 IF OBJECT_ID('TrucksKitchenSupplies')	IS NOT NULL DROP TABLE TrucksKitchenSupplies
 IF OBJECT_ID('MenuItemsFoods')			IS NOT NULL DROP TABLE MenuItemsFoods
 IF OBJECT_ID('TrucksFoods')				IS NOT NULL DROP TABLE TrucksFoods
+IF OBJECT_ID('SubMenusFoods')			IS NOT NULL DROP TABLE SubMenusFoods
 IF OBJECT_ID('Trucks')					IS NOT NULL DROP TABLE Trucks
 IF OBJECT_ID('MenuItems')				IS NOT NULL DROP TABLE MenuItems
 IF OBJECT_ID('MenuItemsTypes')			IS NOT NULL DROP TABLE MenuItemsTypes
+IF OBJECT_ID('SubMenus')				IS NOT NULL DROP TABLE SubMenus
 IF OBJECT_ID('Shifts')					IS NOT NULL DROP TABLE Shifts
 IF OBJECT_ID('Employees')				IS NOT NULL DROP TABLE Employees
 IF OBJECT_ID('EmployeeTypes')			IS NOT NULL DROP TABLE EmployeeTypes
@@ -39,7 +41,15 @@ CREATE TABLE Trucks
 	intTruckID					INTEGER IDENTITY,
 	intTruckNumber				INTEGER				NOT NULL,
 	strTruckName				VARCHAR(255)		NOT NULL,
+	imgCompanyLogo				VARBINARY(MAX),
 	CONSTRAINT Trucks_PK PRIMARY KEY (intTruckID)
+)
+
+CREATE TABLE SubMenus
+(
+	intSubMenuID				INTEGER IDENTITY,
+	strSubMenuName				VARCHAR(255)		NOT NULL,
+	CONSTRAINT SubMenus_PK PRIMARY KEY (intSubMenuID)
 )
 
 CREATE TABLE MenuItems
@@ -50,6 +60,7 @@ CREATE TABLE MenuItems
 	intMenuItemTypeID			INTEGER				NOT NULL,
 	strDescription				VARCHAR(100),
 	dblPrice					DECIMAL(10,2)		NOT NULL,
+	intSubMenuID				INTEGER,
 	CONSTRAINT MenuItems_PK PRIMARY KEY (intMenuItemID)
 )
 
@@ -199,6 +210,14 @@ CREATE TABLE FoodTypes
 	CONSTRAINT FoodTypes_PK PRIMARY KEY (intFoodTypeID)
 )
 
+CREATE TABLE SubMenusFoods
+(
+	intSubMenuFoodID			INTEGER IDENTITY,
+	intSubMenuID				INTEGER				NOT NULL,
+	intFoodID					INTEGER				NOT NULL,
+	CONSTRAINT SubMenusFoods_PK PRIMARY KEY (intSubMenuFoodID)
+)
+
 CREATE TABLE MenuItemsFoods
 (
 	intMenuItemFoodID			INTEGER IDENTITY,
@@ -252,6 +271,9 @@ CREATE TABLE KitchenSupplyTypes
 -- 20. MenuItemsTypes			MenuItems				MenuItemTypeID
 -- 21. Foods					MenuItemsFoods			intFoodID
 -- 22. MenuItems				MenuItemsFoods			intMenuItemID
+-- 23. SubMenus					MenuItems				intSubMenuID
+-- 24. SubMenus					SubMenusFoods			intSubMenuID
+-- 25. Foods					SubMenusFoods			intFoodID
 
 
 -- 1.
@@ -341,3 +363,15 @@ FOREIGN KEY (intFoodID) REFERENCES Foods (intFoodID)
 -- 22.
 ALTER TABLE MenuItemsFoods ADD CONSTRAINT MenuItemsFoods_MenuItems_FK
 FOREIGN KEY (intMenuItemID) REFERENCES MenuItems (intMenuItemID)
+
+-- 23.
+ALTER TABLE MenuItems ADD CONSTRAINT MenuItems_SubMenus_FK
+FOREIGN KEY (intSubMenuID) REFERENCES SubMenus (intSubMenuID)
+
+-- 24.
+ALTER TABLE SubMenusFoods ADD CONSTRAINT SubMenusFoods_SubMenus_FK
+FOREIGN KEY (intSubMenuID) REFERENCES SubMenus (intSubMenuID)
+
+-- 25.
+ALTER TABLE SubMenusFoods ADD CONSTRAINT SubMenusFoods_Foods_FK
+FOREIGN KEY (intFoodID) REFERENCES Foods (intFoodID)
