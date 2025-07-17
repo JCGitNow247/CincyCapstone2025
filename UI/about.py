@@ -17,7 +17,7 @@ about.geometry("512x300+560+490")
 about.title("Powered by TruckBytes")
 
 #Display Titlebar Icon
-about.iconbitmap("images/our.logos/TruckBytes.ico")
+about.iconbitmap("UI/images/our_logos/TruckBytes.ico")
 
 #Prevents the resizing of hte window
 about.resizable(False, False)

@@ -27,33 +27,43 @@ CompanyPlaceholder = "<SQLCompanyName>"
 
 def open_ordering_ui():
     #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'OrderingPage.py'])
+    subprocess.Popen(['python', 'UI/OrderingPage.py'])
     #This closes the current page
     Window.destroy()
 
 def open_about_ui():
-    subprocess.Popen(['python', 'about.py'])
+    subprocess.Popen(['python', 'UI/about.py'])
     #Window.destroy()
 
 def open_login_ui():
-    subprocess.Popen(['python', 'ShiftLogin.py'])
+    subprocess.Popen(['python', 'UI/ShiftLogin.py'])
     Window.destroy()
 
 def open_credit_ui():
-    subprocess.Popen(['python', 'CreditCard.py'])
+    subprocess.Popen(['python', 'UI/CreditCard.py'])
     Window.destroy()
 
 def open_loyalty_ui():
     #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'Loyalty.py'])
+    subprocess.Popen(['python', 'UI/Loyalty.py'])
     #This closes the current page
     Window.destroy()
 
 def open_menu_builder_ui():
     #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'MenuBuilder.py'])
+    subprocess.Popen(['python', 'UI/MenuBuilder.py'])
     #This closes the current page
     Window.destroy()
+
+def open_bus_builder_ui():
+    #This subprocess allows you to specify a program to open a specific file
+    subprocess.Popen(['python', 'UI/UIBuilder.py'])
+    #This closes the current page
+    Window.destroy()
+
+
+
+
 
 #Intantiate UI
 def Create_Window():
@@ -117,7 +127,7 @@ def Create_Menubar():
     Employee_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
 
 
-    '''
+    
     #Mgmt Menu Options
     Mgmt_Menu = Menu(menuBar)
     menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
@@ -128,9 +138,9 @@ def Create_Menubar():
     #Adds a separator bar
     file_menu.add_separator()
     
-    #Define Mgmt menu's submenu "Log Out"
-    Mgmt_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
-    '''
+    #Define Mgmt menu's submenu "Business Profile"
+    Mgmt_Menu.add_command(label="Business Profile", font=14,command=open_bus_builder_ui)
+    
 
 
 

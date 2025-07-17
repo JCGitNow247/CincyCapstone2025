@@ -117,9 +117,9 @@ def CreateButtons():
 def open_loyality_ui():
    if validate_fields():
         #import subprocess
-        subprocess.Popen(['python', 'loyalty.py'])
+        subprocess.Popen(['python', 'UI/loyalty.py'])
         Window.destroy()
-
+ 
 
 
 #Intantiate UI options

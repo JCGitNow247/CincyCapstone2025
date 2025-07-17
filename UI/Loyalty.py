@@ -68,7 +68,7 @@ def CreateButtons():
 #Used to open OrderingPage.py
 def open_ordering_ui():
     #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'OrderingPage.py'])
+    subprocess.Popen(['python', 'UI/OrderingPage.py'])
     #This closes the current page
     Window.destroy()
 

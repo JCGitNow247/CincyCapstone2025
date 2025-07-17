@@ -14,8 +14,6 @@ SQLSubMenu3 = "SQL Sub Menu3"
 
 
 
-
-
 #May need to check this on linux.  This may only work on Windows
 def save_as_png():
         #This Prompts to save a filename, in the listed directory, as a specific file type - You must include an option for all files??
@@ -32,80 +30,46 @@ def save_as_png():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 def DisplayLabels():
-
-  
-
     #Label of the page
     lblTitle = CTkLabel(Window, text="Business Builder", font=('Arial', 32, 'bold'))
     lblTitle.place(x=235,y=20)
 
-    #Create Label & Textbox for "Company Name"
+    #Create Label for "Company Name"
     CompanyName = CTkLabel(Window, text="Company\nName:", font=('Arial',24))
     CompanyName.place(x=60,y=90)
 
-    #Create Label & Textbox for "Item Price"
-    lblItemPrice = CTkLabel(Window, text="Item Price:", font=('Arial',24))
-    lblItemPrice.place(x=60,y=220)
-
+    #Create Label for "Location"
     lblLocation = CTkLabel(Window, font=('Arial', 24), text="Current\nLocation")
-    lblLocation.place(x=18,y=340)
+    lblLocation.place(x=60,y=240)
 
-  
 
 
 def DisplayFields():
 
-    global txtCompanyNameField, txtItemPriceField, txtLocationField
+   # global txtCompanyNameField,  txtLocationField
 
+    #Create Textbox for "Company Name"
     txtCompanyNameField = CTkTextbox(Window, width=250,height=40)
     txtCompanyNameField.place(x=200,y=90)
 
-    txtItemPriceField = CTkTextbox(Window, width=250,height=40)
-    txtItemPriceField.place(x=200,y=220)
-
+   #Create Textbox for "Location"
     txtLocationField = CTkTextbox(Window, width=250,height=150)
-    txtLocationField.place(x=200,y=345)
-
-
-
-
-
-
-
+    txtLocationField.place(x=200,y=240)
 
 
 
 def DisplayButtons():
-    btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Image", width=200, height=50, command=save_as_png)
+    #Create Button to Add Logo
+    btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Logo", width=200, height=50, command=save_as_png)
     btnAddImage.place(x=690,y=30)
-
-    btnCreateNew = CTkButton(Window, font=('Arial', 24), text="Create New Item", width=200, height=50, command=clear_fields)
-    btnCreateNew.place(x=690,y=525)
-
-
+    #Create button to Update Info
+    btnUpdate = CTkButton(Window, font=('Arial', 24), text="Update Info", width=200, height=50, command="")
+    btnUpdate.place(x=690,y=525)
 
 
 
-
-#### I may need to move this up so the drop down menu does not fall off screen.
-def DisplayComboBoxes():
-
-  
- 
-
+def DisplayCurrentLogo():
     #Display "Food.Image.png" file
     img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "their.logo.png")
     if os.path.exists(img_path):
@@ -122,23 +86,12 @@ def DisplayComboBoxes():
 
 
 
-def clear_fields():
- 
-    txtItemPriceField.delete(0.0, 'end')
-   
-    ChkBxIsTaxable.deselect()
-
-    pass
-
-
-
-
 #Intantiate UI options
 Create_Window()
 Create_Menubar()
 
 #Intantiate UI specific to this page
-DisplayComboBoxes()
+DisplayCurrentLogo()
 DisplayLabels()
 DisplayFields()
 DisplayButtons()
