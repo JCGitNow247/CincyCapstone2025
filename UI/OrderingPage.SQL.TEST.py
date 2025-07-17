@@ -1,8 +1,8 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 
-# pip3 install pyodbc - used for connecting to an SQL Server
-from pyodbc import *
+#pip3 install mariadb
+import mariadb
 
 #Variables to link to SQL
 
@@ -23,13 +23,16 @@ dictMenuItems = {}
 intMenuItemIndex = 0
 
 # Add SQL connection credentials for your SQL Server stuff
-conn = connect(
+"""
+I created a separate user from my root called 'truckbytesdev' with password 'tb001'
+and granted permissions for database connections, highly recommended
+"""
+conn = mariadb.connect(
 
-    'Driver={ODBC Driver 17 for SQL Server};'
-    'SERVER=localhost;'
-    'DATABASE=dbTruckBytes;'
-    'UID=sa;'
-    'PWD='
+    host="localhost",
+    user="truckbytesdev",
+    password="tb001",
+    database="dbTruckBytes"
 )
 
 cursor = conn.cursor()
