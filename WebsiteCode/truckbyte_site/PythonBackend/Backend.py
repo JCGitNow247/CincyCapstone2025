@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-import pyodbc
+import mariadb
 
 from flask_cors import CORS
 
@@ -8,13 +8,18 @@ CORS(app)  # This enables access from file:// and any other origins
 
 @app.route('/get-menu')
 def get_menu():
-    conn = pyodbc.connect(
-        'DRIVER={ODBC Driver 17 for SQL Server};'
-        'SERVER=localhost;'
-        'DATABASE=dbTruckBytes;'
-        'Trusted_Connection=yes;'
-    )
-    cursor = conn.cursor()
+    try:
+        conn = mariadb.connect(
+            user="root",
+            password="password",  # 👈 replace with your actual root password
+            host="localhost",
+            port=3306,
+            database="dbtruckbytes"
+        )
+    except mariadb.Error as e:
+        return jsonify({"error": str(e)})
+    
+    cursor = conn.cursor(named_tuple=True)
     cursor.execute("SELECT MenuItemID, MenuItemName, MenuItemDescription, MenuItemPrice FROM VMenuItems")
     rows = cursor.fetchall()
 
@@ -27,6 +32,7 @@ def get_menu():
             'price': float(row.MenuItemPrice)
         })
 
+    conn.close()
     return jsonify(items)
 
 if __name__ == '__main__':

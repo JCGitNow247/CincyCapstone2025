@@ -11,6 +11,11 @@ function ToggleMenu(menuSelector, overlayId) {
     overlay.style.display = isHidden ? 'block' : 'none';
 }
 
+function OpenModificationMenu(itemName) {
+    // Open the correct menu
+    ToggleMenu('.Modification-Menu', 'Modification-overlay');   
+}
+
 // This function will add items to a cart, add an item to a cart once someone has clicked the add button
 function AddToCart(ItemText = "Item In Cart") {
     
@@ -115,7 +120,7 @@ function LoadMenuCards() {
                     ${item.description}
                 </p>
                 <p> $${item.price} </p>
-                <button onclick="ToggleMenu('.Modification-Menu', 'Modification-overlay')">Modify Item</button><br>
+                <button onclick="OpenModificationMenu('${item.name}')">Modify Item</button><br>
                 <button onclick="AddToCart('${item.name}')">Add To Cart</button>
             `;
 
