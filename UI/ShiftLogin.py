@@ -1,21 +1,19 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 import re
-
-
+#pip3 install mariadb
+import mariadb
 """
 Cole: testing some SQL connection code here
 """
-# region SQL Connection test
-from pyodbc import *
 
-conn = connect(
 
-    'DRIVER={ODBC Driver 17 for SQL Server};'
-    'SERVER=localhost;'
-    'DATABASE=dbTruckBytes;'
-    'UID=sa;'
-    'PWD='
+conn = mariadb.connect(
+
+    host="localhost",
+    user="truckbytesdev",
+    password="tb001",
+    database="dbTruckBytes"
 )
 
 cursor = conn.cursor()

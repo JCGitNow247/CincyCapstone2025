@@ -21,19 +21,21 @@ def CreateLabels():
 
     #Create Label For "Expiration Date"
     lblExperation_Date = CTkLabel(Window, text="Expiration Date", font=('Arial',14))
-    lblExperation_Date.place(x=61,y=180)
+    lblExperation_Date.place(x=61,y=155)
 
-    #Create Label For "Zip Code"
-    lblZipCode = CTkLabel(Window, text="Zip Code", font=('Arial',24))
-    lblZipCode.place(x=372,y=180)
 
     #Create Label For "Security Code"
     lblSecurityCode = CTkLabel(Window, text="Security Code", font=('Arial',14))
-    lblSecurityCode.place(x=211,y=180)
+    lblSecurityCode.place(x=211,y=155)
+
+   #Create Label For "Zip Code"
+    lblZipCode = CTkLabel(Window, text="Zip Code", font=('Arial',24))
+    lblZipCode.place(x=372,y=155)
 
 
 
 def CreateFields():
+    #Must be global to validate
     global txtCustomerName, txtCardNumberField, txtZipCodeField, txtSecurityCodeField, txtExpiration_DateField
 
     #Create Textbox for "Customer Name"
@@ -47,18 +49,16 @@ def CreateFields():
 
     #Create Textbox For "Expiration Date"
     txtExpiration_DateField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
-    txtExpiration_DateField.place(x=61,y=240)
-
-    #Create Textbox For "Zip Code"
-    txtZipCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
-    txtZipCodeField.place(x=372,y=240)
-    #txtZipCodeField.insert("0.0","00000")
+    txtExpiration_DateField.place(x=61,y=200)
 
     #Create Textbox For "Security Code"
     txtSecurityCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
-    txtSecurityCodeField.place(x=211,y=240)
+    txtSecurityCodeField.place(x=211,y=200)
 
-
+    #Create Textbox For "Zip Code"
+    txtZipCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
+    txtZipCodeField.place(x=372,y=200)
+    #txtZipCodeField.insert("0.0","00000")
 
 # User Input Validation
 def validate_fields():
@@ -95,31 +95,22 @@ def validate_fields():
 
 def CreateButtons():
 
-    bthTipOption1 = CTkButton(Window, font=('Arial', 24), text=tipOpt1, width=80, height=80)
-    bthTipOption1.place(x=111,y=360)
+    bthTipOption1 = CTkButton(Window, font=('Arial', 24), text=tipOpt1, width=120, height=80)
+    bthTipOption1.place(x=81,y=320)
 
-    bthTipOption2 = CTkButton(Window, font=('Arial', 24), text=tipOpt2, width=80, height=80)
-    bthTipOption2.place(x=301,y=360)
+    bthTipOption2 = CTkButton(Window, font=('Arial', 24), text=tipOpt2, width=120, height=80)
+    bthTipOption2.place(x=282,y=320)
 
-    bthTipOption3 = CTkButton(Window, font=('Arial', 24), text=tipOpt3, width=80, height=80)
-    bthTipOption3.place(x=493,y=360)
+    bthTipOption3 = CTkButton(Window, font=('Arial', 24), text=tipOpt3, width=120, height=80)
+    bthTipOption3.place(x=482,y=320)
 
     
      #WILL BE REMOVED IN FINAL || SKIPS Validation
-    bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80)
+    bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=300, height=100)
     #This command= is imported from OrderingPage.py
     #bthTPayNow = CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyality_ui)
-    bthTPayNow.place(x=241,y=490)
+    bthTPayNow.place(x=192,y=450)
 
-
-
-#Use to open Loyalty.py
-def open_loyality_ui():
-   if validate_fields():
-        #import subprocess
-        subprocess.Popen(['python', 'UI/loyalty.py'])
-        Window.destroy()
- 
 
 
 #Intantiate UI options

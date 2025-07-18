@@ -28,16 +28,16 @@ def validate_fields():
 
 def CreateLabels():
     #Label of the page
-    lblTitle = CTkLabel(Window, text="Customer Loyalty", font=('Arial', 32))
+    lblTitle = CTkLabel(Window, text="Customer Loyalty", font=('Arial', 32, "bold"))
     lblTitle.place(x=235,y=45)
     
     #Create Label For "Phone Number"
     lblPhoneNumb = CTkLabel(Window, text="Phone Number", font=('Arial',24))
-    lblPhoneNumb.place(x=150,y=150)
+    lblPhoneNumb.place(x=150,y=145)
 
     #Create Label For "Email Address"
     lblEmailAddy = CTkLabel(Window, text="Email Address", font=('Arial',24))
-    lblEmailAddy.place(x=150,y=195)
+    lblEmailAddy.place(x=150,y=190)
 
 
 
@@ -46,11 +46,11 @@ def CreateFields():
 
     #Create Entry For "Phone Number"
     txtPhoneNumbField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    txtPhoneNumbField.place(x=360,y=148)
+    txtPhoneNumbField.place(x=360,y=143)
 
     #Create  for "Email Address"
     txtEmailAddyField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    txtEmailAddyField.place(x=360,y=195)
+    txtEmailAddyField.place(x=360,y=190)
 
 
 

@@ -140,6 +140,9 @@ def Create_Menubar():
     
     #Define Mgmt menu's submenu "Business Profile"
     Mgmt_Menu.add_command(label="Business Profile", font=14,command=open_bus_builder_ui)
+
+        #Define Mgmt menu's submenu "Analytics"
+    Mgmt_Menu.add_command(label="Analytics", font=14,command="")
     
 
 

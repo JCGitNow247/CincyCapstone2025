@@ -4,8 +4,8 @@ from OurDisplay import *
 #pip3 install mariadb
 import mariadb
 
-#Variables to link to SQL
 
+#Variables to link to SQL
 SQLTotal = "Your Total"
 Item1 = "SQL Item1"
 Item2 = "SQL Item2"
@@ -62,31 +62,17 @@ SQLItemOrdered = "SQL Item Ordered"
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Do we need to create geometery based on number of items in the menu?
-
 def open_sub_menu(ItemID):
     PopUpMenu = Toplevel()
-    PopUpMenu.geometry("1200x1000")
-    PopUpMenu.title(SQLSubMenuName)
+    #PopUpMenu.geometry("1200x1000")
+    PopUpMenu.geometry("712x610+560+490")
+    #PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
+    PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.minsize(width=300, height=300)
-    PopUpMenu.maxsize(width=350, height=315)
+    #PopUpMenu.maxsize(width=350, height=315)
+
+
+ 
 
     # Force layout update to get correct width and height
     PopUpMenu.update_idletasks()
@@ -132,12 +118,13 @@ def open_sub_menu(ItemID):
 
     # Update sub menu name
     cursor.execute('SELECT SubMenu FROM VSubMenuName WHERE MenuItem = ?', (ItemID,))
+    #cursor.execute('SELECT SubMenu FROM VSubMenuName WHERE MenuItem = ?', ("This is the "+ItemID+" submenu",))
 
     row = cursor.fetchone()
 
     sub_menu_name = row[0]
 
-    PopUpMenu.title(sub_menu_name)
+    PopUpMenu.title("This is the "+sub_menu_name+ " submenu")
 
 
 

@@ -3,6 +3,8 @@ from customtkinter import *
 from tkinter import filedialog
 import os
 
+
+
 #SQL Variables
 SQLItem1 = "SQL SubMenu1"
 SQLItem2 = "SQL SubMenu2"

@@ -14,16 +14,6 @@ SQLSubMenu3 = "SQL Sub Menu3"
 
 
 
-
-
-
-
-
-
-
-
-
-
 #May need to check this on linux.  This may only work on Windows
 def save_as_png():
         #This Prompts to save a filename, in the listed directory, as a specific file type - You must include an option for all files??
@@ -40,20 +30,7 @@ def save_as_png():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 def DisplayLabels():
-
-  
 
     #Label of the page
     lblTitle = CTkLabel(Window, text="Menu Builder", font=('Arial', 32, 'bold'))
@@ -79,20 +56,14 @@ def DisplayFields():
 
     global txtItemNameField, txtItemPriceField, txtItemDescriptionField
 
-    txtItemNameField = CTkTextbox(Window, width=250,height=40)
+    txtItemNameField = CTkTextbox(Window, width=250, height=40)
     txtItemNameField.place(x=200,y=90)
 
-    txtItemPriceField = CTkTextbox(Window, width=250,height=40)
+    txtItemPriceField = CTkTextbox(Window, width=250, height=40)
     txtItemPriceField.place(x=200,y=220)
 
-    txtItemDescriptionField = CTkTextbox(Window, width=250,height=150)
+    txtItemDescriptionField = CTkTextbox(Window, width=250, height=150)
     txtItemDescriptionField.place(x=200,y=345)
-
-
-
-
-
-
 
 
 
@@ -115,7 +86,6 @@ ChkBxIsTaxable.place(x=200,y=270)
 def DisplayComboBoxes():
 
     global cboMenu, cboAddSubMenu
-
 
     cboMenu = CTkComboBox(Window, values=[
         SQLItem1,
@@ -161,6 +131,7 @@ def DisplayComboBoxes():
 
 
 
+#Resets fields after creating a new item
 def clear_fields():
     txtItemNameField.delete(0.0, 'end')
     txtItemPriceField.delete(0.0, 'end')
@@ -173,7 +144,6 @@ def clear_fields():
 
 
 
-
 #Intantiate UI options
 Create_Window()
 Create_Menubar()
@@ -183,6 +153,7 @@ DisplayComboBoxes()
 DisplayLabels()
 DisplayFields()
 DisplayButtons()
+
 
 
 #Create mainloop to run program
