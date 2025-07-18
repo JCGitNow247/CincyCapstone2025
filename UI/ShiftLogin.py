@@ -6,10 +6,18 @@ import mariadb
 """
 Cole: testing some SQL connection code here
 """
+<<<<<<< HEAD
 
 
 conn = mariadb.connect(
 
+=======
+# region SQL Connection test
+import mariadb
+
+conn = mariadb.connect(
+
+>>>>>>> dev
     host="localhost",
     user="truckbytesdev",
     password="tb001",
@@ -17,7 +25,7 @@ conn = mariadb.connect(
 )
 
 cursor = conn.cursor()
-cursor.execute("SELECT dbo.fnEmployeeLogin(?,?)", 'Whitaker', 'test1')
+cursor.execute("SELECT fnEmployeeLogin('Whitaker','test1')")
 EmployeeID = cursor.fetchone()[0]
 print("Employee ID: ", EmployeeID)
 # endregion
