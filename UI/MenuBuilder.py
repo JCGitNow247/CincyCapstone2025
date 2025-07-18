@@ -56,13 +56,13 @@ def DisplayFields():
 
     global txtItemNameField, txtItemPriceField, txtItemDescriptionField
 
-    txtItemNameField = CTkTextbox(Window, width=250, height=40)
+    txtItemNameField = CTkTextbox(Window, width=250, height=40, font=('Arial',24))
     txtItemNameField.place(x=200,y=90)
 
-    txtItemPriceField = CTkTextbox(Window, width=250, height=40)
+    txtItemPriceField = CTkTextbox(Window, width=250, height=40, font=('Arial',24))
     txtItemPriceField.place(x=200,y=220)
 
-    txtItemDescriptionField = CTkTextbox(Window, width=250, height=150)
+    txtItemDescriptionField = CTkTextbox(Window, width=250, height=150, font=('Arial',24))
     txtItemDescriptionField.place(x=200,y=345)
 
 
