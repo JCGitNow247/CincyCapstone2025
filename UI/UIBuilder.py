@@ -5,30 +5,42 @@ import os
 
 
 
-#SQL Variables
-SQLItem1 = "SQL SubMenu1"
-SQLItem2 = "SQL SubMenu2"
-SQLItem3 = "SQL SubMenu3"
+truck_logo = None
+imgLogo = None
 
-SQLSubMenu1 = "SQL Sub Menu1"
-SQLSubMenu2 = "SQL Sub Menu2"
-SQLSubMenu3 = "SQL Sub Menu3"
+def display_current_logo(img_path=None):
+    """Load and display the company logo."""
+    global truck_logo, imgLogo
+
+    if img_path is None:
+        img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "their.logo.png")
+
+    if not os.path.exists(img_path):
+        print(f"Warning: Could not find image at {img_path}")
+        return
+
+    original_logo = Image.open(img_path)
+    resized_logo = original_logo.resize((250, 250), Image.Resampling.LANCZOS)
+    truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250, 250))
+
+    if imgLogo is None:
+        imgLogo = CTkLabel(Window, image=truck_logo, text="")
+        imgLogo.place(x=683, y=115)
+    else:
+        imgLogo.configure(image=truck_logo)
 
 
-
-#May need to check this on linux.  This may only work on Windows
 def save_as_png():
-        #This Prompts to save a filename, in the listed directory, as a specific file type - You must include an option for all files??
-        #result_file = filedialog.asksaveasfile(initialdir="images", filetypes=(("PNG Files", ".png"), ("all files", "*.*")))
-        
-        result_file = filedialog.asksaveasfilename(title="Save Your Company Logo", initialfile="Company_Logo.png", initialdir="images", filetypes=(("PNG Files", ".png"), ("all files", "*.*")))
-        
-        #result_label = Label(Window,text=result_file)
-        result_label = CTkLabel(Window,text=result_file)
+    file_path = filedialog.askopenfilename(
+        title="Select Your Company Logo",
+        initialdir="images",
+        filetypes=(("PNG Files", "*.png"), ("All files", "*.*"))
+    )
+    if file_path:
+        display_current_logo(file_path)
 
-        #result_label.pack(pady=30)
-        #result_label.place(x=200, y=200)
-        result_label.pack()
+
+
 
 
 
@@ -48,15 +60,12 @@ def DisplayLabels():
 
 
 def DisplayFields():
-
-   # global txtCompanyNameField,  txtLocationField
-
     #Create Textbox for "Company Name"
-    txtCompanyNameField = CTkTextbox(Window, width=250,height=40)
+    txtCompanyNameField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
     txtCompanyNameField.place(x=200,y=90)
 
    #Create Textbox for "Location"
-    txtLocationField = CTkTextbox(Window, width=250,height=150)
+    txtLocationField = CTkTextbox(Window, width=250,height=150, font=('Arial',24))
     txtLocationField.place(x=200,y=240)
 
 
