@@ -6,18 +6,11 @@ import mariadb
 """
 Cole: testing some SQL connection code here
 """
-<<<<<<< HEAD
 
-
-conn = mariadb.connect(
-
-=======
 # region SQL Connection test
 import mariadb
 
-conn = mariadb.connect(
-
->>>>>>> dev
+conn = mariadb.connect (
     host="localhost",
     user="truckbytesdev",
     password="tb001",
