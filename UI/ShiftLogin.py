@@ -7,19 +7,18 @@ import re
 Cole: testing some SQL connection code here
 """
 # region SQL Connection test
-from pyodbc import *
+import mariadb
 
-conn = connect(
+conn = mariadb.connect(
 
-    'DRIVER={ODBC Driver 17 for SQL Server};'
-    'SERVER=localhost;'
-    'DATABASE=dbTruckBytes;'
-    'UID=sa;'
-    'PWD='
+    host="localhost",
+    user="truckbytesdev",
+    password="tb001",
+    database="dbTruckBytes"
 )
 
 cursor = conn.cursor()
-cursor.execute("SELECT dbo.fnEmployeeLogin(?,?)", 'Whitaker', 'test1')
+cursor.execute("SELECT fnEmployeeLogin('Whitaker','test1')")
 EmployeeID = cursor.fetchone()[0]
 print("Employee ID: ", EmployeeID)
 # endregion
