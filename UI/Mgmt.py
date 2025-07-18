@@ -24,7 +24,7 @@ btnMenuBuilder.place(x=222,y=415)
 #Intantiate UI options
 Create_Window()
 Create_Menubar()
-Display_Logos23()
+Display_Logos_two_thirds()
 
 
 

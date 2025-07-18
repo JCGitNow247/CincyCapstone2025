@@ -7,12 +7,6 @@ import mariadb
 
 #Variables to link to SQL
 SQLTotal = "Your Total"
-Item1 = "SQL Item1"
-Item2 = "SQL Item2"
-Item3 = "SQL Item3"
-Item4 = "SQL Item4"
-Item5 = "SQL Item5"
-Item6 = "SQL Item6"
 SQLSubMenuName= "SQL Sub Menu Name"
 
 
@@ -68,9 +62,9 @@ def open_sub_menu(ItemID):
     PopUpMenu.geometry("712x610+560+490")
     #PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
-    PopUpMenu.minsize(width=300, height=300)
+    #PopUpMenu.minsize(width=300, height=300)
     #PopUpMenu.maxsize(width=350, height=315)
-
+    PopUpMenu.resizable(False, False)
 
  
 
@@ -118,39 +112,30 @@ def open_sub_menu(ItemID):
 
     # Update sub menu name
     cursor.execute('SELECT SubMenu FROM VSubMenuName WHERE MenuItem = ?', (ItemID,))
-    #cursor.execute('SELECT SubMenu FROM VSubMenuName WHERE MenuItem = ?', ("This is the "+ItemID+" submenu",))
+
 
     row = cursor.fetchone()
 
     sub_menu_name = row[0]
 
-    PopUpMenu.title("This is the "+sub_menu_name+ " submenu")
+    PopUpMenu.title("This is the "+sub_menu_name+ " menu")
 
 
 
 def CreateLabel():
-
     #Label of the page
-    lblTitle = CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold'))
-    lblTitle.place(x=98,y=40)
-
+    lblTitle = CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold')).place(x=98,y=40)
     #Label to Show What Has Been Ordered
-    lblOrdered = CTkLabel(Window, text=SQLItemOrdered, font=('Arial',20))
-    lblOrdered.place(x=708,y=125)
-
+    lblOrdered = CTkLabel(Window, text=SQLItemOrdered, font=('Arial',20)).place(x=708,y=125)
     #Label to display Total
-    lblTotal = CTkLabel(Window, text=SQLTotal, font=('Arial',20))
-    lblTotal.place(x=735,y=525)
+    lblTotal = CTkLabel(Window, text=SQLTotal, font=('Arial',20)).place(x=735,y=525)
 
 
 
 def CreateButtons():
     #Button
-    btnPlaceOrder = CTkButton(Window, text="Place Order", font=('Arial',20), width=200, height=50, command=open_credit_ui)
-    btnPlaceOrder.place(x=735,y=45)
-
-    btnSubmit = CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50)
-    btnSubmit.place(x=735,y=445)
+    btnPlaceOrder = CTkButton(Window, text="Place Order", font=('Arial',20), width=200, height=50, command=open_credit_ui).place(x=735,y=45)
+    btnSubmit = CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50).place(x=735,y=445)
 
     # Iterative buttons dimensions
     button_width = 200

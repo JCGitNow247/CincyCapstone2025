@@ -3,9 +3,10 @@ from OurDisplay import *
 import re
 #pip3 install mariadb
 import mariadb
-"""
-Cole: testing some SQL connection code here
-"""
+
+
+
+
 
 # region SQL Connection test
 import mariadb
@@ -19,38 +20,81 @@ conn = mariadb.connect (
 
 cursor = conn.cursor()
 cursor.execute("SELECT fnEmployeeLogin('Whitaker','test1')")
+
 EmployeeID = cursor.fetchone()[0]
 print("Employee ID: ", EmployeeID)
 # endregion
 
 
+'''
+def get_employee_id(last_name, password):
+    try:
+        conn = mariadb.connect(
+            host="localhost",
+            user="truckbytesdev",
+            password="tb001",
+            database="dbTruckBytes"
+        )
+        cursor = conn.cursor()
+        cursor.execute("SELECT fnEmployeeLogin(%s, %s)", (last_name, password))
+        result = cursor.fetchone()
+        return result[0] if result else None
+    except mariadb.Error as e:
+        print(f"Database error: {e}")
+        return None
+    finally:
+        if conn:
+            conn.close()
+'''
 
 
-lblTitle = CTkLabel(Window, text="Employee Login", font=('Arial', 32))
-lblTitle.place(x=400,y=50)
-
-lblUsername = CTkLabel(Window, text="Last Name:", font=('Arial',20))
-lblUsername.place(x=240,y=170)
-
-lblPassword = CTkLabel(Window, text="Password:", font=('Arial',20))
-lblPassword.place(x=240,y=215)
 
 
 
 
-txtUsernameField = CTkTextbox(Window, width=200,height=1)
-txtUsernameField.place(x=412,y=170)
-
-#This show= arguement is how you obfuscate the field using a *
-txtPasswordField = CTkEntry(Window, width=200,height=1,show="*")
-txtPasswordField.place(x=412,y=215)
 
 
-def MsgBoxInvalid():
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def setup_ui():
+    global txtUsernameField, txtPasswordField
+
+    lblTitle = CTkLabel(Window, text="Employee Login", font=('Arial', 32))
+    lblTitle.place(x=400, y=50)
+
+    CTkLabel(Window, text="Last Name:", font=('Arial', 20)).place(x=240, y=170)
+    CTkLabel(Window, text="Password:", font=('Arial', 20)).place(x=240, y=215)
+
+    txtUsernameField = CTkTextbox(Window, width=200, height=1)
+    txtUsernameField.place(x=412, y=170)
+
+    txtPasswordField = CTkEntry(Window, width=200, height=1, show="*")
+    txtPasswordField.place(x=412, y=215)
+
+    CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui).place(x=412, y=270)
+
+
+
+def show_invalid_msg():
     # This function displays messagebox Titlebar & then message
     messagebox.showinfo("Invalid Password", "Invalid Password\nPlease Try Again")
    
-    pop_button= Button(Window,text="", command=MsgBoxInvalid)
+    pop_button= Button(Window,text="", command=show_invalid_msg)
     pop_button.pack(padx=30, pady=45)
     
     
@@ -89,7 +133,7 @@ def open_ordering_ui():
 btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui)
 btnSubmit.place(x=412,y=270)
 
-
+setup_ui()
 
 #Intantiate UI options
 Create_Window()

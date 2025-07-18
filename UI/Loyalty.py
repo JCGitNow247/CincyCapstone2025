@@ -87,7 +87,7 @@ def open_ordering_w_v_ui():
 #Intantiate UI options
 Create_Window()
 Create_Menubar()
-Display_Logos23()
+Display_Logos_two_thirds()
 
 #Intantiate UI specific to this page
 CreateFields()

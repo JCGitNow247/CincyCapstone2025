@@ -24,7 +24,6 @@ Window = CTk()
 CompanyPlaceholder = "<SQLCompanyName>"
 
 
-
 def open_ordering_ui():
     #This subprocess allows you to specify a program to open a specific file
     subprocess.Popen(['python', 'UI/OrderingPage.py'])
@@ -64,7 +63,6 @@ def open_bus_builder_ui():
 
 
 
-
 #Intantiate UI
 def Create_Window():
     #Create size of window
@@ -100,7 +98,7 @@ def Create_Menubar():
     #menuBar.configure(bg_color="#c80d0d")
 
     #Define a Menubar
-    file_menu = Menu(menuBar)
+    file_menu = Menu(menuBar, tearoff=0)
 
     #File Menu options
     menuBar.add_cascade(label="File", font=14, menu=file_menu)
@@ -113,7 +111,7 @@ def Create_Menubar():
 
 
     #Employee Menu Options
-    Employee_Menu = Menu(menuBar)
+    Employee_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
 
 
@@ -129,7 +127,7 @@ def Create_Menubar():
 
     
     #Mgmt Menu Options
-    Mgmt_Menu = Menu(menuBar)
+    Mgmt_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
 
     #Define Mgmt menu's submenu "Menu Builder"
@@ -154,7 +152,7 @@ def Create_Menubar():
 
 
 
-def Display_Logos23():
+def Display_Logos_two_thirds():
 
     #Display "TruckBytes.png" file
     original_logo = Image.open("UI/images/our_logos/TruckBytes.png")
