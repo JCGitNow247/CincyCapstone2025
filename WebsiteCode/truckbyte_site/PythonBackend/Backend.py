@@ -41,8 +41,6 @@ def get_menu():
     return jsonify(items)
 
 
-
-
 @app.route('/get-modifiers')
 def get_modifiers():
     item_name = request.args.get('item')  # Get ?item= from URL
@@ -52,7 +50,7 @@ def get_modifiers():
     conn = get_connection()
     cursor = conn.cursor(named_tuple=True)
 
-    # Step 1: Get submenu ID from menu item name
+    # Get submenu ID from menu item name
     cursor.execute("""
         SELECT intSubMenuID
         FROM MenuItems
@@ -66,9 +64,9 @@ def get_modifiers():
 
     submenu_id = result[0]
 
-    # Step 2: Get foods from that submenu
+    # Get foods from that submenu
     cursor.execute("""
-        SELECT f.strFoodName
+        SELECT f.strFoodName, f.dblSellPrice
         FROM SubMenusFoods smf
         JOIN Foods f ON smf.intFoodID = f.intFoodID
         WHERE smf.intSubMenuID = %s
@@ -78,7 +76,7 @@ def get_modifiers():
     rows = cursor.fetchall()
     conn.close()
 
-    modifiers = [row[0] for row in rows]
+    modifiers = [{"name": row.strFoodName, "price": float(row.dblSellPrice)} for row in rows]
     return jsonify(modifiers)
 
 if __name__ == '__main__':

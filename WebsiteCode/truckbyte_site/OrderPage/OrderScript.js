@@ -33,8 +33,9 @@ function OpenModificationMenu(itemName) {
                 const label = document.createElement('label');
                 label.className = 'option-box';
                 label.innerHTML = `
-                    <input type="checkbox" name="mod" value="${mod}" />
-                    <span>${mod}</span>
+                    <input type="checkbox" name="mod" value="${mod}" data-price="${mod.price}"/>
+                    <span>${mod.name}</span><br>
+                    <small>$${mod.price.toFixed(2)}</small>
                 `;
                 optionGrid.appendChild(label);
             });
