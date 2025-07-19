@@ -96,10 +96,6 @@ function AddToCart(baseName = "Item", basePrice = 0) {
 
     const itemTotal = basePrice + modTotal;
 
-    console.log("Item total: " + itemTotal)
-    console.log("Base Price: " + basePrice)
-    console.log("Modification Total: " + modTotal)
-
     //Build display name
     let itemText = selectedBaseItem || "Item";
     if (selectedMods.length > 0) {
@@ -172,6 +168,7 @@ function SetupCartItemDeletion() {
                 cartItem.remove();
                 updateCartCount();
                 SaveCartToStorage();
+                updateTotalPrice();
             }
         });
     });
@@ -181,10 +178,18 @@ function SetupCartItemDeletion() {
 
 // This function will make an array, items that will store the cart data for the user to persist across pages.
 function SaveCartToStorage() {
-    const cartItems = Array.from(document.querySelectorAll('.Cart-Item span')).map(span => {
-        return { html: span.innerHTML };
+    const items = document.querySelectorAll('.Cart-Item');
+    const savedItems = [];
+
+    items.forEach(item => {
+        const span = item.querySelector('span');
+        const html = span.innerHTML;
+        const price = item.getAttribute('data-price');
+
+        savedItems.push({ html, price }); // store both html and price
     });
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+    localStorage.setItem('cartItems', JSON.stringify(savedItems));
 }
 
 // Restores the cart data for the user so they see it in their cart. 
@@ -192,7 +197,7 @@ function restoreCartFromStorage() {
     const savedItems = JSON.parse(localStorage.getItem('cartItems') || "[]");
     const cartGrid = document.querySelector('.Cart-Item-Grid');
 
-    savedItems.forEach(({ html }) => {
+    savedItems.forEach(({ html, price }) => {
         const cartItem = document.createElement('div');
         cartItem.className = 'Cart-Item';
 
@@ -211,12 +216,17 @@ function restoreCartFromStorage() {
         const span = document.createElement('span');
         span.innerHTML = html;
 
+        cartItem.setAttribute('data-price', parseFloat(price).toFixed(2)); // use stored price
+
         cartItem.appendChild(button);
         cartItem.appendChild(span);
         cartGrid.appendChild(cartItem);
     });
 
     updateCartCount();
+    updateTotalPrice(); // Add this line
+
+    
 }
 
 // Loads the menu cards for the specified food truck.
@@ -261,8 +271,6 @@ function updateTotalPrice() {
     if (totalLabel) {
         totalLabel.textContent = `Total: $${total.toFixed(2)}`;
     }
-
-    console.log("Item total (from updateTotalPrice function): " + total)
 }
 
 // proceeds to the checkout page.
