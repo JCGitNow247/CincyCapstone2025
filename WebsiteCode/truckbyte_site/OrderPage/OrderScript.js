@@ -13,7 +13,33 @@ function ToggleMenu(menuSelector, overlayId) {
 
 function OpenModificationMenu(itemName) {
     // Open the correct menu
-    ToggleMenu('.Modification-Menu', 'Modification-overlay');   
+    ToggleMenu('.Modification-Menu', 'Modification-overlay');
+
+    // Load modifiers dynamically
+    fetch(`http://localhost:5000/get-modifiers?item=${encodeURIComponent(itemName)}`)
+        .then(res => res.json())
+        .then(modifiers => {
+            console.log("Fetched modifiers:", modifiers)
+            
+            const optionGrid = document.querySelector('.Modification-Menu .option-grid');
+            if (!optionGrid) {
+                console.error("Missing .option-grid inside .Modification-Menu!");
+                return;
+            }
+
+            optionGrid.innerHTML = ''; // Clear old options
+
+            modifiers.forEach(mod => {
+                const label = document.createElement('label');
+                label.className = 'option-box';
+                label.innerHTML = `
+                    <input type="checkbox" name="mod" value="${mod}" />
+                    <span>${mod}</span>
+                `;
+                optionGrid.appendChild(label);
+            });
+        })
+        .catch(err => console.error("Error loading modifiers:", err));
 }
 
 // This function will add items to a cart, add an item to a cart once someone has clicked the add button

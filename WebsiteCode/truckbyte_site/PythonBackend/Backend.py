@@ -1,13 +1,13 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 import mariadb
 
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 CORS(app)  # This enables access from file:// and any other origins
 
-@app.route('/get-menu')
-def get_menu():
+def get_connection():
     try:
         conn = mariadb.connect(
             user="root",
@@ -16,9 +16,14 @@ def get_menu():
             port=3306,
             database="dbtruckbytes"
         )
+        return conn
     except mariadb.Error as e:
         return jsonify({"error": str(e)})
-    
+
+@app.route('/get-menu')
+def get_menu():
+
+    conn = get_connection()
     cursor = conn.cursor(named_tuple=True)
     cursor.execute("SELECT MenuItemID, MenuItemName, MenuItemDescription, MenuItemPrice FROM VMenuItems")
     rows = cursor.fetchall()
@@ -34,6 +39,47 @@ def get_menu():
 
     conn.close()
     return jsonify(items)
+
+
+
+
+@app.route('/get-modifiers')
+def get_modifiers():
+    item_name = request.args.get('item')  # Get ?item= from URL
+    if not item_name:
+        return jsonify([])
+
+    conn = get_connection()
+    cursor = conn.cursor(named_tuple=True)
+
+    # Step 1: Get submenu ID from menu item name
+    cursor.execute("""
+        SELECT intSubMenuID
+        FROM MenuItems
+        WHERE strMenuItemName = %s
+    """, (item_name,))
+    result = cursor.fetchone()
+
+    if not result or not result[0]:
+        conn.close()
+        return jsonify([])
+
+    submenu_id = result[0]
+
+    # Step 2: Get foods from that submenu
+    cursor.execute("""
+        SELECT f.strFoodName
+        FROM SubMenusFoods smf
+        JOIN Foods f ON smf.intFoodID = f.intFoodID
+        WHERE smf.intSubMenuID = %s
+        ORDER BY f.strFoodName
+    """, (submenu_id,))
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    modifiers = [row[0] for row in rows]
+    return jsonify(modifiers)
 
 if __name__ == '__main__':
     app.run(debug=True)
