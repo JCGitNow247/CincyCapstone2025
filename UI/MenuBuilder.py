@@ -3,6 +3,7 @@ from customtkinter import CTkCheckBox
 from tkinter import filedialog
 import os
 
+
 #SQL Variables
 SQLItem1 = "SQL SubMenu1"
 SQLItem2 = "SQL SubMenu2"
@@ -13,6 +14,10 @@ SQLSubMenu2 = "SQL Sub Menu2"
 SQLSubMenu3 = "SQL Sub Menu3"
 
 
+
+
+
+'''
 
 #May need to check this on linux.  This may only work on Windows
 def save_as_png():
@@ -27,6 +32,50 @@ def save_as_png():
         #result_label.pack(pady=30)
         #result_label.place(x=200, y=200)
         result_label.pack()
+'''
+
+
+
+truck_logo = None
+imgLogo = None
+
+def display_food_image(img_path=None):
+    """Load and display the company logo."""
+    global truck_logo, imgLogo
+
+    if img_path is None:
+        img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "FoodImage.png")
+
+    if not os.path.exists(img_path):
+        print(f"Warning: Could not find image at {img_path}")
+        return
+
+    original_logo = Image.open(img_path)
+    resized_logo = original_logo.resize((250, 250), Image.Resampling.LANCZOS)
+    truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250, 250))
+
+    if imgLogo is None:
+        imgLogo = CTkLabel(Window, image=truck_logo, text="")
+        imgLogo.place(x=683, y=115)
+    else:
+        imgLogo.configure(image=truck_logo)
+
+
+def save_as_png():
+    file_path = filedialog.askopenfilename(
+    title="Select Your Food Image",
+    initialdir="images",
+    filetypes=(
+        ("Image Files", "*.png;*.jpg;*.jpeg"),
+        ("PNG Files", "*.png"),
+        ("JPEG Files", "*.jpg;*.jpeg"),
+        ("All files", "*.*")
+    )
+    )
+
+
+    if file_path:
+        display_food_image(file_path)
 
 
 
@@ -92,7 +141,6 @@ def DisplayComboBoxes():
         SQLItem2,
         SQLItem3],
         font=('Arial', 18),
-     
         justify="center", 
         width=250, 
         height=40)
@@ -140,7 +188,10 @@ def clear_fields():
     ChkBxIsTaxable.deselect()
     cboAddSubMenu.set("Prompt Existing Sub Menu?")
     cboMenu.set('Add To Existing Menu')
-    pass
+
+    # Reset displayed image
+    display_food_image()  
+  
 
 
 
