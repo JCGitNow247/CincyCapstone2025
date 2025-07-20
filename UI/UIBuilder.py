@@ -1,4 +1,4 @@
-from OurDisplay import *
+from OurDisplay import * #CompanyPlaceholder, Window
 from customtkinter import *
 from tkinter import filedialog
 import os
@@ -60,6 +60,7 @@ def DisplayLabels():
 
 
 def DisplayFields():
+    global txtCompanyNameField
     #Create Textbox for "Company Name"
     txtCompanyNameField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
     txtCompanyNameField.place(x=200,y=90)
@@ -75,7 +76,7 @@ def DisplayButtons():
     btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Logo", width=200, height=50, command=save_as_png)
     btnAddImage.place(x=690,y=30)
     #Create button to Update Info
-    btnUpdate = CTkButton(Window, font=('Arial', 24), text="Update Info", width=200, height=50, command="")
+    btnUpdate = CTkButton(Window, font=('Arial', 24), text="Update Info", width=200, height=50, command=update_company_name)
     btnUpdate.place(x=690,y=525)
 
 
@@ -94,6 +95,20 @@ def DisplayCurrentLogo():
 
     imgLogo = CTkLabel(Window,image=truck_logo, text="")
     imgLogo.place(x=683,y=115)
+
+
+
+
+
+def update_company_name():
+    global CompanyPlaceholder
+    CompanyPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
+    Window.title(CompanyPlaceholder + " Powered by TruckBytes")
+
+
+
+
+
 
 
 
