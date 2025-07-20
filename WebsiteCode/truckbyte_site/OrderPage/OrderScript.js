@@ -267,10 +267,13 @@ function updateTotalPrice() {
         total += price;
     });
 
-    const totalLabel = document.querySelector('.Total label');
-    if (totalLabel) {
-        totalLabel.textContent = `Total: $${total.toFixed(2)}`;
-    }
+    const totalLabels = document.querySelectorAll('.Total label');
+
+    totalLabels.forEach(totalLabel => {
+        if (totalLabel) {
+            totalLabel.textContent = `Total: $${total.toFixed(2)}`;
+        }
+    })
 }
 
 // proceeds to the checkout page.

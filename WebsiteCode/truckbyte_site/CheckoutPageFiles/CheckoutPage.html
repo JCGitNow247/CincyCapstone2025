@@ -17,76 +17,80 @@
             </div>
 
             <h1 class="title">Checkout</h1>
-            
 
             <div class="Checkout-Form">
-                <div class="General-Information">
-                    <div class="Input-Row">
-                        <div class="Form-Field">
-                            <label>First Name</label> <br>
-                            <input type="text">
+                <form id="CheckoutForm" onsubmit="handleCheckout(event)">
+                    <div class="General-Information">
+                        <div class="Input-Row">
+                            <div class="Form-Field">
+                                <label>First Name</label> <br>
+                                <input type="text" placeholder="John" required>
+                            </div>
+                            <div class="Form-Field">
+                                <label>Last Name</label> <br>
+                                <input type="text" placeholder="Doe" required>
+                            </div>                        
                         </div>
-                        <div class="Form-Field">
-                            <label>Last Name</label> <br>
-                            <input type="text">
-                        </div>                        
-                    </div>
 
-                    <div class="Input-Row">
-                        <div class="Form-Field">
-                            <label>Phone Number</label> <br>
-                            <input type="text">
+                        <div class="Input-Row">
+                            <div class="Form-Field">
+                                <label>Phone Number</label> <br>
+                                <input type="tel" pattern="\d{3}-\d{3}-\d{4}" maxlength="12" placeholder="123-456-7890" title="Format: 123-456-7890" required>
+                            </div>
+                            <div class="Form-Field">
+                                <label>Email Address</label> <br>
+                                <input type="text" placeholder="JohnDoe@gmail.com" required>
+                            </div>                      
                         </div>
-                        <div class="Form-Field">
-                            <label>Email Address</label> <br>
-                            <input type="text">
-                        </div> 
-                                              
+                        <br>
                     </div>
-                    <br>
-                </div>
 
 
-                <div class="Card-Information">
-                    <div class="Input-Row">
-                        <div class="Form-Field">
-                            <label>Card Number</label> <br>
-                            <input type="text">
+                    <div class="Card-Information">
+                        <div class="Input-Row">
+                            <div class="Form-Field">
+                                <label>Card Number</label> <br>
+                                <input type="text" pattern="\d{16}" maxlength="16" inputmode="numeric" placeholder="1111222233334444" required>
+                            </div>
+                            <div class="Form-Field">
+                                <label>Security Code</label> <br>
+                                <input type="text" pattern="\d{3}" maxlength="3" inputmode="numeric" placeholder="123" required>
+                            </div>                        
                         </div>
-                        <div class="Form-Field">
-                            <label>Security Code</label> <br>
-                            <input type="text">
-                        </div>                        
-                    </div>
 
-                    <div class="Input-Row">
-                        <div class="Form-Field">
-                            <label>Expiration Date</label> <br>
-                            <input type="text">
+                        <div class="Input-Row">
+                            <div class="Form-Field">
+                                <label>Expiration Date</label> <br>
+                                <input type="date" required>
+                            </div>
+                            <div class="Form-Field">
+                                <label>Zipcode</label> <br>
+                                <input type="text" pattern="\d{5}" maxlength="5" inputmode="numeric" placeholder="12345" required>
+                            </div>                        
                         </div>
-                        <div class="Form-Field">
-                            <label>Zipcode</label> <br>
-                            <input type="text">
-                        </div>                        
                     </div>
-                </div>
 
-                <div class="Tip-Options">
-                    <div class="Tip-Label">Add a tip</div> 
-                    <div class="Tip-Radios">
-                        <input type="radio" name="TipOption">
-                        <input type="radio" name="TipOption">
-                        <input type="radio" name="TipOption">
-                        <input type="radio" name="TipOption">
+                    <div class="Tip-Options">
+                        <div class="Tip-Label">Add a tip (Optional)</div> 
+                        <div class="Tip-Radios">
+                            <label>No tip</label>
+                            <input type="radio" value="" name="TipOption" checked>
+                            <label>15%</label>
+                            <input type="radio" value="0.15" name="TipOption">
+                            <label>18%</label>
+                            <input type="radio" value="0.18" name="TipOption">
+                            <label>20%</label>
+                            <input type="radio" value="0.20" name="TipOption">
+                        </div>
                     </div>
-                </div>
 
-                <div class="Total">
-                    
-                    <label>Total: $0.00</label>
-                </div>
+                    <div class="Total">              
+                        <label>Total: $0.00</label>
+                        <button type="submit">Pay</button>
+                    </div>
+                </form>
             </div>
-
+            
 
             <!-- This is the pop up menu for the CART and whatever items a user has added into their cart-->
             <div class="overlay" id="Cart-overlay">
@@ -98,13 +102,20 @@
                         
                     </div>
 
-                    <div class="Cart-Buttons">
-                        <button type="submit" onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')">Close</button>
-                        <button type="submit" onclick="ProceedToCheckout()">Proceed To Checkout</button>
+                    <div class="Cart-Bottom-Bar">
+                        <div class="Total">
+                            <label>Total: $0.00 </label>
+                        </div>
+
+                        <div class="Bottom-Menu-Buttons">
+                            <button type="submit" onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')">Close</button>
+                            <button type="submit" onclick="ProceedToCheckout()">Proceed To Checkout</button>
+                        </div>
                     </div>
                 </div>
             </div>
             <!------------------------------------------------------------------>
     </body>
     <script src="../OrderPage/OrderScript.js"></script>
+    <script src="CheckoutScript.js"></script>
 </html>

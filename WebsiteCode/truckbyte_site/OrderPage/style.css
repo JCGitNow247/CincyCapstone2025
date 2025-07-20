@@ -82,8 +82,8 @@ body {
 
 .Cart-Menu {
   display: none;
-  width: 75vw;
-  height: 75vh;
+  width: 85vw;
+  height: 85vh;
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
@@ -136,7 +136,7 @@ body {
 
 .Cart-Item-Grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px
 }
 
@@ -146,7 +146,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 15vw;
+  width: 12vw;
   background-color: white;
   border: 2px solid #ccc;
   padding: 15px;

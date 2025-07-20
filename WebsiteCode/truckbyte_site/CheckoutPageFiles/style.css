@@ -34,7 +34,7 @@ body {
   font-size: 4em;
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 20%;
+  margin-bottom: 3%;
 }
 
 .Checkout-Form {
@@ -43,6 +43,9 @@ body {
 }
 
 .Checkout-Form input[type="text"] {width: 120%; height: 50%;}
+.Checkout-Form input[type="date"] {width: 120%; height: 50%;}
+.Checkout-Form input[type="number"] {width: 120%; height: 50%;}
+.Checkout-Form input[type="tel"] {width: 120%; height: 50%;}
 
 .Checkout-Form .Input-Row {
   display: flex;
@@ -58,7 +61,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 15%;
+  margin-top: 10%;
   font-size: 135%;
 }
 
@@ -67,12 +70,25 @@ body {
   font-weight: bold;
 }
 
-.Tip-Options input[type="radio"] {width: 24px; height: 24px; margin-right: 15px; margin-bottom: 30%;}
+.Tip-Options input[type="radio"] {width: 24px; height: 24px; margin-right: 15px; margin-bottom: 15%;}
 
 .Total {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   font-size: 135%;
+}
+
+.Total button {
+  margin-top: 5%;
+  padding: 2% 15%;
+  font-size: 1.2em;
+  width: auto;
+  height: auto;
+}
+
+.Tip-Radios label {
+  font-size: 90%;
 }
 
 .overlay {
@@ -88,8 +104,8 @@ body {
 
 .Cart-Menu {
   display: none;
-  width: 75vw;
-  height: 75vh;
+  width: 85vw;
+  height: 85vh;
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
@@ -107,7 +123,7 @@ body {
 
 .Cart-Item-Grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px
 }
 
@@ -117,7 +133,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 15vw;
+  width: 12vw;
   background-color: white;
   border: 2px solid #ccc;
   padding: 15px;
@@ -146,3 +162,19 @@ body {
 }
 
 .Cart-Item button img {width: 16px; height: 16px;}
+
+
+#orderSummary h2 {
+  font-size: 250%;
+}
+
+#orderSummary li {
+  font-size: 120%;
+  margin-bottom: 10px;
+}
+
+#orderSummary p {
+    font-size: 180%;
+    font-weight: bold;
+    margin-top: 20px;
+}
