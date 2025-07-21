@@ -3,18 +3,41 @@ body {
     font-style: italic;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     display: flex;
-    height: 70vh;
     justify-content: center;
-    align-items: center;
+    margin: 0;
+    padding: 0%;
 }
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.Top-Banner {
+  width: 100%;
+  background-color: #929292;
+  text-align: right;
+  padding: 20px 0;
+}
+
+.Top-Buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.Top-Buttons button {font-style: italic; font-weight: bold; text-align: center; width: auto; padding-right: 10px; padding-left: 10px; padding-top: 4px; padding-bottom: 4px; margin-right: 1%; margin-left: 1%;}
 
 .centered {
   text-align: center;
 }
 
 button {
-  font-size: 2rem;
-  height: 3em;
+  font-size: 1em;
+  padding: 10px 20px;
+  height: auto;
 }
 
 .button-container {

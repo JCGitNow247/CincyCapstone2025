@@ -46,7 +46,7 @@ function handleCheckout(event) {
 
     //console.log("The base total is: ", baseTotal) for testing
     //console.log("The tip amount is: ", tipAmount) for testing
-    
+
     window.location.href = "summary.html" // Redirect
 }
 
@@ -80,6 +80,8 @@ function showOrderSummary() {
     summaryHTML += `</ul><p><strong>Total Paid:</strong> $${finalTotal}</p>`;
 
     summaryDiv.innerHTML = summaryHTML;
+
+    localStorage.removeItem("cartItems");
 }
 
 window.addEventListener('DOMContentLoaded', () => {

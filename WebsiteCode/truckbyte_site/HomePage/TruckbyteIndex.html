@@ -8,14 +8,23 @@
     </head>
 
     <body>
-        <div class="centered">
-            <h1>Welcome to Truckbyte</h1>
-            <img src="../Images/TruckBytes.POS.Blue.png" alt="Truckbyte" width="400" height="400">
-            
-            <div class="button-container">
-                <p> How do we know the location at which the customer is ordering from?<p>
-                <p> Add an about us section? <p>
-                <button onclick="OrderNow()">Order Now</button>
+        <div class="page-wrapper">
+            <div class="Top-Banner">
+                <div class="Top-Buttons">
+                    <Button onclick="window.location.href='TruckbyteIndex.html'" id="headerBackButton"> Home </Button>
+                    <label> Food Truck Name here</label>
+                    <Button> About </Button>
+                </div>
+            </div>
+
+            <div class="centered">
+                <h1>Welcome to Truckbyte</h1>
+                <img src="../Images/TruckBytes.POS.Blue.png" alt="Truckbyte" width="400" height="400">
+                
+                <div class="button-container">
+                    <p> How do we know the location at which the customer is ordering from?<p>
+                    <button onclick="OrderNow()">Order Now</button>
+                </div>
             </div>
         </div>
         <script src="script.js"></script>
