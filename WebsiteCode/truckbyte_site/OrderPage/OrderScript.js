@@ -197,6 +197,11 @@ function restoreCartFromStorage() {
     const savedItems = JSON.parse(localStorage.getItem('cartItems') || "[]");
     const cartGrid = document.querySelector('.Cart-Item-Grid');
 
+    if (!cartGrid) {
+        console.warn("No .Cart-Item-Grid found - skipping cart restore")
+        return;
+    }
+
     savedItems.forEach(({ html, price }) => {
         const cartItem = document.createElement('div');
         cartItem.className = 'Cart-Item';

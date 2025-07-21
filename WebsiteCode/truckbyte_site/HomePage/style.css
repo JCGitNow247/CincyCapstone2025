@@ -34,13 +34,44 @@ body {
   text-align: center;
 }
 
-button {
+.button-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.button-container button {
   font-size: 1em;
   padding: 10px 20px;
   height: auto;
 }
 
-.button-container {
-    margin-top: 40px;
-    text-align: center;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  display: none;
 }
+
+.AboutUs-Popup {
+  display: none;
+  width: 85vw;
+  height: 85vh;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  background: #cacaca;
+  border-radius: 6px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+}
+
+.AboutUs-Popup h2 {margin-top: 0.5em; margin-bottom: 1em; font-size: 3.5em;}
+.AboutUs-Popup button {font-size: 2em; width: auto; padding: 10px 20px; align-self: center; margin-bottom: 1em;}
+.AboutUs-Popup p {font-size: 2em; margin: -5em 0; line-height: 0;}
