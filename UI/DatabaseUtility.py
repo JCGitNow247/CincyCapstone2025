@@ -56,6 +56,25 @@ def get_menu_items():
     return dictMenuItems
 
 
+def get_menu_item_name(ItemID):
+    """
+    <b>Name:</b> get_menu_item_name<br>
+    <b>Abstract:</b> Get the name of a menu item from an id<br>
+    <b>Param:</b> <i>ItemID</i> - input for menu item id<br>
+    <b>Return:</b> <i>menu_item_name</i> - name of menu item
+    """
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT MenuItemName FROM VMenuItems WHERE MenuItemID = ?', (ItemID,))
+
+    row = cursor.fetchone()
+
+    menu_item_name = row[0]
+
+    return menu_item_name
+
 
 def get_sub_menu_items(ItemID):
     """
@@ -69,7 +88,7 @@ def get_sub_menu_items(ItemID):
 
     cursor = conn.cursor()
 
-    cursor.execute('SELECT SubMenuItem FROM VSubMenuItems WHERE MenuItem = ?', (ItemID,))
+    cursor.execute('SELECT SubMenuItemID, SubMenuItem FROM VSubMenuItems WHERE MenuItem = ?', (ItemID,))
     rows = cursor.fetchall()
 
     return rows
