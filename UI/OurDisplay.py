@@ -1,5 +1,6 @@
 from tkinter import *
 import os
+import tkinter.font as tkfont
 
 #For some reason messagebox is not included in the import *??
 from tkinter import messagebox
