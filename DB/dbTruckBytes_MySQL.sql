@@ -394,6 +394,7 @@ FROM
 -- View: VSubMenuItems
 CREATE OR REPLACE VIEW VSubMenuItems AS
 SELECT
+	 F.intFoodID AS SubMenuItemID,
     F.strFoodName AS SubMenuItem,
     MI.intMenuItemID AS MenuItem
 FROM
@@ -692,6 +693,7 @@ INSERT INTO Foods (strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFo
 -- SubMenusFoods
 INSERT INTO SubMenusFoods (intSubMenuID, intFoodID) VALUES
   (1, 10),
+  (1, 3),
   (1, 8),
   (1, 13),
   (1, 6),
