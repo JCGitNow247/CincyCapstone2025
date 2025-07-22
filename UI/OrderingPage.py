@@ -124,7 +124,7 @@ def CreateTextBox():
     OrderDisplay.place(x=700,y=125)
 
     # Create a bold font
-    bold_font = tkfont.Font(family="Arial", size=20, weight="bold")
+    bold_font = tkfont.Font(family="Arial", size=15, weight="bold")
     OrderDisplay._textbox.tag_configure("bold", font=bold_font)
 
 
