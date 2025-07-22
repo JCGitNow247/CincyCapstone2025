@@ -4,6 +4,8 @@ from OurDisplay import *
 #Import database utilities
 import DatabaseUtility as DB
 
+from OrderItem import OrderItem
+
 #Variables to link to SQL
 SQLTotal = "Your Total"
 SQLSubMenuName= "SQL Sub Menu Name"
@@ -13,7 +15,8 @@ CurrentOrder = "$: "
 "This needs to display which buttons were pushed"
 SQLItemOrdered = "SQL Item Ordered"
 
-
+OrderItemsList = []
+OrderDisplay = None
 
 def open_sub_menu(ItemID):
     PopUpMenu = Toplevel()
@@ -53,8 +56,11 @@ def open_sub_menu(ItemID):
 
     checkboxes = []
     for i, row in enumerate(SubMenuRows):
-        item_name = row[0]
+        item_id = row[0]
+        item_name = row[1]
         checkbox = CTkCheckBox(scroll_frame, text=item_name)
+        checkbox.item_id = item_id
+        checkbox.item_name = item_name
         
         row_num = i // 2   # Every two items, start a new row
         col_num = i % 2    # 0 or 1 (column 1 or column 2)
@@ -62,15 +68,64 @@ def open_sub_menu(ItemID):
         checkbox.grid(row=row_num, column=col_num, padx=10, pady=5, sticky="w")
         checkboxes.append(checkbox)
 
+    #Add Item button
+    add_item = CTkButton(PopUpMenu, text="Add Item", font=('Arial',20), width=200, height=50, command=lambda: add_selected_items(PopUpMenu, checkboxes, ItemID))
+    add_item.place(x=75,y=250)
+
     # Close button
     my_button = CTkButton(PopUpMenu, text="close", font=('Arial',20), width=200, height=50, command=PopUpMenu.destroy)
-    my_button.place(x=75,y=250)
+    my_button.place(x=75,y=320)
 
     # Update sub menu name
     sub_menu_name = DB.get_sub_menu_name(ItemID)
 
     PopUpMenu.title("This is the "+sub_menu_name+ " menu")
 
+
+def add_selected_items(PopUpMenu, checkboxes, ItemID):
+
+    global OrderDisplay
+    
+    order_item = OrderItem()
+    order_item.set_id(ItemID)
+    order_item.set_name(DB.get_menu_item_name(ItemID))
+
+    id = order_item.get_id()
+    name = order_item.get_name()
+
+    for checkbox in checkboxes:
+        if checkbox.get():
+            order_item.add_food_item(checkbox.item_id, checkbox.item_name)
+
+    print(f"Menu Item ID: {id}, Menu Item Name: {name}")
+
+    for item in order_item.m_aFoodItems:
+        print(f"Food ID: {item['id']}, Name: {item['name']}")
+
+    OrderItemsList.append(order_item)
+
+    if OrderDisplay:
+        OrderDisplay.configure(state="normal")
+        OrderDisplay.insert("end", f"{order_item.get_name()}\n", "bold")
+
+        for food in order_item.m_aFoodItems:
+            OrderDisplay.insert("end", f"   {food['name']}\n")
+        OrderDisplay.insert("end", "\n")
+
+        OrderDisplay.configure(state="disabled")
+
+    PopUpMenu.destroy()
+
+
+def CreateTextBox():
+    global OrderDisplay
+    OrderDisplay = CTkTextbox(Window, font=('Arial', 20), width=300, height=300)
+    OrderDisplay.configure(state="disabled")
+    OrderDisplay.place(x=700,y=125)
+
+    # Create a bold font
+    bold_font = tkfont.Font(family="Arial", size=20, weight="bold")
+    OrderDisplay._textbox.tag_configure("bold", font=bold_font)
 
 
 def CreateLabel():
@@ -131,6 +186,7 @@ Create_Menubar()
 #Intantiate UI specific to this page
 CreateButtons()
 CreateLabel()
+CreateTextBox()
 
 
 
