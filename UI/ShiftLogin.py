@@ -1,75 +1,8 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 import re
-#pip3 install mariadb
-import mariadb
 
-
-
-
-
-# region SQL Connection test
-import mariadb
-
-conn = mariadb.connect (
-    host="localhost",
-    user="truckbytesdev",
-    password="tb001",
-    database="dbTruckBytes"
-)
-
-cursor = conn.cursor()
-cursor.execute("SELECT fnEmployeeLogin('Whitaker','test1')")
-
-EmployeeID = cursor.fetchone()[0]
-print("Employee ID: ", EmployeeID)
-# endregion
-
-
-'''
-def get_employee_id(last_name, password):
-    try:
-        conn = mariadb.connect(
-            host="localhost",
-            user="truckbytesdev",
-            password="tb001",
-            database="dbTruckBytes"
-        )
-        cursor = conn.cursor()
-        cursor.execute("SELECT fnEmployeeLogin(%s, %s)", (last_name, password))
-        result = cursor.fetchone()
-        return result[0] if result else None
-    except mariadb.Error as e:
-        print(f"Database error: {e}")
-        return None
-    finally:
-        if conn:
-            conn.close()
-'''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import DatabaseUtility as DB
 
 def setup_ui():
     global txtUsernameField, txtPasswordField
