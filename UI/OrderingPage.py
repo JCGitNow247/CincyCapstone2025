@@ -1,53 +1,12 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 
-#pip3 install mariadb
-import mariadb
-
+#Import database utilities
+import DatabaseUtility as DB
 
 #Variables to link to SQL
 SQLTotal = "Your Total"
 SQLSubMenuName= "SQL Sub Menu Name"
-
-
-"""
-Connecting to the DB section
-"""
-dictMenuItems = {}
-intMenuItemIndex = 0
-
-# Add SQL connection credentials for your SQL Server stuff
-"""
-I created a separate user from my root called 'truckbytesdev' with password 'tb001'
-and granted permissions for database connections, highly recommended
-"""
-conn = mariadb.connect(
-
-    host="localhost",
-    user="truckbytesdev",
-    password="tb001",
-    database="dbTruckBytes"
-)
-
-cursor = conn.cursor()
-
-cursor.execute('SELECT MenuItemID, MenuItemName FROM VMenuItems ORDER BY MenuType')
-
-dictMenuItemsRows = cursor.fetchall()
-
-for row in dictMenuItemsRows:
-
-    MenuItemID = row[0]
-    MenuItemName = row[1]
-
-    dictMenuItems[intMenuItemIndex] = {
-
-        "id": MenuItemID,
-        "name": MenuItemName
-    }
-
-    intMenuItemIndex += 1
-
 
 CurrentOrder = "$: "
 
@@ -65,8 +24,6 @@ def open_sub_menu(ItemID):
     #PopUpMenu.minsize(width=300, height=300)
     #PopUpMenu.maxsize(width=350, height=315)
     PopUpMenu.resizable(False, False)
-
- 
 
     # Force layout update to get correct width and height
     PopUpMenu.update_idletasks()
@@ -92,11 +49,10 @@ def open_sub_menu(ItemID):
     scroll_frame.place(x=15, y=20)
 
     # Fetch submenu items
-    cursor.execute('SELECT SubMenuItem FROM VSubMenuItems WHERE MenuItem = ?', (ItemID,))
-    rows = cursor.fetchall()
+    SubMenuRows = DB.get_sub_menu_items(ItemID)
 
     checkboxes = []
-    for i, row in enumerate(rows):
+    for i, row in enumerate(SubMenuRows):
         item_name = row[0]
         checkbox = CTkCheckBox(scroll_frame, text=item_name)
         
@@ -111,12 +67,7 @@ def open_sub_menu(ItemID):
     my_button.place(x=75,y=250)
 
     # Update sub menu name
-    cursor.execute('SELECT SubMenu FROM VSubMenuName WHERE MenuItem = ?', (ItemID,))
-
-
-    row = cursor.fetchone()
-
-    sub_menu_name = row[0]
+    sub_menu_name = DB.get_sub_menu_name(ItemID)
 
     PopUpMenu.title("This is the "+sub_menu_name+ " menu")
 
@@ -151,6 +102,9 @@ def CreateButtons():
     y_step = button_height + y_padding
 
     buttons = []  # Store buttons in case you want to reference or destroy them later
+
+    # Get menu items
+    dictMenuItems = DB.get_menu_items()
 
     # Iterative dictMenuItems buttons
     for index, item in dictMenuItems.items():
