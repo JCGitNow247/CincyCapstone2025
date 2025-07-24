@@ -250,7 +250,7 @@ function LoadMenuCards() {
                 <p>
                     ${item.description}
                 </p>
-                <p> $${item.price} </p>
+                <p> $${item.price.toFixed(2)} </p>
                 <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Modify Item</button><br>
                 <button onclick="AddToCart('${item.name}', ${item.price})">Add To Cart</button>
             `;
