@@ -1,8 +1,8 @@
-from OurDisplay import * #CompanyPlaceholder, Window
+from OurDisplay import *
 from customtkinter import *
 from tkinter import filedialog
 import os
-
+import json
 
 
 truck_logo = None
@@ -24,12 +24,13 @@ def display_current_logo(img_path=None):
     truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250, 250))
 
     if imgLogo is None:
-        imgLogo = CTkLabel(Window, image=truck_logo, text="")
-        imgLogo.place(x=683, y=115)
+        imgLogo = CTkLabel(Window, image=truck_logo, text="").place(x=683, y=115)
     else:
         imgLogo.configure(image=truck_logo)
 
 
+
+#Ask user for a new logo
 def save_as_png():
     file_path = filedialog.askopenfilename(
         title="Select Your Company Logo",
@@ -41,21 +42,13 @@ def save_as_png():
 
 
 
-
-
-
 def DisplayLabels():
     #Label of the page
-    lblTitle = CTkLabel(Window, text="Business Builder", font=('Arial', 32, 'bold'))
-    lblTitle.place(x=235,y=20)
-
+    CTkLabel(Window, text="Business Builder", font=('Arial', 32, 'bold')).place(x=235,y=20)
     #Create Label for "Company Name"
-    CompanyName = CTkLabel(Window, text="Company\nName:", font=('Arial',24))
-    CompanyName.place(x=60,y=90)
-
+    CTkLabel(Window, text="Company\nName:", font=('Arial',24)).place(x=60,y=90)
     #Create Label for "Location"
-    lblLocation = CTkLabel(Window, font=('Arial', 24), text="Current\nLocation")
-    lblLocation.place(x=60,y=240)
+    CTkLabel(Window, font=('Arial', 24), text="Current\nLocation").place(x=60,y=240)
 
 
 
@@ -73,11 +66,9 @@ def DisplayFields():
 
 def DisplayButtons():
     #Create Button to Add Logo
-    btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Logo", width=200, height=50, command=save_as_png)
-    btnAddImage.place(x=690,y=30)
+    CTkButton(Window, font=('Arial', 24), text="Click To Add Logo", width=200, height=50, command=save_as_png).place(x=690,y=30)
     #Create button to Update Info
-    btnUpdate = CTkButton(Window, font=('Arial', 24), text="Update Info", width=200, height=50, command=update_company_name)
-    btnUpdate.place(x=690,y=525)
+    CTkButton(Window, font=('Arial', 24), text="Update Info", width=200, height=50, command=update_company_name).place(x=690,y=525)
 
 
 
@@ -86,17 +77,14 @@ def DisplayCurrentLogo():
     img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "their.logo.png")
     if os.path.exists(img_path):
         original_logo = Image.open(img_path)
+
         resized_logo = original_logo.resize((250, 250), Image.Resampling.LANCZOS)
         truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250, 250))
-        imgLogo = CTkLabel(Window, image=truck_logo, text="")
-        imgLogo.place(x=683, y=115)
+        CTkLabel(Window, image=truck_logo, text="").place(x=683, y=115)
     else:
         print(f"Warning: Could not find image at {img_path}")
 
-    imgLogo = CTkLabel(Window,image=truck_logo, text="")
-    imgLogo.place(x=683,y=115)
-
-
+    CTkLabel(Window,image=truck_logo, text="").place(x=683,y=115)
 
 
 
@@ -105,10 +93,10 @@ def update_company_name():
     CompanyPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
     Window.title(CompanyPlaceholder + " Powered by TruckBytes")
 
-
-
-
-
+    # Save the updated name permanently in config.json
+    with open("config.json", "w") as f:
+        json.dump({"CompanyPlaceholder": CompanyPlaceholder}, f)
+    Window.title(CompanyPlaceholder + " Powered by TruckBytes")
 
 
 

@@ -21,8 +21,17 @@ import subprocess
 #Instantiate a window
 Window = CTk()
 
+
+
 #Variable to link back to SQL
-CompanyPlaceholder = "<SQLCompanyName>"
+import json
+config_file = "config.json"
+if os.path.exists(config_file):
+    with open(config_file, "r") as f:
+        CompanyPlaceholder = json.load(f).get("CompanyPlaceholder", "<SQLCompanyName>")
+else:
+    CompanyPlaceholder = "<SQLCompanyName>"
+
 
 
 def open_ordering_ui():
@@ -60,7 +69,6 @@ def open_bus_builder_ui():
     subprocess.Popen(['python', 'UI/UIBuilder.py'])
     #This closes the current page
     Window.destroy()
-
 
 
 
@@ -140,16 +148,8 @@ def Create_Menubar():
     #Define Mgmt menu's submenu "Business Profile"
     Mgmt_Menu.add_command(label="Business Profile", font=14,command=open_bus_builder_ui)
 
-        #Define Mgmt menu's submenu "Analytics"
+    #Define Mgmt menu's submenu "Analytics"
     Mgmt_Menu.add_command(label="Analytics", font=14,command="")
-    
-
-
-
-
-
-
-
 
 
 
@@ -159,17 +159,14 @@ def Display_Logos_two_thirds():
     original_logo = Image.open("UI/images/our_logos/TruckBytes.png")
     resized_logo = original_logo.resize((200,200),Image.Resampling.LANCZOS)
     truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
-
-    imgLogo = CTkLabel(Window,image=truck_logo, text="")
-    imgLogo.place(x=744,y=320)
+    CTkLabel(Window,image=truck_logo, text="").place(x=744,y=320)
 
     #Display "their.logo.png" file
     their_logo = Image.open("UI/images/our_logos/their.logo.png")
     resized_logo = their_logo.resize((200,200),Image.Resampling.LANCZOS)
     truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
+    CTkLabel(Window,image=truck_logo, text="").place(x=744,y=33)
 
-    imgLogo = CTkLabel(Window,image=truck_logo, text="")
-    imgLogo.place(x=744,y=33)
 
 
 def Display_Logo_Center():
