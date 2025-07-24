@@ -20,12 +20,8 @@ OrderDisplay = None
 
 def open_sub_menu(ItemID):
     PopUpMenu = Toplevel()
-    #PopUpMenu.geometry("1200x1000")
     PopUpMenu.geometry("712x610+560+490")
-    #PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
-    #PopUpMenu.minsize(width=300, height=300)
-    #PopUpMenu.maxsize(width=350, height=315)
     PopUpMenu.resizable(False, False)
 
     # Force layout update to get correct width and height
@@ -129,19 +125,15 @@ def CreateTextBox():
 
 
 def CreateLabel():
-    #Label of the page
-    lblTitle = CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold')).place(x=98,y=40)
-    #Label to Show What Has Been Ordered
-    lblOrdered = CTkLabel(Window, text=SQLItemOrdered, font=('Arial',20)).place(x=708,y=125)
-    #Label to display Total
-    lblTotal = CTkLabel(Window, text=SQLTotal, font=('Arial',20)).place(x=735,y=525)
-
-
+    CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold')).place(x=98,y=40)
+    CTkLabel(Window, text=SQLItemOrdered, font=('Arial',20)).place(x=708,y=125)
+    CTkLabel(Window, text=SQLTotal, font=('Arial',20)).place(x=735,y=525)
 
 def CreateButtons():
-    #Button
-    btnPlaceOrder = CTkButton(Window, text="Place Order", font=('Arial',20), width=200, height=50, command=open_credit_ui).place(x=735,y=45)
-    btnSubmit = CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50).place(x=735,y=445)
+    CTkButton(Window, text="Place Order", font=('Arial',20), width=200, height=50, command=open_credit_ui).place(x=735,y=45)
+    CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50).place(x=735,y=445)
+
+
 
     # Iterative buttons dimensions
     button_width = 200

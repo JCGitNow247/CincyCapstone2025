@@ -28,16 +28,13 @@ def validate_fields():
 
 def CreateLabels():
     #Label of the page
-    lblTitle = CTkLabel(Window, text="Customer Loyalty", font=('Arial', 32, "bold"))
-    lblTitle.place(x=235,y=45)
+    CTkLabel(Window, text="Customer Loyalty", font=('Arial', 32, "bold")).place(x=235,y=45)
     
     #Create Label For "Phone Number"
-    lblPhoneNumb = CTkLabel(Window, text="Phone Number", font=('Arial',24))
-    lblPhoneNumb.place(x=150,y=145)
+    CTkLabel(Window, text="Phone Number", font=('Arial',24)).place(x=150,y=145)
 
     #Create Label For "Email Address"
-    lblEmailAddy = CTkLabel(Window, text="Email Address", font=('Arial',24))
-    lblEmailAddy.place(x=150,y=190)
+    CTkLabel(Window, text="Email Address", font=('Arial',24)).place(x=150,y=190)
 
 
 
@@ -45,23 +42,22 @@ def CreateFields():
     global txtPhoneNumbField, txtEmailAddyField
 
     #Create Entry For "Phone Number"
-    txtPhoneNumbField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    txtPhoneNumbField.place(x=360,y=143)
+    txtPhoneNumbField = CTkTextbox(Window, width=250,height=40, font=('Arial',24)).place(x=360,y=143)
 
     #Create  for "Email Address"
-    txtEmailAddyField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    txtEmailAddyField.place(x=360,y=190)
+    txtEmailAddyField = CTkTextbox(Window, width=250,height=40, font=('Arial',24)).place(x=360,y=190)
 
 
 
 def CreateButtons():
-    #WILL BE REMOVED IN FINAL || SKIPS Validation
-    btnCheckLoyal = CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80)
-    #btnCheckLoyal = CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80, command=open_ordering_w_v_ui)
-    btnCheckLoyal.place(x=222,y=270)
 
-    btnMenuBuilder = CTkButton(Window, font=('Arial', 24), text="Skip Loyalty\n Order Food", width=300, height=80, command=open_ordering_ui)
-    btnMenuBuilder.place(x=222,y=415)
+    #CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80, command=open_ordering_w_v_ui).place(x=222,y=270)
+
+    #This SKIPS Validation = Will Be Removed in Final. Use above code to validate
+    #Create button to Check Loyalty
+    CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80).place(x=222,y=270)
+    #Create button to Skip Loyalty
+    CTkButton(Window, font=('Arial', 24), text="Skip Loyalty\n Order Food", width=300, height=80, command=open_ordering_ui).place(x=222,y=415)
 
 
 

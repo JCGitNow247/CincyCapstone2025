@@ -9,30 +9,13 @@ SQLItem1 = "SQL SubMenu1"
 SQLItem2 = "SQL SubMenu2"
 SQLItem3 = "SQL SubMenu3"
 
-SQLSubMenu1 = "SQL Sub Menu1"
-SQLSubMenu2 = "SQL Sub Menu2"
-SQLSubMenu3 = "SQL Sub Menu3"
+SQLSubMenu1 = "intSubMenuID1"
+SQLSubMenu2 = "intSubMenuID2"
+SQLSubMenu3 = "intSubMenuID3"
 
 
 
 
-
-'''
-
-#May need to check this on linux.  This may only work on Windows
-def save_as_png():
-        #This Prompts to save a filename, in the listed directory, as a specific file type - You must include an option for all files??
-        #result_file = filedialog.asksaveasfile(initialdir="images", filetypes=(("PNG Files", ".png"), ("all files", "*.*")))
-        
-        result_file = filedialog.asksaveasfilename(title="Save Your Food Photo", initialfile="Company_Logo.png", initialdir="images", filetypes=(("PNG Files", ".png"), ("all files", "*.*")))
-        
-        #result_label = Label(Window,text=result_file)
-        result_label = CTkLabel(Window,text=result_file)
-
-        #result_label.pack(pady=30)
-        #result_label.place(x=200, y=200)
-        result_label.pack()
-'''
 
 
 
@@ -62,6 +45,7 @@ def display_food_image(img_path=None):
 
 
 def save_as_png():
+      #This Prompts to save a filename, in the listed directory, as a specific file type - You must include an option for all files??
     file_path = filedialog.askopenfilename(
     title="Select Your Food Image",
     initialdir="images",

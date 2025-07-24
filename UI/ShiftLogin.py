@@ -7,18 +7,16 @@ import DatabaseUtility as DB
 def setup_ui():
     global txtUsernameField, txtPasswordField
 
-    lblTitle = CTkLabel(Window, text="Employee Login", font=('Arial', 32))
-    lblTitle.place(x=400, y=50)
-
-    CTkLabel(Window, text="Last Name:", font=('Arial', 20)).place(x=240, y=170)
-    CTkLabel(Window, text="Password:", font=('Arial', 20)).place(x=240, y=215)
-
     txtUsernameField = CTkTextbox(Window, width=200, height=1)
     txtUsernameField.place(x=412, y=170)
 
     txtPasswordField = CTkEntry(Window, width=200, height=1, show="*")
     txtPasswordField.place(x=412, y=215)
 
+    CTkLabel(Window, text="Employee Login", font=('Arial', 32)).place(x=400, y=50)
+    CTkLabel(Window, text="Last Name:", font=('Arial', 20)).place(x=240, y=170)
+    CTkLabel(Window, text="Password:", font=('Arial', 20)).place(x=240, y=215)
+    
     CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui).place(x=412, y=270)
 
 
@@ -62,10 +60,12 @@ def open_ordering_ui():
 
 
 #WILL BE REMOVED IN FINAL || SKIPS Validation
-#btnSubmit = CTkButton(Window, text="Login", width=200, height=40)
-btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui)
-btnSubmit.place(x=412,y=270)
+#btnSubmit = CTkButton(Window, text="Login", width=200, height=40).place(x=412,y=270)
+btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui).place(x=412,y=270)
 
+
+
+#Intantiate UI specific to this page
 setup_ui()
 
 #Intantiate UI options
@@ -73,6 +73,6 @@ Create_Window()
 Create_Menubar()
 Display_Logo_Center()
 
-##################################
+
 
 Window.mainloop()
