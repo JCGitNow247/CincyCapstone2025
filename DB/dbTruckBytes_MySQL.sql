@@ -692,8 +692,6 @@ INSERT INTO Foods (strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFo
 
 -- SubMenusFoods
 INSERT INTO SubMenusFoods (intSubMenuID, intFoodID) VALUES
-  (1, 10),
-  (1, 3),
   (1, 8),
   (1, 13),
   (1, 6),
@@ -702,23 +700,18 @@ INSERT INTO SubMenusFoods (intSubMenuID, intFoodID) VALUES
   (1, 21),
   (1, 22),
   (1, 23),
-  (2, 12),
   (2, 1),
   (2, 2),
   (2, 5),
   (2, 7),
   (2, 13),
   (2, 19),
-  (3, 15),
-  (3, 16),
   (3, 14),
   (3, 2),
   (3, 17),
   (3, 18),
   (3, 8),
   (3, 19),
-  (4, 11),
-  (4, 4),
   (4, 21),
   (4, 22);
 
@@ -760,14 +753,11 @@ INSERT INTO MenuItemsTypes (strMenuItemType) VALUES
 
 -- MenuItems
 INSERT INTO MenuItems (strMenuItemName, imgMenuItemImage, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID) VALUES
-  ('Burger', NULL, 1, 'Burger with bun, patty, cheese, lettuce, tomato, onion, ketchup, mustard, and mayonnaise', 9.50, 1),
-  ('Chicken Taco', NULL, 1, 'Taco with tortialla, chicken, lettuce, and tomato', 3.25, 2),
-  ('Beef Taco', NULL, 1, 'Taco with tortilla, beef, lettuce, and tomato', 3.00, 2),
+  ('Burger', NULL, 1, 'Build your own burger from a list of toppings', 9.50, 1),
+  ('Taco', NULL, 1, 'Build your own taco from a list of toppings', 3.25, 2),
   ('Fries', NULL, 2, NULL, 1.50, NULL),
-  ('Cheese Pizza', NULL, 1, 'Pizza with dough, sauce, and cheese', 7.00, 3),
-  ('Veggie Pizza', NULL, 1, 'Pizza with dough, sauce, cheese, tomato, and onion', 9.00, 3),
-  ('Sausage & Pepperoni Pizza', NULL, 1, 'Pizza with dough, sauce, cheese, sausage, and pepperoni', 11.00, 3),
-  ('Hotdog', NULL, 1, 'Hotdog bun, hotdog, ketchup, and mustard', 3.50, 4),
+  ('Pizza', NULL, 1, 'Build your own pizza from a list of toppings', 7.00, 3),
+  ('Hotdog', NULL, 1, 'Build your own hotdog from a list of toppings', 3.50, 4),
   ('Coca-Cola', NULL, 3, NULL, 1.50, NULL),
   ('Dr. Pepper', NULL, 3, NULL, 1.50, NULL),
   ('Lemonade', NULL, 3, NULL, 1.75, NULL),
@@ -778,70 +768,37 @@ INSERT INTO MenuItemsFoods (intMenuItemID, intFoodID, dblFoodWeight) VALUES
     -- Burger (MenuItemID 1)
     (1, 3, 0.25),        -- Hamburger Patty (4 oz)
     (1, 10, 0.25),       -- Burger Bun (~0.25 lb)
-    (1, 6, 0.05),        -- Lettuce Leaf (0.75 oz)
-    (1, 8, 0.06),        -- Sliced Tomato (1 oz)
-    (1, 13, 0.06),       -- Cheddar Cheese (1 oz)
-    (1, 20, 0.03),       -- Pickles (0.5 oz)
-    (1, 21, 0.02),       -- Ketchup (0.25 oz)
-    (1, 22, 0.02),       -- Mustard (0.25 oz)
-    (1, 23, 0.02),       -- Mayonnaise (0.25 oz)
 
-    -- Chicken Taco (MenuItemID 2)
-    (2, 1, 0.13),        -- Chicken (2 oz)
+    -- Taco (MenuItemID 2)
     (2, 12, 0.25),       -- Tortilla (~0.25 lb)
-    (2, 5, 0.031),       -- Shredded Lettuce (0.5 oz)
-    (2, 7, 0.031),       -- Diced Tomato (0.5 oz)
-    (2, 13, 0.05),       -- Cheddar Cheese (0.75 oz)
 
-    -- Beef Taco (MenuItemID 3)
-    (3, 2, 0.13),        -- Ground Beef (2 oz)
-    (3, 12, 0.25),       -- Tortilla (~0.25 lb)
-    (3, 5, 0.031),       -- Shredded Lettuce (0.5 oz)
-    (3, 7, 0.031),       -- Diced Tomato (0.5 oz)
-    (3, 13, 0.05),       -- Cheddar Cheese (0.75 oz)
+    -- Fries (MenuItemID 3)
+    (3, 9, 0.31),        -- Potatoes (5 oz)
 
-    -- Fries (MenuItemID 4)
-    (4, 9, 0.31),        -- Potatoes (5 oz)
+    -- Cheese Pizza (MenuItemID 4)
+    (4, 15, 0.25),       -- Pizza Dough Ball (~0.25 lb)
+    (4, 16, 0.19),       -- Pizza Sauce (3 oz)
 
-    -- Cheese Pizza (MenuItemID 5)
-    (5, 15, 0.25),       -- Pizza Dough Ball (~0.25 lb)
-    (5, 16, 0.19),       -- Pizza Sauce (3 oz)
-    (5, 14, 0.19),       -- Mozzarella Cheese (3 oz)
+    -- Hotdog (MenuItemID 5)
+    (5, 11, 0.25),       -- Hot Dog Bun (~0.25 lb)
+    (5, 4, 0.15),        -- Hotdog (~0.15 lb)
+    (5, 21, 0.02),       -- Ketchup (0.25 oz)
+    (5, 22, 0.02),       -- Mustard (0.25 oz)
 
-    -- Veggie Pizza (MenuItemID 6)
-    (6, 15, 0.25),       -- Pizza Dough Ball (~0.25 lb)
-    (6, 16, 0.19),       -- Pizza Sauce (3 oz)
-    (6, 14, 0.16),       -- Mozzarella Cheese (2.5 oz)
-    (6, 7, 0.06),        -- Diced Tomato (1 oz)
-    (6, 19, 0.06),       -- Onions (1 oz)
+    -- Coca-Cola (MenuItemID 6)
+    (6, 24, 0.75),       -- Coca-Cola Syrup (12 oz)
 
-    -- Sausage & Pepperoni Pizza (MenuItemID 7)
-    (7, 15, 0.25),       -- Pizza Dough Ball (~0.25 lb)
-    (7, 16, 0.19),       -- Pizza Sauce (3 oz)
-    (7, 14, 0.19),       -- Mozzarella Cheese (3 oz)
-    (7, 17, 0.13),       -- Pepperoni (2 oz)
-    (7, 18, 0.13),       -- Sausage Crumble (2 oz)
+    -- Dr. Pepper (MenuItemID 7)
+    (7, 25, 0.75),      -- Dr. Pepper Syrup (12 oz)
 
-    -- Hotdog (MenuItemID 8)
-    (8, 11, 0.25),       -- Hot Dog Bun (~0.25 lb)
-    (8, 4, 0.15),        -- Hotdog (~0.15 lb)
-    (8, 21, 0.02),       -- Ketchup (0.25 oz)
-    (8, 22, 0.02),       -- Mustard (0.25 oz)
+    -- Lemonade (MenuItemID 8)
+    (8, 26, 0.5),       -- Lemonade Mix (8 oz)
 
-    -- Coca-Cola (MenuItemID 9)
-    (9, 24, 0.75),       -- Coca-Cola Syrup (12 oz)
+    -- Water (MenuItemID 9)
+    (9, 27, 1.00),      -- Bottled Water (16 oz bottle)
 
-    -- Dr. Pepper (MenuItemID 10)
-    (10, 25, 0.75),      -- Dr. Pepper Syrup (12 oz)
-
-    -- Lemonade (MenuItemID 11)
-    (11, 26, 0.5),       -- Lemonade Mix (8 oz)
-
-    -- Water (MenuItemID 12)
-    (12, 27, 1.00),      -- Bottled Water (16 oz bottle)
-
-    -- Blue Powerade (MenuItemID 13)
-    (13, 28, 1.25);      -- Blue Powerade Mix (20 oz)
+    -- Blue Powerade (MenuItemID 10)
+    (10, 28, 1.25);      -- Blue Powerade Mix (20 oz)
 
 INSERT INTO TrucksMenuItems (intTruckID, intMenuItemID) VALUES
     (1, 1),
@@ -853,7 +810,4 @@ INSERT INTO TrucksMenuItems (intTruckID, intMenuItemID) VALUES
     (1, 7),
     (1, 8),
     (1, 9),
-    (1, 10),
-    (1, 11),
-    (1, 12),
-    (1, 13);
+    (1, 10);
