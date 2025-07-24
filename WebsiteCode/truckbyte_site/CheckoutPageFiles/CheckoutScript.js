@@ -1,27 +1,3 @@
-// creates and adds the cart items to the cart once the checkout page is loaded.
-function loadCartFromStorage() {
-    const cartGrid = document.querySelector('.Cart-Item-Grid');
-    if (!cartGrid) return;
-
-    const savedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    let total = 0;
-
-    savedItems.forEach(itemName => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'Cart-Item';
-
-        const span = document.createElement('span');
-        span.textContent = itemName;
-        cartItem.appendChild(span);
-        cartGrid.appendChild(cartItem);
-
-        total += parseFloat(itemName.price) || 0;
-    });
-
-    localStorage.setItem('cartTotal', total.toFixed(2));
-
-}
-
 function handleCheckout(event) {
     event.preventDefault(); // Prevent form refresh
     
@@ -38,9 +14,6 @@ function handleCheckout(event) {
 
     const finalTotal = (baseTotal + tipAmount).toFixed(2);
     localStorage.setItem("finalTotal", finalTotal);
-
-    const savedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    localStorage.setItem("cartItems", JSON.stringify(savedItems));
 
     localStorage.setItem("orderConfirmed", "true");
 
@@ -85,6 +58,5 @@ function showOrderSummary() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    loadCartFromStorage();
     showOrderSummary();
 });

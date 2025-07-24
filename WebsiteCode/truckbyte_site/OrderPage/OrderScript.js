@@ -272,6 +272,8 @@ function updateTotalPrice() {
         total += price;
     });
 
+    localStorage.setItem("cartTotal", total.toFixed(2));
+
     const totalLabels = document.querySelectorAll('.Total label');
 
     totalLabels.forEach(totalLabel => {
