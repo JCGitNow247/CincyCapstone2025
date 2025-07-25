@@ -10,7 +10,8 @@ def setup_ui():
     txtUsernameField = CTkTextbox(Window, width=200, height=1)
     txtUsernameField.place(x=412, y=170)
 
-    txtPasswordField = CTkEntry(Window, width=200, height=1, show="*")
+    txtPasswordField = CTkEntry(Window,  width=200, height=30, font=('Arial', 24), border_width=0,fg_color=txtUsernameField.cget("fg_color"), corner_radius=txtUsernameField.cget("corner_radius"), show="*")
+
     txtPasswordField.place(x=412, y=215)
 
     CTkLabel(Window, text="Employee Login", font=('Arial', 32)).place(x=400, y=50)

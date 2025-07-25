@@ -13,7 +13,7 @@ SQLSubMenuName= "SQL Sub Menu Name"
 CurrentOrder = "$: "
 
 "This needs to display which buttons were pushed"
-SQLItemOrdered = "SQL Item Ordered"
+SQLItemOrdered = ""
 
 OrderItemsList = []
 OrderDisplay = None
@@ -170,9 +170,9 @@ def remove_last_item():
 
 def CreateTextBox():
     global OrderDisplay
-    OrderDisplay = CTkTextbox(Window, font=('Arial', 20), width=300, height=300)
+    OrderDisplay = CTkTextbox(Window, font=('Arial', 20), width=200, height=300)
     OrderDisplay.configure(state="disabled")
-    OrderDisplay.place(x=700,y=125)
+    OrderDisplay.place(x=735,y=125)
 
     # Create a bold font
     bold_font = tkfont.Font(family="Arial", size=15, weight="bold")
