@@ -19,6 +19,12 @@ OrderItemsList = []
 OrderDisplay = None
 
 def open_sub_menu(ItemID):
+
+    MenuItemType = DB.get_menu_item_type(ItemID)
+    if MenuItemType == "Sides":
+        add_side_item(ItemID)
+        return
+
     PopUpMenu = Toplevel()
     PopUpMenu.geometry("712x610+560+490")
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
@@ -76,6 +82,23 @@ def open_sub_menu(ItemID):
     sub_menu_name = DB.get_sub_menu_name(ItemID)
 
     PopUpMenu.title("This is the "+sub_menu_name+ " menu")
+
+
+def add_side_item(ItemID):
+    global OrderDisplay
+
+    order_item = OrderItem()
+    order_item.set_id(ItemID)
+    order_item.set_name(DB.get_menu_item_name(ItemID))
+
+    OrderItemsList.append(order_item)
+
+    if OrderDisplay:
+        OrderDisplay.configure(state="normal")
+        OrderDisplay.insert("end", f"{order_item.get_name()}\n", "bold")
+        OrderDisplay.insert("end", "\n")
+        OrderDisplay.configure(state="disabled")
+
 
 
 def add_selected_items(PopUpMenu, checkboxes, ItemID):
