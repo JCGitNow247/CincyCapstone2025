@@ -116,6 +116,12 @@ def get_sub_menu_name(ItemID):
     return sub_menu_name
 
 def get_menu_item_type(ItemID):
+    """
+    <b>Name:</b> get_menu_item_type<br>
+    <b>Abstract:</b> Returns the menu name associated to the menu item by menu item id<br>
+    <b>Param:</b> <i>ItemID</i> - input for menu item id<br>
+    <b>Return:</b> <i>menu_item_type</i> - name of associated sub menu
+    """
 
     conn = get_connection()
 
@@ -125,6 +131,6 @@ def get_menu_item_type(ItemID):
 
     row = cursor.fetchone()
 
-    MenuItemType = row[0]
+    menu_item_type = row[0]
 
-    return MenuItemType
+    return menu_item_type

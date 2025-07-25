@@ -109,17 +109,9 @@ def add_selected_items(PopUpMenu, checkboxes, ItemID):
     order_item.set_id(ItemID)
     order_item.set_name(DB.get_menu_item_name(ItemID))
 
-    id = order_item.get_id()
-    name = order_item.get_name()
-
     for checkbox in checkboxes:
         if checkbox.get():
             order_item.add_food_item(checkbox.item_id, checkbox.item_name)
-
-    print(f"Menu Item ID: {id}, Menu Item Name: {name}")
-
-    for item in order_item.m_aFoodItems:
-        print(f"Food ID: {item['id']}, Name: {item['name']}")
 
     OrderItemsList.append(order_item)
 
