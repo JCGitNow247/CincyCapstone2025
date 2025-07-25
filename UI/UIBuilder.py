@@ -3,6 +3,8 @@ from customtkinter import *
 from tkinter import filedialog
 import os
 import json
+import shutil
+
 
 
 truck_logo = None
@@ -13,7 +15,7 @@ def display_current_logo(img_path=None):
     global truck_logo, imgLogo
 
     if img_path is None:
-        img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "their.logo.png")
+        img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "CompanyLogo.png")
 
     if not os.path.exists(img_path):
         print(f"Warning: Could not find image at {img_path}")
@@ -30,15 +32,33 @@ def display_current_logo(img_path=None):
 
 
 
-#Ask user for a new logo
 def save_as_png():
+  
     file_path = filedialog.askopenfilename(
         title="Select Your Company Logo",
-        initialdir="images",
+        initialdir="UI/images/Company_images",
         filetypes=(("PNG Files", "*.png"), ("All files", "*.*"))
     )
     if file_path:
-        display_current_logo(file_path)
+        # Copy the new logo into your app's logos folder
+        logo_folder = os.path.join(os.path.dirname(__file__), "images", "our_logos")
+        if not os.path.exists(logo_folder):
+            os.makedirs(logo_folder)
+        
+        new_logo_path = os.path.join(logo_folder, "CompanyLogo.png")
+        shutil.copy(file_path, new_logo_path)
+
+        # Save the path in config.json
+        config_file = "config.json"
+        config = {}
+        if os.path.exists(config_file):
+            with open(config_file, "r") as f:
+                config = json.load(f)
+        config["CompanyLogo"] = new_logo_path
+        with open(config_file, "w") as f:
+            json.dump(config, f)
+
+        display_current_logo(new_logo_path)
 
 
 
@@ -74,7 +94,7 @@ def DisplayButtons():
 
 def DisplayCurrentLogo():
     #Display "Food.Image.png" file
-    img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "their.logo.png")
+    img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "CompanyLogo.png")
     if os.path.exists(img_path):
         original_logo = Image.open(img_path)
 

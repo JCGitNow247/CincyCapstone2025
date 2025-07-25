@@ -24,13 +24,44 @@ Window = CTk()
 
 
 #Variable to link back to SQL
-import json
+import json ############################################
 config_file = "config.json"
 if os.path.exists(config_file):
     with open(config_file, "r") as f:
         CompanyPlaceholder = json.load(f).get("CompanyPlaceholder", "<SQLCompanyName>")
 else:
     CompanyPlaceholder = "<SQLCompanyName>"
+
+
+
+
+    #config_file = "config.json"
+    logo_path = os.path.join("UI", "images", "our_logos", "their.logo.png")  # default
+
+
+    if os.path.exists(config_file):
+        with open(config_file, "r") as f:
+            config = json.load(f)
+            logo_path = config.get("CompanyLogo", logo_path)
+
+    if os.path.exists(logo_path):
+        their_logo = Image.open(logo_path)
+    else:
+        print(f"Warning: Could not find logo at {logo_path}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -161,11 +192,11 @@ def Display_Logos_two_thirds():
     truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
     CTkLabel(Window,image=truck_logo, text="").place(x=744,y=320)
 
-    #Display "their.logo.png" file
-    their_logo = Image.open("UI/images/our_logos/their.logo.png")
-    resized_logo = their_logo.resize((200,200),Image.Resampling.LANCZOS)
-    truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
-    CTkLabel(Window,image=truck_logo, text="").place(x=744,y=33)
+    #Display "CompanyLogo.png" file
+    company_logo = Image.open("UI/images/our_logos/CompanyLogo.png")
+    resized_logo = company_logo.resize((200,200),Image.Resampling.LANCZOS)
+    truck2_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
+    CTkLabel(Window,image=truck2_logo, text="").place(x=744,y=33)
 
 
 
