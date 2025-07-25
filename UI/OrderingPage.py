@@ -136,6 +136,38 @@ def add_selected_items(PopUpMenu, checkboxes, ItemID):
     PopUpMenu.destroy()
 
 
+
+
+
+
+
+def remove_last_item():
+    global OrderItemsList, OrderDisplay
+
+    if OrderItemsList:
+        OrderItemsList.pop()  # Remove the last order item
+
+        # Clear and re-display remaining items
+        OrderDisplay.configure(state="normal")
+        OrderDisplay.delete("1.0", "end")
+
+        for order_item in OrderItemsList:
+            OrderDisplay.insert("end", f"{order_item.get_name()}\n", "bold")
+            for food in order_item.m_aFoodItems:
+                OrderDisplay.insert("end", f"   {food['name']}\n")
+            OrderDisplay.insert("end", "\n")
+
+        OrderDisplay.configure(state="disabled")
+
+
+
+
+
+
+
+
+
+
 def CreateTextBox():
     global OrderDisplay
     OrderDisplay = CTkTextbox(Window, font=('Arial', 20), width=300, height=300)
@@ -148,13 +180,13 @@ def CreateTextBox():
 
 
 def CreateLabel():
-    CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold')).place(x=98,y=40)
+    CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold')).place(x=108,y=40)
     CTkLabel(Window, text=SQLItemOrdered, font=('Arial',20)).place(x=708,y=125)
     CTkLabel(Window, text=SQLTotal, font=('Arial',20)).place(x=735,y=525)
 
 def CreateButtons():
     CTkButton(Window, text="Place Order", font=('Arial',20), width=200, height=50, command=open_credit_ui).place(x=735,y=45)
-    CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50).place(x=735,y=445)
+    CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50, command=remove_last_item).place(x=735,y=445)
 
 
 
@@ -164,8 +196,8 @@ def CreateButtons():
     y_padding = 25
 
     #scrollable frame for menu items
-    scroll_frame = CTkScrollableFrame(Window, width=600, height=450)
-    scroll_frame.place(x=50, y=100)
+    scroll_frame = CTkScrollableFrame(Window, width=470, height=450)
+    scroll_frame.place(x=106, y=100)
 
     # Iterative buttons placement
     x_positions = [0, 300]  # column 1 and column 2
