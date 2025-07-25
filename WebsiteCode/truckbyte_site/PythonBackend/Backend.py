@@ -10,11 +10,11 @@ CORS(app)  # This enables access from file:// and any other origins
 def get_connection():
     try:
         conn = mariadb.connect(
-            user="root",
-            password="password",  # 👈 replace with your actual root password
-            host="localhost",
+            host='localhost',
+            user='truckbytesdev',
+            password='tb001',
             port=3306,
-            database="dbtruckbytes"
+            database='dbTruckBytes'
         )
         return conn
     except mariadb.Error as e:
