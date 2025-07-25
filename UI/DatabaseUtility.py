@@ -214,3 +214,151 @@ def get_sub_menus():
         intSubMenuIndex += 1
 
     return SubMenus
+
+
+
+def insert_food(name, amount, purchase_price, sell_price, food_type_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = """
+        INSERT INTO Foods (strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFoodTypeID)
+        VALUES (%s, %s, %s, %s, %s)
+    """
+    cursor.execute(sql, (name, amount, purchase_price, sell_price, food_type_id))
+    conn.commit()
+
+    cursor.execute("SELECT LAST_INSERT_ID()")
+    food_id = cursor.fetchone()[0]
+
+    cursor.close()
+    conn.close()
+    return food_id
+
+
+
+def get_food_by_id(food_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = """
+        SELECT intFoodID, strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFoodTypeID
+        FROM Foods WHERE intFoodID = %s
+    """
+    cursor.execute(sql, (food_id,))
+    row = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if row:
+        return {
+            "id": row[0],
+            "name": row[1],
+            "amount": row[2],
+            "purchase": row[3],
+            "sell": row[4],
+            "type_id": row[5]
+        }
+    return None
+
+
+
+def get_food_types():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT intFoodTypeID, strFoodType FROM FoodTypes")
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return {row[0]: row[1] for row in rows}
+
+
+
+def get_all_foods():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT intFoodID, strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFoodTypeID
+        FROM Foods
+    """)
+
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    # Return a list of dicts for each food item
+    return [
+        {
+            "id": row[0],
+            "name": row[1],
+            "amount": row[2],
+            "purchase": row[3],
+            "sell": row[4],
+            "type_id": row[5]
+        }
+        for row in rows
+    ]
+
+
+
+def update_food_item(food_id, updated_data):
+    """
+    Update a food record in the Foods table.
+
+    Parameters:
+    - food_id (int): ID of the food item to update.
+    - updated_data (dict): Dictionary with keys:
+        "name" (str),
+        "amount" (float),
+        "purchase" (float),
+        "sell" (float),
+        "type_id" (int)
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = """
+        UPDATE Foods
+        SET strFoodName = %s,
+            dblAmount = %s,
+            dblPurchasePrice = %s,
+            dblSellPrice = %s,
+            intFoodTypeID = %s
+        WHERE intFoodID = %s
+    """
+
+    cursor.execute(sql, (
+        updated_data["name"],
+        updated_data["amount"],
+        updated_data["purchase"],
+        updated_data["sell"],
+        updated_data["type_id"],
+        food_id
+    ))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+
+def delete_food_by_id(food_id):
+    """
+    Delete a food record from the Foods table by its ID.
+
+    Parameters:
+    - food_id (int): ID of the food item to delete.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = "DELETE FROM Foods WHERE intFoodID = %s"
+    cursor.execute(sql, (food_id,))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
