@@ -75,6 +75,7 @@ CREATE TABLE MenuItems (
 	strDescription VARCHAR(100),
 	dblPrice DECIMAL(10,2) NOT NULL,
 	intSubMenuID INT,
+	strTaxableItem VARCHAR(1) NOT NULL,
 	PRIMARY KEY (intMenuItemID)
 );
 
@@ -657,7 +658,8 @@ INSERT INTO SubMenus (strSubMenuName) VALUES
   ('Burgers'),
   ('Tacos'),
   ('Pizzas'),
-  ('Hotdogs');
+  ('Hotdogs'),
+  ('Drinks');
 
 -- Foods
 INSERT INTO Foods (strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFoodTypeID) VALUES
@@ -684,11 +686,11 @@ INSERT INTO Foods (strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFo
   ('Ketchup', 3, 4, 0.10, 8),
   ('Mustard', 3, 4, 0.10, 8),
   ('Mayonnaise', 3, 4, 0.10, 8),
-  ('Coca-Cola Syrup (5 gal box)', 640, 95, 0.25, 3),
-  ('Dr. Pepper Syrup (5 gal box)', 640, 95, 0.25, 3),
-  ('Lemonade Mix (1 gal)', 128, 8, 0.08, 3),
-  ('Bottled Water (16.9oz)', 24, 10, 1.00, 3),
-  ('Blue Powerade Mix (1 gal)', 128, 9, 0.10, 3);
+  ('Coca-Cola', 640, 95, 0.25, 3),
+  ('Dr. Pepper', 640, 95, 0.25, 3),
+  ('Lemonade', 128, 8, 0.08, 3),
+  ('Bottled Water', 24, 10, 1.00, 3),
+  ('Blue Powerade', 128, 9, 0.10, 3);
 
 -- SubMenusFoods
 INSERT INTO SubMenusFoods (intSubMenuID, intFoodID) VALUES
@@ -713,7 +715,12 @@ INSERT INTO SubMenusFoods (intSubMenuID, intFoodID) VALUES
   (3, 8),
   (3, 19),
   (4, 21),
-  (4, 22);
+  (4, 22),
+  (5, 24),
+  (5, 25),
+  (5, 26),
+  (5, 27),
+  (5, 28);
 
 -- TrucksFoods
 INSERT INTO TrucksFoods (intTruckID, intFoodID) VALUES
@@ -752,17 +759,13 @@ INSERT INTO MenuItemsTypes (strMenuItemType) VALUES
   ('Drinks');
 
 -- MenuItems
-INSERT INTO MenuItems (strMenuItemName, imgMenuItemImage, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID) VALUES
-  ('Burger', NULL, 1, 'Build your own burger from a list of toppings', 9.50, 1),
-  ('Taco', NULL, 1, 'Build your own taco from a list of toppings', 3.25, 2),
-  ('Fries', NULL, 2, NULL, 1.50, NULL),
-  ('Pizza', NULL, 1, 'Build your own pizza from a list of toppings', 7.00, 3),
-  ('Hotdog', NULL, 1, 'Build your own hotdog from a list of toppings', 3.50, 4),
-  ('Coca-Cola', NULL, 3, NULL, 1.50, NULL),
-  ('Dr. Pepper', NULL, 3, NULL, 1.50, NULL),
-  ('Lemonade', NULL, 3, NULL, 1.75, NULL),
-  ('Water', NULL, 3, NULL, 1.25, NULL),
-  ('Blue Powerade', NULL, 3, NULL, 1.50, NULL);
+INSERT INTO MenuItems (strMenuItemName, imgMenuItemImage, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID, strTaxableItem) VALUES
+  ('Burger', NULL, 1, 'Build your own burger from a list of toppings', 9.50, 1, 'N'),
+  ('Taco', NULL, 1, 'Build your own taco from a list of toppings', 3.25, 2, 'N'),
+  ('Fries', NULL, 2, NULL, 1.50, NULL, 'N'),
+  ('Pizza', NULL, 1, 'Build your own pizza from a list of toppings', 7.00, 3, 'N'),
+  ('Hotdog', NULL, 1, 'Build your own hotdog from a list of toppings', 3.50, 4, 'N'),
+  ('Drinks', NULL, 3, 'Choose your drink', 1.50, 5, 'Y');
 
 INSERT INTO MenuItemsFoods (intMenuItemID, intFoodID, dblFoodWeight) VALUES
     -- Burger (MenuItemID 1)
@@ -783,22 +786,7 @@ INSERT INTO MenuItemsFoods (intMenuItemID, intFoodID, dblFoodWeight) VALUES
     (5, 11, 0.25),       -- Hot Dog Bun (~0.25 lb)
     (5, 4, 0.15),        -- Hotdog (~0.15 lb)
     (5, 21, 0.02),       -- Ketchup (0.25 oz)
-    (5, 22, 0.02),       -- Mustard (0.25 oz)
-
-    -- Coca-Cola (MenuItemID 6)
-    (6, 24, 0.75),       -- Coca-Cola Syrup (12 oz)
-
-    -- Dr. Pepper (MenuItemID 7)
-    (7, 25, 0.75),      -- Dr. Pepper Syrup (12 oz)
-
-    -- Lemonade (MenuItemID 8)
-    (8, 26, 0.5),       -- Lemonade Mix (8 oz)
-
-    -- Water (MenuItemID 9)
-    (9, 27, 1.00),      -- Bottled Water (16 oz bottle)
-
-    -- Blue Powerade (MenuItemID 10)
-    (10, 28, 1.25);      -- Blue Powerade Mix (20 oz)
+    (5, 22, 0.02);       -- Mustard (0.25 oz)
 
 INSERT INTO TrucksMenuItems (intTruckID, intMenuItemID) VALUES
     (1, 1),
@@ -806,8 +794,4 @@ INSERT INTO TrucksMenuItems (intTruckID, intMenuItemID) VALUES
     (1, 3),
     (1, 4),
     (1, 5),
-    (1, 6),
-    (1, 7),
-    (1, 8),
-    (1, 9),
-    (1, 10);
+    (1, 6);
