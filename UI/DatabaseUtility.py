@@ -115,6 +115,8 @@ def get_sub_menu_name(ItemID):
 
     return sub_menu_name
 
+
+
 def get_menu_item_type(ItemID):
     """
     <b>Name:</b> get_menu_item_type<br>
@@ -134,3 +136,81 @@ def get_menu_item_type(ItemID):
     menu_item_type = row[0]
 
     return menu_item_type
+
+
+
+def get_menus():
+
+    Menus = {}
+    intMenuIndex = 0
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT MenuTypeID, MenuType FROM VMenus')
+
+    rows = cursor.fetchall()
+
+    for row in rows:
+
+        MenuTypeID = row[0]
+        MenuType = row[1]
+
+        Menus[intMenuIndex] = {
+
+            "id": MenuTypeID,
+            "name": MenuType
+        }
+
+        intMenuIndex += 1
+
+
+    return Menus
+
+
+def get_menu_id(menu_name):
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT MenuTypeID FROM VMenus WHERE MenuType = ?', (menu_name,))
+
+    row = cursor.fetchone()
+
+    if row is not None:
+        menu_id = row[0]
+    else:
+        menu_id = None
+
+    return menu_id
+
+
+def get_sub_menus():
+
+    SubMenus = {}
+    intSubMenuIndex = 0
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT SubMenuID, SubMenuName FROM VSubMenus')
+
+    rows = cursor.fetchall()
+
+    for row in rows:
+        
+        SubMenuID = row[0]
+        SubMenuName = row[1]
+
+        SubMenus[intSubMenuIndex] = {
+
+            "id": SubMenuID,
+            "name": SubMenuName
+        }
+
+        intSubMenuIndex += 1
+
+    return SubMenus
