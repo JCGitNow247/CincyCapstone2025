@@ -413,6 +413,14 @@ FROM
     SubMenus AS SM
 JOIN MenuItems AS MI ON SM.intSubMenuID = MI.intSubMenuID;
 
+-- View: VMenuItemType
+CREATE OR REPLACE VIEW VMenuItemType AS
+SELECT
+	MI.intMenuItemID AS MenuItem,
+	MIT.strMenuItemType AS MenuItemType
+FROM
+	MenuItems AS MI
+JOIN MenuItemsTypes AS MIT ON MI.intMenuItemTypeID = MIT.intMenuItemTypeID;
 
 -- ----------------------------------------------------------
 -- Create Procedures
