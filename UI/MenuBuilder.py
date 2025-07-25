@@ -1,6 +1,7 @@
 from OurDisplay import *
 from customtkinter import CTkCheckBox
 from tkinter import filedialog
+import DatabaseUtility as DB
 import os
 
 
@@ -120,10 +121,12 @@ def DisplayComboBoxes():
 
     global cboMenu, cboAddSubMenu
 
-    cboMenu = CTkComboBox(Window, values=[
-        SQLItem1,
-        SQLItem2,
-        SQLItem3],
+    Menus = DB.get_menus()
+
+    menu_names = [item["name"] for item in Menus.values()]
+
+    cboMenu = CTkComboBox(Window,
+        values=menu_names,
         font=('Arial', 18),
         justify="center", 
         width=250, 
@@ -132,12 +135,13 @@ def DisplayComboBoxes():
     cboMenu.place(x=200,y=140)
     cboMenu.set('Add To Existing Menu')
 
+    SubMenus = DB.get_sub_menus()
+
+    sub_menu_names = ["None"]
+    sub_menu_names += [item["name"] for item in SubMenus.values()]
 
     cboAddSubMenu = CTkComboBox(Window,
-        values=[
-        SQLSubMenu1,
-        SQLSubMenu2,
-        SQLSubMenu3], 
+        values=sub_menu_names, 
         font=('Arial', 14),
         justify="center",
         width=250, 
@@ -160,7 +164,6 @@ def DisplayComboBoxes():
 
     imgLogo = CTkLabel(Window,image=truck_logo, text="")
     imgLogo.place(x=683,y=115)
-
 
 
 #Resets fields after creating a new item
