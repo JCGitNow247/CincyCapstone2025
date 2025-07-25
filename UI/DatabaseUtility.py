@@ -114,3 +114,17 @@ def get_sub_menu_name(ItemID):
     sub_menu_name = row[0]
 
     return sub_menu_name
+
+def get_menu_item_type(ItemID):
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT MenuItemType FROM VMenuItemType WHERE MenuItem = ?', (ItemID,))
+
+    row = cursor.fetchone()
+
+    MenuItemType = row[0]
+
+    return MenuItemType
