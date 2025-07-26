@@ -25,15 +25,7 @@ def open_sub_menu(ItemID):
         add_side_item(ItemID)
         return
 
-    scale = float(Window.tk.call('tk', 'scaling'))
-    screen_width = Window.winfo_screenwidth()
-    screen_height = Window.winfo_screenheight()
-
-    popup_width = int(screen_width * 0.2 * scale/1.9)
-    popup_height = int(screen_height * 0.3 * scale/1.5)
-
     PopUpMenu = Toplevel()
-    PopUpMenu.geometry(f"{popup_width}x{popup_height}")
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.resizable(False, False)
 
@@ -41,14 +33,19 @@ def open_sub_menu(ItemID):
     PopUpMenu.update_idletasks()
     Window.update_idletasks()
 
+    # Get screen size (or main window size)
+    screen_width = Window.winfo_screenwidth()
+    screen_height = Window.winfo_screenheight()
+
+    # Size the popup to 40% of screen width and 30% of height
+    popup_width = min(int(screen_width * 0.2), 800)
+    popup_height = min(int(screen_height * 0.3), 600)
+
     # Get sizes
-    main_width = Window.winfo_width()
-    main_height = Window.winfo_height()
     main_x = Window.winfo_x()
     main_y = Window.winfo_y()
-
-    popup_width = PopUpMenu.winfo_width()
-    popup_height = PopUpMenu.winfo_height()
+    main_width = Window.winfo_width()
+    main_height = Window.winfo_height()
 
     # Calculate centered position relative to main window
     x = main_x + (main_width // 2) - (popup_width // 2)
