@@ -25,11 +25,12 @@ def open_sub_menu(ItemID):
         add_side_item(ItemID)
         return
 
+    scale = float(Window.tk.call('tk', 'scaling'))
     screen_width = Window.winfo_screenwidth()
     screen_height = Window.winfo_screenheight()
 
-    popup_width = int(screen_width * 0.2)
-    popup_height = int(screen_height * 0.3)
+    popup_width = int(screen_width * 0.2 * scale/1.9)
+    popup_height = int(screen_height * 0.3 * scale/1.5)
 
     PopUpMenu = Toplevel()
     PopUpMenu.geometry(f"{popup_width}x{popup_height}")
@@ -53,7 +54,7 @@ def open_sub_menu(ItemID):
     x = main_x + (main_width // 2) - (popup_width // 2)
     y = main_y + (main_height // 2) - (popup_height // 2)
 
-    PopUpMenu.geometry(f"+{x}+{y}")
+    PopUpMenu.geometry(f"{popup_width}x{popup_height}+{x}+{y}")
 
     # Scrollable frame for checkboxes
     scroll_frame = CTkScrollableFrame(PopUpMenu, width=300, height=60)
