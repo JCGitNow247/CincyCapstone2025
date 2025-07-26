@@ -28,6 +28,6 @@ function OrderNow() {
     window.location.href = "../OrderPage/OrderPage.html"
   } 
   else {
-    console.log("Please Select a Location")
+    alert("Please Select a Location");
   }
 }
