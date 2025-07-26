@@ -25,8 +25,14 @@ def open_sub_menu(ItemID):
         add_side_item(ItemID)
         return
 
+    screen_width = Window.winfo_screenwidth()
+    screen_height = Window.winfo_screenheight()
+
+    popup_width = int(screen_width * 0.2)
+    popup_height = int(screen_height * 0.3)
+
     PopUpMenu = Toplevel()
-    PopUpMenu.geometry("712x610+560+490")
+    PopUpMenu.geometry(f"{popup_width}x{popup_height}")
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.resizable(False, False)
 
