@@ -1,35 +1,3 @@
-body {
-    background-color: rgb(182, 182, 182);
-    font-style: italic;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    padding: 0%;
-}
-
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.Top-Banner {
-  width: 100%;
-  background-color: #929292;
-  text-align: right;
-  padding: 20px 0;
-}
-
-.Top-Buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.Top-Buttons button {font-style: italic; font-weight: bold; text-align: center; width: auto; padding-right: 10px; padding-left: 10px; padding-top: 4px; padding-bottom: 4px; margin-right: 1%; margin-left: 1%;}
-
 .centered {
   text-align: center;
 }
@@ -37,23 +5,23 @@ body {
 .button-container {
     margin-top: 40px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .button-container button {
-  font-size: 1em;
-  padding: 10px 20px;
+  font-size: 2em;
+  padding: 30px 30px;
   height: auto;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 5;
-  display: none;
+.button-container select {
+  font-size: 1em;
+  padding: 10px 10px;
+  width: auto;
+  margin-top: 10%;
 }
 
 .AboutUs-Popup {

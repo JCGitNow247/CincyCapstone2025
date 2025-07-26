@@ -111,7 +111,7 @@ function AddToCart(baseName = "Item", basePrice = 0) {
     // Create the delete button
     const button = document.createElement('button')
     const img = document.createElement('img');
-    img.src = "../Images/TrashIcon.png";
+    img.src = "../assets/images/TrashIcon.png";
     img.alt = 'TrashIcon';
     button.appendChild(img);
 
@@ -208,7 +208,7 @@ function restoreCartFromStorage() {
 
         const button = document.createElement('button');
         const img = document.createElement('img');
-        img.src = "../Images/TrashIcon.png";
+        img.src = "../assets/images/TrashIcon.png";
         img.alt = 'TrashIcon';
         button.appendChild(img);
 

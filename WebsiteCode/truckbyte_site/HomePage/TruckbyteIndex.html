@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,17 +13,23 @@
             <div class="Top-Banner">
                 <div class="Top-Buttons">
                     <Button onclick="window.location.href='TruckbyteIndex.html'"> Home </Button>
-                    <label> Food Truck Name here</label>
+                    <label> Truckbyte's Online Ordering</label>
                     <Button onclick="ToggleMenu('.AboutUs-Popup', 'AboutUs-overlay')"> About Us </Button>
                 </div>
             </div>
 
             <div class="centered">
                 <h1>Welcome to Truckbyte</h1>
-                <img src="../Images/TruckBytes.POS.Blue.png" alt="Truckbyte" width="400" height="400">
+                <img src="../assets/images/TruckBytes.POS.Blue.png" alt="Truckbyte" width="400" height="400">
                 
                 <div class="button-container">
                     <button onclick="OrderNow()">Order Now</button>
+                    <select id="foodTruckDropdown">
+                        <option value="" disabled selected>Select a Location</option>
+                        <option value="truck1">Jason's Jubilant Dishes</option>
+                        <option value="truck2">Adam's Amazing Appetizers</option>
+                        <option value="truck3">Cole's Cozy Corner</option>
+                    </select>
                 </div>
             </div>
 
