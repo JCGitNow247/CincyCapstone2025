@@ -24,22 +24,14 @@ def open_sub_menu(ItemID):
     if MenuItemType == "Sides":
         add_side_item(ItemID)
         return
+    
+    scale = Window.tk.call('tk', 'scaling')
 
-    PopUpMenu = Toplevel()
-    PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
-    PopUpMenu.resizable(False, False)
+    base_width = 600
+    base_height = 500
 
-    # Force layout update to get correct width and height
-    PopUpMenu.update_idletasks()
-    Window.update_idletasks()
-
-    # Get screen size (or main window size)
-    screen_width = Window.winfo_screenwidth()
-    screen_height = Window.winfo_screenheight()
-
-    # Size the popup to 40% of screen width and 30% of height
-    popup_width = min(int(screen_width * 0.2), 800)
-    popup_height = min(int(screen_height * 0.3), 600)
+    scaled_width = min(int(base_width * scale), 360)
+    scaled_height = min(int(base_height * scale), 380)
 
     # Get sizes
     main_x = Window.winfo_x()
@@ -48,10 +40,13 @@ def open_sub_menu(ItemID):
     main_height = Window.winfo_height()
 
     # Calculate centered position relative to main window
-    x = main_x + (main_width // 2) - (popup_width // 2)
-    y = main_y + (main_height // 2) - (popup_height // 2)
+    x = main_x + (main_width // 2) - (scaled_width // 2)
+    y = main_y + (main_height // 2) - (scaled_height // 2)
 
-    PopUpMenu.geometry(f"{popup_width}x{popup_height}+{x}+{y}")
+    PopUpMenu = Toplevel()
+    PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}")
+    PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
+    PopUpMenu.resizable(False, False)
 
     # Scrollable frame for checkboxes
     scroll_frame = CTkScrollableFrame(PopUpMenu, width=300, height=60)
