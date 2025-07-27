@@ -544,7 +544,9 @@ INSERT INTO EmployeesShifts (intEmployeeID, intShiftID, dtmShiftStart, dtmShiftE
 
 -- Trucks
 INSERT INTO Trucks (intTruckNumber, strTruckName, imgCompanyLogo) VALUES
-  (1, 'SuperTruck', NULL);
+  (1, 'SuperTruck', NULL),
+  (2, 'AwesomeTruck', NULL),
+  (3, 'MegaTruck', NULL);
 
 -- TrucksShifts
 INSERT INTO TrucksShifts (intShiftID, intTruckID) VALUES
