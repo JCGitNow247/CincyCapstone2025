@@ -1,24 +1,5 @@
 let selectedBaseItem = null;
 
-// Toggles the modification menu on and off
-function ToggleMenu(menuSelector, overlayId) {
-    const menu = document.querySelector(menuSelector);
-    const overlay = document.getElementById(overlayId);
-    if (!menu || !overlay) return;
-
-    const isHidden = getComputedStyle(menu).display === 'none'
-
-    //Toggle display
-    menu.style.display = isHidden ? 'flex' : 'none';
-    overlay.style.display = isHidden ? 'block' : 'none';
-
-        // If closing the menu, clear selected modifiers
-    if (!isHidden) {
-        const checkboxes = menu.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(cb => cb.checked = false);
-    }
-}
-
 function OpenModificationMenu(itemName, itemPrice) {
 
     selectedBaseItem = { name: itemName, price: itemPrice}
@@ -111,7 +92,7 @@ function AddToCart(baseName = "Item", basePrice = 0) {
     // Create the delete button
     const button = document.createElement('button')
     const img = document.createElement('img');
-    img.src = "../Images/TrashIcon.png";
+    img.src = "../assets/images/TrashIcon.png";
     img.alt = 'TrashIcon';
     button.appendChild(img);
 
@@ -208,7 +189,7 @@ function restoreCartFromStorage() {
 
         const button = document.createElement('button');
         const img = document.createElement('img');
-        img.src = "../Images/TrashIcon.png";
+        img.src = "../assets/images/TrashIcon.png";
         img.alt = 'TrashIcon';
         button.appendChild(img);
 
@@ -245,15 +226,27 @@ function LoadMenuCards() {
             const card = document.createElement('div');
             card.className = 'menu-card';
 
-            card.innerHTML = `
-                <h2> ${item.name} </h2>
-                <p>
-                    ${item.description}
-                </p>
-                <p> $${item.price.toFixed(2)} </p>
-                <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Modify Item</button><br>
-                <button onclick="AddToCart('${item.name}', ${item.price})">Add To Cart</button>
-            `;
+            if(item.name == "Drinks") {
+                card.innerHTML = `
+                    <h2> ${item.name} </h2>
+                    <p>
+                        ${item.description}
+                    </p>
+                    <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Add Drinks</button><br>
+                `;
+            } else {
+                card.innerHTML = `
+                    <h2> ${item.name} </h2>
+                    <p>
+                        ${item.description}
+                    </p>
+                    <p> $${item.price.toFixed(2)} </p>
+                    <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Modify Item</button><br>
+                    <button onclick="AddToCart('${item.name}', ${item.price})">Add To Cart</button>
+                `;
+            }
+
+
 
             container.appendChild(card);
         });
@@ -281,11 +274,6 @@ function updateTotalPrice() {
             totalLabel.textContent = `Total: $${total.toFixed(2)}`;
         }
     })
-}
-
-// proceeds to the checkout page.
-function ProceedToCheckout() {
-  window.location.href = "../CheckoutPageFiles/CheckoutPage.html"
 }
 
 if (document.querySelector('.menu-container')){

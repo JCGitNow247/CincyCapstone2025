@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html> 
     <head>
+        <link rel="stylesheet" href="../assets/css/global.css">
         <link rel="stylesheet" href="style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Online Ordering</title>
@@ -11,7 +12,7 @@
             <div class="Top-Banner">
                 <div class="Top-Buttons">
                     <Button onclick="window.location.href='../OrderPage/OrderPage.html'" id="headerBackButton"> Back </Button>
-                    <label> Food Truck Name here</label>
+                    <label id="foodTruckNameLabel"> Food Truck Name here </label>
                     <Button onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')" id="headerCartButton"> Cart (0) </Button>
                 </div>
             </div>
@@ -116,6 +117,8 @@
             </div>
             <!------------------------------------------------------------------>
     </body>
+    <script src="../assets/js/SharedFunctions.js"></script>
     <script src="../OrderPage/OrderScript.js"></script>
     <script src="CheckoutScript.js"></script>
+    <script>AddFoodTruckTitleName();</script>
 </html>
