@@ -362,3 +362,37 @@ def delete_food_by_id(food_id):
     conn.commit()
     cursor.close()
     conn.close()
+
+
+def get_total_sales():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT SUM(dblSaleAmount) FROM sales")
+    result = cursor.fetchone()[0]
+    conn.close()
+    return result or 0
+
+def get_sales_by_day():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT DATE(dtmDate), SUM(dblSaleAmount)
+        FROM sales
+        GROUP BY DATE(dtmDate)
+        ORDER BY DATE(dtmDate)
+    """)
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+def get_sales_by_payment_type():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT intSalesPaymentTypeID, SUM(dblSaleAmount)
+        FROM sales
+        GROUP BY intSalesPaymentTypeID
+    """)
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
