@@ -44,7 +44,7 @@ def display_food_image(img_path=None):
     else:
         imgLogo.configure(image=truck_logo)
 
-
+'''
 def save_as_png():
       #This Prompts to save a filename, in the listed directory, as a specific file type - You must include an option for all files??
     file_path = filedialog.askopenfilename(
@@ -62,7 +62,7 @@ def save_as_png():
     if file_path:
         display_food_image(file_path)
 
-
+'''
 
 def DisplayLabels():
 
@@ -102,8 +102,8 @@ def DisplayFields():
 
 
 def DisplayButtons():
-    btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Image", width=200, height=50, command=save_as_png)
-    btnAddImage.place(x=690,y=30)
+   # btnAddImage = CTkButton(Window, font=('Arial', 24), text="Click To Add Image", width=200, height=50, command=save_as_png)
+   # btnAddImage.place(x=690,y=30)
 
     btnCreateNew = CTkButton(Window, font=('Arial', 24), text="Create New Item", width=200, height=50, command=clear_fields)
     btnCreateNew.place(x=690,y=525)
@@ -150,7 +150,7 @@ def DisplayComboBoxes():
     cboAddSubMenu.place(x=200,y=510)  
     cboAddSubMenu.set('Prompt Existing Sub Menu?')
 
-
+'''
     #Display "Food.Image.png" file
     img_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "FoodImage.png")
     if os.path.exists(img_path):
@@ -165,7 +165,7 @@ def DisplayComboBoxes():
     imgLogo = CTkLabel(Window,image=truck_logo, text="")
     imgLogo.place(x=683,y=115)
 
-
+'''
 #Resets fields after creating a new item
 def clear_fields():
     txtItemNameField.delete(0.0, 'end')
