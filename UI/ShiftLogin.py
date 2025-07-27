@@ -1,5 +1,6 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
+from DatabaseUtility import *
 import re
 
 import DatabaseUtility as DB
@@ -34,12 +35,10 @@ def setup_ui():
                                 show="*")
     txtPasswordField.place(x=412, y=215)
 
- 
-    
     #Button
     CTkButton(Window, text="Login",
               width=w,
-              height=40,command=open_ordering_ui).place(x=412, y=270)
+              height=40,command=handle_login).place(x=412, y=270)
 
 
 
@@ -54,7 +53,7 @@ def show_invalid_msg():
 
 #Validate user inputs
 def validate_fields():
-    employee_name = txtUsernameField.get("1.0", "end").strip()
+    employee_name = txtUsernameField.get().strip()
     password = txtPasswordField.get().strip()
  
 
@@ -65,21 +64,37 @@ def validate_fields():
     
 
     #Validates Passwords
-    if not (password.isdigit() and len(password) > 2):
+    if (len(password) <= 2):
         messagebox.showerror("Invalid Password", "Password must be at least 2 digits.")
 
         #Because the password was rejected, the password is removed
         txtPasswordField.delete(0, 'end')
         return False
+    
+    if not validate_employee_credentials(employee_name, password):
+        messagebox.showerror("login Failed", "Invalid last name or password")
+        return False
   
     return True
 
+def validate_employee_credentials(last_name, password):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = """
+        SELECT COUNT(*) FROM employees
+        WHERE strLastName = %s AND strPassword = %s
+    """
+    cursor.execute(query, (last_name, password))
+    result = cursor.fetchone()[0]
+    conn.close()
+
+    return result > 0
 
 
-def open_ordering_ui():
+def handle_login():
     if validate_fields():
-        #import subprocess
-        subprocess.Popen(['python', 'OrderingPage.py'])
+        open_ordering_ui()
         Window.destroy()
 
 
