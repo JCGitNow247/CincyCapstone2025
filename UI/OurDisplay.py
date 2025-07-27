@@ -116,7 +116,8 @@ def Create_Menubar():
                               command=open_loyalty_ui)
 
 
-    ''' #This would need to validate if the login was from a valid manager -- Leaving it out of code
+    
+    #This would need to validate if the login was from a valid manager -- Leaving it out of code
     #Mgmt Menu Options
     Mgmt_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
@@ -132,7 +133,7 @@ def Create_Menubar():
 
     #Define Mgmt menu's submenu "Analytics"
     Mgmt_Menu.add_command(label="Analytics", font=14,command=open_analytics_ui)
-    '''
+    
 
 
 # Fuctions to call other ui pages
@@ -150,7 +151,7 @@ def open_credit_ui(): _open_ui('CreditCard.py')
 def open_loyalty_ui(): _open_ui('Loyalty.py')
 def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
 def open_bus_builder_ui(): _open_ui('UIBuilder.py')
-
+def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
 
 
 #Fuctions for UI setup type
