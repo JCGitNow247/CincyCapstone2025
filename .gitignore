@@ -8,3 +8,5 @@ UI/__pycache__/OurDisplay.cpython-313.pyc
 UI/__pycache__/DatabaseUtility.cpython-313.pyc
 
 UI/__pycache__/OrderItem.cpython-313.pyc
+
+UI/debug.log
