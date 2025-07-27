@@ -9,7 +9,7 @@ def setup_ui():
     w = 300
     h = 80
     f = ('Arial', 24)
-    button_size = {'width': 300, 'height': 80}
+    button_size = {'width': 250, 'height': 80}
 
 
     #Label For the whole page
@@ -23,20 +23,25 @@ def setup_ui():
         ("Truckbytes Ordering", open_ordering_ui),
         ("Analytics", open_analytics_ui),
         ("Menu Builder", open_menu_builder_ui),
-        ("UI & Location", open_bus_builder_ui),
+        ("UI & Location", open_UIbuilder_ui),
         ("Inventory", inventory_builder_ui),
     ]
 
+
     # Layout calculation
-    start_y = 120       # where the first button appears
-    spacing = 80       # vertical distance between buttons
-    x_position = 222
+    start_x, start_y = 100, 140  # top-left corner of button grid
+    x_spacing, y_spacing = 350, 120  # horizontal & vertical spacing
+    columns = 2
 
     for index, (text, command) in enumerate(buttons):
-        y_position = start_y + index * spacing
+        col = index % columns
+        row = index // columns
+        x_position = start_x + col * x_spacing
+        y_position = start_y + row * y_spacing
         CTkButton(Window, text=text, font=f, command=command, **button_size).place(x=x_position, y=y_position)
 
 
+# Initialize window and menus
 
 #Intantiate UI options
 Create_Window()
