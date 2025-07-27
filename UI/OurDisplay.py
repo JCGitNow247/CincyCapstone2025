@@ -110,12 +110,10 @@ def Create_Menubar():
     Employee_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
     
-    if is_logged_in:
-        #Define Employee menu's submenu "Log Out"
-        Employee_Menu.add_command(label="Logout", font=14, command=logout)
-    else:
-        #Define Employee menu's submenu "Log In"
-        Employee_Menu.add_command(label="Log In", font=14, command=open_login_ui)
+    #Define Employee menu's submenu "Log Out"
+    Employee_Menu.add_command(label="Logout", font=14, command=logout)
+    #Define Employee menu's submenu "Log In"
+    Employee_Menu.add_command(label="Log In", font=14, command=open_login_ui)
 
 
     # Show manager menu only if type_id == 2 (which is 'manager' in your SQL)

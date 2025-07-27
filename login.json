@@ -1,5 +1,1 @@
-{
-    "is_logged_in": true,
-    "employee_id": 4,
-    "employee_type_id": 3
-}
+{"is_logged_in": false, "employee_id": null, "employee_type_id": null}
