@@ -101,6 +101,11 @@ def open_bus_builder_ui():
     #This closes the current page
     Window.destroy()
 
+def open_analytics_ui():
+    #This subprocess allows you to specify a program to open a specific file
+    subprocess.Popen(['python', 'UI/Analytics.py'])
+    #This closes the current page
+    Window.destroy()
 
 
 #Intantiate UI
@@ -180,9 +185,7 @@ def Create_Menubar():
     Mgmt_Menu.add_command(label="Business Profile", font=14,command=open_bus_builder_ui)
 
     #Define Mgmt menu's submenu "Analytics"
-    Mgmt_Menu.add_command(label="Analytics", font=14,command="")
-
-
+    Mgmt_Menu.add_command(label="Analytics", font=14,command=open_analytics_ui)
 
 def Display_Logos_two_thirds():
 

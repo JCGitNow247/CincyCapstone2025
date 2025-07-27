@@ -9,7 +9,7 @@ def CreateButtonsAndLabels():
     
     #Create Buttons
     CTkButton(Window, font=('Arial', 24), text="Truckbytes Ordering", width=300, height=80, command=open_ordering_ui).place(x=222,y=119)
-    CTkButton(Window, font=('Arial', 24), text="Analytics", width=300, height=80).place(x=222,y=268)
+    CTkButton(Window, font=('Arial', 24), text="Analytics", width=300, height=80, command=open_analytics_ui).place(x=222,y=268)
     CTkButton(Window, font=('Arial', 24), text="Menu Builder", width=300, height=80, command=open_menu_builder_ui).place(x=222,y=415)
 
 
