@@ -79,5 +79,15 @@ def get_modifiers():
     modifiers = [{"name": row.strFoodName, "price": float(row.dblSellPrice)} for row in rows]
     return jsonify(modifiers)
 
+@app.route('/get-trucks')
+def get_trucks():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT intTruckNumber, strTruckName FROM Trucks");
+    rows = cursor.fetchall()
+    trucks = [{"id": row[0], "name": row[1]} for row in rows]
+    return jsonify(trucks)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

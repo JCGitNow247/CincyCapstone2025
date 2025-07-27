@@ -30,7 +30,26 @@ function AddFoodTruckTitleName() {
     }
 }
 
+function BuildTruckList() {
+    fetch('http://localhost:5000/get-trucks')
+        .then(response => response.json())
+        .then(trucks => {
+            const dropdown = document.getElementById('foodTruckDropdown');
+            if (!dropdown) return;
+
+            trucks.forEach(truck => {
+                const option = document.createElement('option');
+                option.value = truck.id;
+                option.textContent = truck.name;
+                dropdown.appendChild(option);
+            });
+        })
+        .catch(err => console.error("Error loading trucks:", err));
+}
+
 // proceeds to the checkout page.
 function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"
 }
+
+window.BuildTruckList = BuildTruckList;
