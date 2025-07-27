@@ -12,39 +12,54 @@ tipOpt3= "20%"
 
 def CreateFields():
     #Must be global to validate
-    global txtCustomerName, txtCardNumberField, txtZipCodeField, txtSecurityCodeField, txtExpiration_DateField
+    global CustomerNameField, CardNumberField, ZipCodeField, SecurityCodeField, Expiration_DateField
 
-    #Create Textbox for "Customer Name"
-    txtCustomerName = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    txtCustomerName.place(x=61,y=90)
-    txtCustomerName.focus_set()
     
-    #Create Textbox for "Card Number"
-    txtCardNumberField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    txtCardNumberField.place(x=372,y=90)
+    #Accept Entry for "Customer Name"
+    CustomerNameField = CTkTextbox(Window,
+                               width=250,
+                               height=40,
+                               font=('Arial',24))
+    CustomerNameField.place(x=61,y=90)
+    CustomerNameField.focus_set()
+    
+    #Accept Entry for "Card Number"
+    CardNumberField = CTkTextbox(Window,
+                                  width=250,
+                                  height=40,
+                                  font=('Arial',24))
+    CardNumberField.place(x=372,y=90)
 
-    #Create Textbox For "Expiration Date"
-    txtExpiration_DateField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
-    txtExpiration_DateField.place(x=61,y=200)
+    #Accept Entry For "Expiration Date"
+    Expiration_DateField = CTkEntry(Window,
+                                       width=100,
+                                       height=40,
+                                       font=('Arial',24))
+    Expiration_DateField.place(x=61,y=200)
 
-    #Create Textbox For "Security Code"
-    txtSecurityCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
-    txtSecurityCodeField.place(x=211,y=200)
+    #Accept Entry For "Security Code"
+    SecurityCodeField = CTkEntry(Window,
+                                    width=100,
+                                    height=40,
+                                    font=('Arial',24))
+    SecurityCodeField.place(x=211,y=200)
 
-    #Create Textbox For "Zip Code"
-    txtZipCodeField = CTkTextbox(Window, width=100,height=40, font=('Arial',24))
-    txtZipCodeField.place(x=372,y=200)
-    #txtZipCodeField.insert("0.0","00000")
-
+    #Accept Entry For "Zip Code"
+    ZipCodeField = CTkEntry(Window,
+                               width=100,
+                               height=40,
+                               font=('Arial',24))
+    ZipCodeField.place(x=372,y=200)
+  
 
 
 # User Input Validation
 def validate_fields():
-    card_number = txtCardNumberField.get("1.0", "end").strip()
-    zip_code = txtZipCodeField.get("1.0", "end").strip()
-    security_code = txtSecurityCodeField.get("1.0", "end").strip()
-    expiration_date = txtExpiration_DateField.get("1.0", "end").strip()
-    name_on_card = txtCustomerName.get("1.0", "end").strip()
+    card_number = CardNumberField.get("1.0", "end").strip()
+    zip_code = ZipCodeField.get("1.0", "end").strip()
+    security_code = SecurityCodeField.get("1.0", "end").strip()
+    expiration_date = Expiration_DateField.get("1.0", "end").strip()
+    name_on_card = CustomerNameField.get("1.0", "end").strip()
 
     name_regex = r"^[A-Za-z\s\-']{2,50}$"
     if not re.match(name_regex, name_on_card):
@@ -75,7 +90,6 @@ def CreateLabels():
 
     Cost = "OrderingPage"
 
-
     #Create Label for "Customer Name"
     CTkLabel(Window, text="Name On Card", font=('Arial',24),).place(x=61,y=50)
     CTkLabel(Window, text="Card Number", font=('Arial',24)).place(x=372,y=50)
@@ -94,9 +108,8 @@ def CreateButtons():
 
     
     #WILL BE REMOVED IN FINAL || SKIPS Validation
-    CTkButton(Window, font=('Arial', 24), text="Pay", width=300, height=100).place(x=292,y=450)
-  
-    #CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyality_ui)
+    #CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyalty_ui).place(x=292,y=450)
+    CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=validate_fields).place(x=292,y=450)
 
 
 

@@ -7,6 +7,40 @@ import shutil
 
 
 
+
+
+
+
+#Variable to link back to json file
+CONFIG_FILE = "config.json"
+
+
+
+
+DEFAULT_COMPANY_NAME = "<SQLCompanyName>"
+DEFAULT_LOGO_PATH = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")
+
+CompanyPlaceholder = DEFAULT_COMPANY_NAME
+logo_path = DEFAULT_LOGO_PATH
+
+if os.path.exists(CONFIG_FILE):
+    with open(CONFIG_FILE, "r") as config_file:
+        config_data = json.load(config_file)
+        CompanyPlaceholder = config_data.get("CompanyPlaceholder", DEFAULT_COMPANY_NAME)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 truck_logo = None
 imgLogo = None
 
@@ -62,6 +96,11 @@ def save_as_png():
 
 
 
+
+
+
+
+
 def DisplayLabels():
     #Label of the page
     CTkLabel(Window, text="Business Builder", font=('Arial', 32, 'bold')).place(x=235,y=20)
@@ -72,15 +111,19 @@ def DisplayLabels():
 
 
 
-def DisplayFields():
-    global txtCompanyNameField
-    #Create Textbox for "Company Name"
-    txtCompanyNameField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    txtCompanyNameField.place(x=200,y=90)
 
-   #Create Textbox for "Location"
+def DisplayFields():
+    global txtCompanyNameField, txtCompanyNameField
+
+    #Create Textbox for "Location"
     txtLocationField = CTkTextbox(Window, width=250,height=150, font=('Arial',24))
     txtLocationField.place(x=200,y=240)
+
+    #Create Textbox for "Company Name"
+    txtCompanyNameField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
+    
+    txtCompanyNameField.place(x=200,y=90)
+    #txtCompanyNameField.insert(f"DEFAULT_COMPANY_NAME")
 
 
 
@@ -112,6 +155,18 @@ def update_company_name():
     global CompanyPlaceholder
     CompanyPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
     Window.title(CompanyPlaceholder + " Powered by TruckBytes")
+
+    # Save the updated name permanently in config.json
+    with open("config.json", "w") as f:
+        json.dump({"CompanyPlaceholder": CompanyPlaceholder}, f)
+    Window.title(CompanyPlaceholder + " Powered by TruckBytes")
+
+
+    
+def update_company_Location():
+    global LocationPlaceholder
+    LocationPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
+    Window.title(LocationPlaceholder + " Powered by TruckBytes")
 
     # Save the updated name permanently in config.json
     with open("config.json", "w") as f:
