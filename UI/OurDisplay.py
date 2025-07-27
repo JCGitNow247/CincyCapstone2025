@@ -136,7 +136,7 @@ def Create_Menubar():
     
 
 
-    ''' #This would need to validate if the login was from a valid manager -- Leaving it out of code
+     #This would need to validate if the login was from a valid manager -- Leaving it out of code
     #Mgmt Menu Options
     Mgmt_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
@@ -171,6 +171,7 @@ def open_loyalty_ui(): _open_ui('Loyalty.py')
 def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
 def open_bus_builder_ui(): _open_ui('UIBuilder.py')
 def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
+
 
 # Will log the user in upon success
 def login_success():
