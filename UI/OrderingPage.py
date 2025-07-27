@@ -44,7 +44,8 @@ def open_sub_menu(ItemID):
     y = main_y + (main_height // 2) - (scaled_height // 2)
 
     PopUpMenu = Toplevel()
-    PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}")
+    #PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}")
+    PopUpMenu.geometry("712x610")
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.resizable(False, False)
 
