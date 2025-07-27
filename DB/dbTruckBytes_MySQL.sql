@@ -683,11 +683,11 @@ INSERT INTO FoodTypes (strFoodType) VALUES
 
 -- SubMenus
 INSERT INTO SubMenus (strSubMenuName) VALUES
-  ('Burgers'),
-  ('Tacos'),
-  ('Pizzas'),
-  ('Hotdogs'),
-  ('Drinks');
+  ('Sandwich toppings'),
+  ('Taco toppings'),
+  ('Pizza toppings'),
+  ('Hotdog condiment'),
+  ('Drink');
 
 -- Foods
 INSERT INTO Foods (strFoodName, dblAmount, dblPurchasePrice, dblSellPrice, intFoodTypeID) VALUES
@@ -787,13 +787,13 @@ INSERT INTO MenuItemsTypes (strMenuItemType) VALUES
   ('Drinks');
 
 -- MenuItems
-INSERT INTO MenuItems (strMenuItemName, imgMenuItemImage, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID, strTaxableItem) VALUES
-  ('Burger', NULL, 1, 'Build your own burger from a list of toppings', 9.50, 1, 'N'),
-  ('Taco', NULL, 1, 'Build your own taco from a list of toppings', 3.25, 2, 'N'),
-  ('Fries', NULL, 2, NULL, 1.50, NULL, 'N'),
-  ('Pizza', NULL, 1, 'Build your own pizza from a list of toppings', 7.00, 3, 'N'),
-  ('Hotdog', NULL, 1, 'Build your own hotdog from a list of toppings', 3.50, 4, 'N'),
-  ('Drinks', NULL, 3, 'Choose your drink', 1.50, 5, 'Y');
+INSERT INTO MenuItems (strMenuItemName, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID, strTaxableItem) VALUES
+  ('Burger', 1, 'Build your own burger from a list of toppings', 9.50, 1, 'N'),
+  ('Taco',  1, 'Build your own taco from a list of toppings', 3.25, 2, 'N'),
+  ('Fries',  2, 'Fried in beef talo', 1.50, NULL, 'N'),
+  ('Pizza', 1, 'Build your own pizza from a list of toppings', 7.00, 3, 'N'),
+  ('Hotdog', 1, 'Build your own hotdog from a list of toppings', 3.50, 4, 'N'),
+  ('Drinks', 3, 'Choose your drink', 1.50, 5, 'Y');
 
 INSERT INTO MenuItemsFoods (intMenuItemID, intFoodID, dblFoodWeight) VALUES
     -- Burger (MenuItemID 1)
