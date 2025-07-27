@@ -17,6 +17,15 @@ import shutil
 
 
 
+if os.path.exists(CONFIG_FILE):
+    try:
+        with open(CONFIG_FILE, "r") as config_file:
+            contents = config_file.read()
+            config_data = json.loads(contents) if contents.strip() else {}
+            CompanyPlaceholder = config_data.get("CompanyPlaceholder", DEFAULT_COMPANY_NAME)
+    except Exception as e:
+        print("Failed to read config.json:", e)
+        CompanyPlaceholder = DEFAULT_COMPANY_NAME
 
 
 

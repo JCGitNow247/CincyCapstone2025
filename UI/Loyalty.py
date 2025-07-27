@@ -1,12 +1,19 @@
+# Reset login state at startup (ONLY done here)
+import json
+
+# RESET variables upon first entry with the application
+with open("login.json", "w") as f:
+    json.dump({
+        "is_logged_in": False,
+        "employee_id": None,
+        "employee_type_id": None
+    }, f)
+
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 
 #Import to validate email address 
 import re
-
-from tkinter import messagebox
-
-
 
 #User input validation
 def validate_fields():
@@ -28,79 +35,39 @@ def validate_fields():
 
 
 
-def page_ui():
-
-    global txtPhoneNumbField, txtEmailAddyField
+def CreateLabels():
     #Label of the page
-    CTkLabel(Window,
-             text="Customer Loyalty",
-             font=('Arial', 32, "bold")).place(x=235,y=45)
+    CTkLabel(Window, text="Customer Loyalty", font=('Arial', 32, "bold")).place(x=235,y=45)
     
     #Create Label For "Phone Number"
-    CTkLabel(Window,
-             text="Phone Number",
-             font=('Arial',24)).place(x=150,y=145)
+    CTkLabel(Window, text="Phone Number", font=('Arial',24)).place(x=150,y=145)
 
     #Create Label For "Email Address"
-    CTkLabel(Window,
-             text="Email Address",
-             font=('Arial',24)).place(x=150,y=190)
+    CTkLabel(Window, text="Email Address", font=('Arial',24)).place(x=150,y=190)
+
+
+
+def CreateFields():
+    global txtPhoneNumbField, txtEmailAddyField
 
     #Create Entry For "Phone Number"
-    txtPhoneNumbField = CTkEntry(Window,
-                                width=250,
-                                height=40,
-                                font=('Arial',24)).place(x=360,y=143)
+    txtPhoneNumbField = CTkTextbox(Window, width=250,height=40, font=('Arial',24)).place(x=360,y=143)
 
-    #Create Entry for "Email Address"
-    txtEmailAddyField = CTkEntry(Window,
-                                width=250,
-                                height=40,
-                                font=('Arial',24)).place(x=360,y=190)
+    #Create  for "Email Address"
+    txtEmailAddyField = CTkTextbox(Window, width=250,height=40, font=('Arial',24)).place(x=360,y=190)
 
-    '''
-    CTkButton(Window,
-              font=('Arial', 24), 
-              text="Check Loyalty",
-              width=300, height=80,
-              command=open_ordering_w_v_ui).place(x=222,y=270)
-    '''
 
+
+def CreateButtons():
+
+    #CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80, command=open_ordering_w_v_ui).place(x=222,y=270)
 
     #This SKIPS Validation = Will Be Removed in Final. Use above code to validate
     #Create button to Check Loyalty
-    CTkButton(Window,
-              font=('Arial', 24),
-              text="Check Loyalty\nCreate Loyality",
-              width=300, 
-              height=80,
-              command=show_user_entrys).place(x=222,y=270)
-
-
+    CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80).place(x=222,y=270)
     #Create button to Skip Loyalty
-    CTkButton(Window,
-              font=('Arial', 24),
-              text="Skip Loyalty\n Order Food",
-              width=300,
-              height=80,
-              command=open_ordering_ui).place(x=222,y=415)
+    CTkButton(Window, font=('Arial', 24), text="Skip Loyalty\n Order Food", width=300, height=80, command=open_ordering_ui).place(x=222,y=415)
 
-
-
-
-def show_user_entrys():
-    ######  I could not get the ".get()" to work, not sure why.
-    phone = "I can not get the .get() function"        ##### txtPhoneNumbField.get("1.0", "end").strip()
-    email = "to work"                                  ##### txtEmailAddyField.get("1.0", "end").strip()
-    
-    message = f"Sorry that does not match our records.\nYou entered:\n {phone}\n{email} \nWould You like to create Loyality account with this information?" #\n {phone}\n {email}"
-    #message = f"That does not match our records.\nYou entered:  \nWould You like to create Loyality account with this information?" #\n {phone}\n {email}"
-    result = messagebox.askquestion("First Time Loyality Signup", message)
-
-    if result == "yes":
-       yesMsg = f"You have been added"
-       messagebox.showinfo("Created New Account", yesMsg)#, command=open_ordering_ui)
-      #########  Hitting OK needs to lead to the ordering page. ##############
 
 
 #Used to open OrderingPage.py
@@ -122,13 +89,15 @@ def open_ordering_w_v_ui():
 
 
 
-#Intantiate UI specific to this page
-page_ui()
-
 #Intantiate UI options
 Create_Window()
 Create_Menubar()
 Display_Logos_two_thirds()
+
+#Intantiate UI specific to this page
+CreateFields()
+CreateLabels()
+CreateButtons()
 
 
 

@@ -95,9 +95,33 @@ def validate_employee_credentials(last_name, password):
 
 def handle_login():
     if validate_fields():
+        #Fetch user data
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        last_name = txtUsernameField.get().strip()
+        password = txtPasswordField.get().strip()
+
+        query = """
+            SELECT intEmployeeID, intEmployeeTypeID FROM Employees
+            WHERE strLastName = %s AND strPassword = %s
+        """
+        cursor.execute(query, (last_name, password))
+        row = cursor.fetchone()
+        conn.close()
+
+        if row:
+            emp_id, emp_type_id = row
+            login_data = {
+                "is_logged_in": True,
+                "employee_id": emp_id,
+                "employee_type_id": emp_type_id
+            }
+            with open("login.json", "w") as f:
+                json.dump(login_data, f, indent=4)
+
         login_success()
         open_ordering_ui()
-
 
 #WILL BE REMOVED IN FINAL || SKIPS Validation
 #btnSubmit = CTkButton(Window, text="Login", width=200, height=40).place(x=412,y=270)
