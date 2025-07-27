@@ -1,5 +1,5 @@
-from tkinter import *
 import os
+from tkinter import *
 
 #Used to read json file
 import json
@@ -7,23 +7,15 @@ import json
 #Used to open new .py files
 import subprocess
 
-
 from tkinter import Menu, messagebox
-
 import tkinter.font as tkfont
 
 
-#To istall, run the following on terminal:
-# pip install Pillow
 #Import To Display Images
-from PIL import Image
-
-#To istall, run the following on terminal:
-# pip install customtkinter & pip install customtkinter --upgrade
-from customtkinter import * 
+from PIL import Image ##--## To istall run the following on terminal: pip install Pillow
 
 
-
+from customtkinter import * ##--## #To istall, run the following on terminal: pip install customtkinter & pip install customtkinter --upgrade
 
 
 
@@ -34,10 +26,6 @@ Window = CTk()
 
 #Variable to link back to json file
 CONFIG_FILE = "config.json"
-
-
-
-
 DEFAULT_COMPANY_NAME = "<SQLCompanyName>"
 DEFAULT_LOGO_PATH = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")
 
@@ -56,25 +44,6 @@ if os.path.exists(logo_path):
 else:
     pass
     #print(f"Warning: Could not find logo at {logo_path}")
-
-
-
-
-def _open_ui(filename, close_window=True):
-    """Helper to open a UI file and optionally close current window."""
-    subprocess.Popen(['python', f'UI/{filename}'])
-    if close_window:
-        Window.destroy()
-
-
-def open_analytics_ui(): _open_ui('Analytics.py')
-def open_ordering_ui(): _open_ui('OrderingPage.py')
-def open_about_ui(): _open_ui('about.py', close_window=False)
-def open_login_ui(): _open_ui('ShiftLogin.py')
-def open_credit_ui(): _open_ui('CreditCard.py')
-def open_loyalty_ui(): _open_ui('Loyalty.py')
-def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
-def open_bus_builder_ui(): _open_ui('UIBuilder.py')
 
 
 
@@ -101,9 +70,6 @@ def Create_Window():
 
 
 
-
-
-
 def Create_Menubar():
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
@@ -114,31 +80,43 @@ def Create_Menubar():
     file_menu = Menu(menuBar, tearoff=0)
 
     #File Menu options
-    menuBar.add_cascade(label="File", font=14, menu=file_menu)
+    menuBar.add_cascade(label="File",
+                        font=14,
+                        menu=file_menu)
 
     #Define File Menu's submenu "About"
-    file_menu.add_command(label="About", font=14, command=open_about_ui)
+    file_menu.add_command(label="About",
+                          font=14,
+                          command=open_about_ui)
 
      #Define File Menu's submenu "Close Program"
-    file_menu.add_command(label="Close Program", font=14, command=Window.quit)
+    file_menu.add_command(label="Close Program",
+                          font=14,
+                          command=Window.quit)
 
 
     #Employee Menu Options
     Employee_Menu = Menu(menuBar, tearoff=0)
-    menuBar.add_cascade(label="Employee", menu=Employee_Menu)
-
+    menuBar.add_cascade(label="Employee",
+                        menu=Employee_Menu)
 
     #Define Employee menu's submenu "Log In"
-    Employee_Menu.add_command(label="Log In", font=14,command=open_login_ui)
+    Employee_Menu.add_command(label="Log In",
+                              font=14,
+                              command=open_login_ui)
     
     #Adds a separator bar
-    #file_menu.add_separator()
+    file_menu.add_separator()
+    file_menu.add_separator()
+    file_menu.add_separator()
     
     #Define Employee menu's submenu "Log Out"
-    Employee_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
+    Employee_Menu.add_command(label="Logout",
+                              font=14,
+                              command=open_loyalty_ui)
 
 
-    '''
+    ''' #This would need to validate if the login was from a valid manager -- Leaving it out of code
     #Mgmt Menu Options
     Mgmt_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
@@ -157,12 +135,28 @@ def Create_Menubar():
     '''
 
 
+# Fuctions to call other ui pages
+def _open_ui(filename, close_window=True):
+    """Helper to open a UI file and optionally close current window."""
+    subprocess.Popen(['python', f'UI/{filename}'])
+    if close_window:
+        Window.destroy()
 
+def open_analytics_ui(): _open_ui('Analytics.py')
+def open_ordering_ui(): _open_ui('OrderingPage.py')
+def open_about_ui(): _open_ui('about.py', close_window=False)
+def open_login_ui(): _open_ui('ShiftLogin.py')
+def open_credit_ui(): _open_ui('CreditCard.py')
+def open_loyalty_ui(): _open_ui('Loyalty.py')
+def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
+def open_bus_builder_ui(): _open_ui('UIBuilder.py')
+
+
+
+#Fuctions for UI setup type
 def Display_Logos_two_thirds():
 
     #Display "TruckBytes.png" file
-
-    
     original_logo = Image.open("UI/images/our_logos/TruckBytes.png")
     resized_logo = original_logo.resize((200,200),Image.Resampling.LANCZOS)
     truck_logo = CTkImage(light_image=resized_logo,
@@ -172,12 +166,6 @@ def Display_Logos_two_thirds():
              image=truck_logo,
              text="").place(x=744,y=320)
     
-
-
-   # _display_logo("UI/images/our_logos/TruckBytes.png", (744, 320))
-   # _display_logo("UI/images/our_logos/CompanyLogo.png", (744, 33))
-
-
   
     #Display "CompanyLogo.png" file
     company_logo = Image.open("UI/images/our_logos/CompanyLogo.png")
@@ -188,7 +176,6 @@ def Display_Logos_two_thirds():
     CTkLabel(Window,
              image=truck2_logo,
              text="").place(x=744,y=33)
-
 
 
 
@@ -204,12 +191,3 @@ def Display_Logo_Center():
     imgLogo = CTkLabel(Window,image=truck_logo,
                        text="")
     imgLogo.place(x=412,y=340)
-
-
-'''
-def _display_logo(path, position, size=(250, 250)):
-    """Helper to display a single logo image at the given position."""
-    if not os.path.exists(path):
-        print(f"Warning: Logo not found at {path}. Skipping.")
-        return
-'''

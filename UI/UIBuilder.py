@@ -113,7 +113,7 @@ def DisplayLabels():
 
 
 def DisplayFields():
-    global txtCompanyNameField, txtCompanyNameField
+    global txtCompanyNameField, txtLocationField
 
     #Create Textbox for "Location"
     txtLocationField = CTkTextbox(Window, width=250,height=150, font=('Arial',24))
