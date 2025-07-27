@@ -36,7 +36,7 @@ else:
 
 
     #config_file = "config.json"
-    logo_path = os.path.join("UI", "images", "our_logos", "their.logo.png")  # default
+    logo_path = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")  # default
 
 
     if os.path.exists(config_file):
