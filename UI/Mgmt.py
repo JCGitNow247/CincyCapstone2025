@@ -24,11 +24,12 @@ def setup_ui():
         ("Analytics", open_analytics_ui),
         ("Menu Builder", open_menu_builder_ui),
         ("UI & Location", open_bus_builder_ui),
+        ("Inventory", inventory_builder_ui),
     ]
 
     # Layout calculation
     start_y = 120       # where the first button appears
-    spacing = 120       # vertical distance between buttons
+    spacing = 80       # vertical distance between buttons
     x_position = 222
 
     for index, (text, command) in enumerate(buttons):
