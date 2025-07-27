@@ -7,18 +7,39 @@ import DatabaseUtility as DB
 def setup_ui():
     global txtUsernameField, txtPasswordField
 
-    txtUsernameField = CTkTextbox(Window, width=200, height=1)
+    #Standard width
+    w = 200
+    
+    #Labels
+    CTkLabel(Window, text="Employee Login",
+             font=('Arial', 32)).place(x=400, y=50)
+    
+    CTkLabel(Window, text="Last Name:",
+             font=('Arial', 20)).place(x=240, y=170)
+    
+    CTkLabel(Window, text="Password:",
+             font=('Arial', 20)).place(x=240, y=215)
+
+    #Entry Field
+    txtUsernameField = CTkEntry(Window,
+                                  width=w,
+                                  height=35,
+                                  font=('Arial', 24))
     txtUsernameField.place(x=412, y=170)
 
-    txtPasswordField = CTkEntry(Window,  width=200, height=30, font=('Arial', 24), border_width=0,fg_color=txtUsernameField.cget("fg_color"), corner_radius=txtUsernameField.cget("corner_radius"), show="*")
-
+    txtPasswordField = CTkEntry(Window,
+                                width=w,
+                                height=35,
+                                font=('Arial', 24),
+                                show="*")
     txtPasswordField.place(x=412, y=215)
 
-    CTkLabel(Window, text="Employee Login", font=('Arial', 32)).place(x=400, y=50)
-    CTkLabel(Window, text="Last Name:", font=('Arial', 20)).place(x=240, y=170)
-    CTkLabel(Window, text="Password:", font=('Arial', 20)).place(x=240, y=215)
+ 
     
-    CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui).place(x=412, y=270)
+    #Button
+    CTkButton(Window, text="Login",
+              width=w,
+              height=40,command=open_ordering_ui).place(x=412, y=270)
 
 
 
@@ -42,6 +63,8 @@ def validate_fields():
         messagebox.showerror("Invalid Name", "Please enter a valid name")
         return False
     
+
+    #Validates Passwords
     if not (password.isdigit() and len(password) > 2):
         messagebox.showerror("Invalid Password", "Password must be at least 2 digits.")
 

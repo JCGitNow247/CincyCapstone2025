@@ -7,10 +7,19 @@ import DatabaseUtility as DB
 from OrderItem import OrderItem
 
 #Variables to link to SQL
-SQLTotal = "Your Total"
+SQLTotal = " dblSellPrice Total"  ### This should be an aggregate of 
 SQLSubMenuName= "SQL Sub Menu Name"
 
 CurrentOrder = "$: "
+
+
+
+# Iterative buttons dimensions
+button_width = 200
+button_height = 120
+y_padding = 25
+
+
 
 "This needs to display which buttons were pushed"
 SQLItemOrdered = ""
@@ -44,8 +53,8 @@ def open_sub_menu(ItemID):
     y = main_y + (main_height // 2) - (scaled_height // 2)
 
     PopUpMenu = Toplevel()
-    #PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}")
-    PopUpMenu.geometry("712x610")
+    #PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") ############
+    PopUpMenu.geometry("712x610")                                  ############
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.resizable(False, False)
 
@@ -67,21 +76,36 @@ def open_sub_menu(ItemID):
         row_num = i // 2   # Every two items, start a new row
         col_num = i % 2    # 0 or 1 (column 1 or column 2)
 
-        checkbox.grid(row=row_num, column=col_num, padx=10, pady=5, sticky="w")
+        checkbox.grid(row=row_num,
+                      column=col_num,
+                      padx=10,
+                      pady=5, 
+                      sticky="w")
         checkboxes.append(checkbox)
 
     #Add Item button
-    add_item = CTkButton(PopUpMenu, text="Add Item", font=('Arial',20), width=200, height=50, command=lambda: add_selected_items(PopUpMenu, checkboxes, ItemID))
+    add_item = CTkButton(PopUpMenu,
+                         text="Add Item",
+                         font=('Arial',20),
+                         width=button_width,
+                         height=50,
+                         command=lambda: add_selected_items(PopUpMenu, checkboxes, ItemID))
     add_item.place(x=75,y=250)
 
     # Close button
-    my_button = CTkButton(PopUpMenu, text="close", font=('Arial',20), width=200, height=50, command=PopUpMenu.destroy)
+    my_button = CTkButton(PopUpMenu,
+                          text="close",
+                          font=('Arial',20),
+                          width=button_width,
+                          height=50,
+                          command=PopUpMenu.destroy)
     my_button.place(x=75,y=320)
 
     # Update sub menu name
     sub_menu_name = DB.get_sub_menu_name(ItemID)
 
     PopUpMenu.title("This is the "+sub_menu_name+ " menu")
+
 
 
 def add_side_item(ItemID):
@@ -129,10 +153,6 @@ def add_selected_items(PopUpMenu, checkboxes, ItemID):
 
 
 
-
-
-
-
 def remove_last_item():
     global OrderItemsList, OrderDisplay
 
@@ -162,7 +182,10 @@ def remove_last_item():
 
 def CreateTextBox():
     global OrderDisplay
-    OrderDisplay = CTkTextbox(Window, font=('Arial', 20), width=200, height=300)
+    OrderDisplay = CTkTextbox(Window,
+                              font=('Arial', 20),
+                              width=200,
+                              height=300)
     OrderDisplay.configure(state="disabled")
     OrderDisplay.place(x=735,y=125)
 
@@ -172,23 +195,46 @@ def CreateTextBox():
 
 
 def CreateLabel():
-    CTkLabel(Window, text="Welcome To The Ordering Page", font=('Arial', 32, 'bold')).place(x=108,y=40)
-    CTkLabel(Window, text=SQLItemOrdered, font=('Arial',20)).place(x=708,y=125)
-    CTkLabel(Window, text=SQLTotal, font=('Arial',20)).place(x=735,y=525)
+    CTkLabel(Window,
+             text="Welcome To The Ordering Page",
+             font=('Arial', 32, 'bold')).place(x=108,y=40)
+    
+    '''CTkLabel(Window,
+             text=SQLItemOrdered,
+             font=('Arial',20)).place(x=708,y=125)
+    '''
+
+    CTkLabel(Window,
+             text="Your Total: $"+SQLTotal,
+             font=('Arial',20)).place(x=735,y=525)
+
+
 
 def CreateButtons():
-    CTkButton(Window, text="Place Order", font=('Arial',20), width=200, height=50, command=open_credit_ui).place(x=735,y=45)
-    CTkButton(Window, text="Remove Last", font=('Arial',20), width=200, height=50, command=remove_last_item).place(x=735,y=445)
 
 
 
-    # Iterative buttons dimensions
-    button_width = 200
-    button_height = 120
-    y_padding = 25
+
+
+    CTkButton(Window, text="Place Order",
+              font=('Arial',20),
+              width= button_width,
+              height=50,
+              command=open_credit_ui).place(x=735,y=45)
+    
+    CTkButton(Window,
+              text="Remove Last",
+              font=('Arial',20),
+              width= button_width,
+              height=50,
+              command=remove_last_item).place(x=735,y=445)
+
+
 
     #scrollable frame for menu items
-    scroll_frame = CTkScrollableFrame(Window, width=470, height=450)
+    scroll_frame = CTkScrollableFrame(Window,
+                                      width=470,
+                                      height=450)
     scroll_frame.place(x=106, y=100)
 
     # Iterative buttons placement
@@ -211,7 +257,11 @@ def CreateButtons():
         x = x_positions[col]
         y = row * y_step
 
-        button = CTkButton(scroll_frame, font=('Arial', 20), text=ItemName, width=button_width, height=button_height, command=lambda i=ItemID: open_sub_menu(i))
+        button = CTkButton(scroll_frame, font=('Arial', 20),
+                           text=ItemName,
+                           width=button_width,
+                           height=button_height,
+                           command=lambda i=ItemID: open_sub_menu(i))
         
         button.grid(row=row, column=col, padx=15, pady=15)
         buttons.append(button)
