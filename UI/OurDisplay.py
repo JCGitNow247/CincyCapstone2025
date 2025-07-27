@@ -10,22 +10,17 @@ import subprocess
 from tkinter import Menu, messagebox
 import tkinter.font as tkfont
 
-
 #Import To Display Images
 from PIL import Image ##--## To istall run the following on terminal: pip install Pillow
 
-
 from customtkinter import * ##--## #To istall, run the following on terminal: pip install customtkinter & pip install customtkinter --upgrade
-
-
 
 #Instantiate a window
 Window = CTk()
 
-
-
 #Variable to link back to json file
 CONFIG_FILE = "config.json"
+LOGIN_FILE = "login.json"
 DEFAULT_COMPANY_NAME = "<SQLCompanyName>"
 DEFAULT_LOGO_PATH = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")
 
@@ -33,10 +28,19 @@ CompanyPlaceholder = DEFAULT_COMPANY_NAME
 logo_path = DEFAULT_LOGO_PATH
 
 if os.path.exists(CONFIG_FILE):
-    with open(CONFIG_FILE, "r") as config_file:
-        config_data = json.load(config_file)
-        CompanyPlaceholder = config_data.get("CompanyPlaceholder", DEFAULT_COMPANY_NAME)
-        logo_path = config_data.get("CompanyLogo", DEFAULT_LOGO_PATH)
+    try:
+        with open(CONFIG_FILE, "r") as config_file:
+            contents = config_file.read()
+            if contents.strip():
+                config_data = json.loads(contents)
+            else:
+                config_data = {}
+            CompanyPlaceholder = config_data.get("CompanyPlaceholder", DEFAULT_COMPANY_NAME)
+            logo_path = config_data.get("CompanyLogo", DEFAULT_LOGO_PATH)
+    except Exception as e:
+        print("ERROR LOADING CONFIG.JSON:", e)
+        CompanyPlaceholder = DEFAULT_COMPANY_NAME
+        logo_path = DEFAULT_LOGO_PATH
 
 # Load company logo if it exists
 if os.path.exists(logo_path):
@@ -44,6 +48,7 @@ if os.path.exists(logo_path):
 else:
     pass
     #print(f"Warning: Could not find logo at {logo_path}")
+
 
 
 
@@ -71,6 +76,15 @@ def Create_Window():
 
 
 def Create_Menubar():
+    global is_logged_in
+
+    try:
+        with open(LOGIN_FILE, "r") as f:
+            is_logged_in = json.load(f).get("is_logged_in", False)
+    except Exception as e:
+        print("Failed to load login state:", e)
+        is_logged_in = False
+    
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
     Window.config(menu=menuBar) #,bg_color="#c80d0d")
@@ -94,30 +108,35 @@ def Create_Menubar():
                           font=14,
                           command=Window.quit)
 
+    #Adds a separator bar
+    file_menu.add_separator()
+    file_menu.add_separator()
+    file_menu.add_separator()
+
 
     #Employee Menu Options
     Employee_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Employee",
                         menu=Employee_Menu)
-
-    #Define Employee menu's submenu "Log In"
-    Employee_Menu.add_command(label="Log In",
-                              font=14,
-                              command=open_login_ui)
     
-    #Adds a separator bar
-    file_menu.add_separator()
-    file_menu.add_separator()
-    file_menu.add_separator()
-    
-    #Define Employee menu's submenu "Log Out"
-    Employee_Menu.add_command(label="Logout",
-                              font=14,
-                              command=open_loyalty_ui)
 
+    if is_logged_in:
+        #Define Employee menu's submenu "Log Out"
+        Employee_Menu.add_command(label="Logout",
+                                  font=14,
+                                  command=logout)
+    else:
+        #Define Employee menu's submenu "Log In"
+        Employee_Menu.add_command(label="Log In",
+                                font=14,
+                                command=open_login_ui)
+    
+    print(is_logged_in)
 
     
-    #This would need to validate if the login was from a valid manager -- Leaving it out of code
+
+
+    ''' #This would need to validate if the login was from a valid manager -- Leaving it out of code
     #Mgmt Menu Options
     Mgmt_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
@@ -152,6 +171,10 @@ def open_loyalty_ui(): _open_ui('Loyalty.py')
 def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
 def open_bus_builder_ui(): _open_ui('UIBuilder.py')
 def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
+
+# Will log the user in upon success
+def login_success():
+    global is_logged_in
 
 
 #Fuctions for UI setup type

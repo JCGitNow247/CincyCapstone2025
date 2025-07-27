@@ -77,6 +77,7 @@ def validate_fields():
   
     return True
 
+# Validates to see if employee credentials are in the database.
 def validate_employee_credentials(last_name, password):
     conn = get_connection()
     cursor = conn.cursor()
@@ -94,13 +95,13 @@ def validate_employee_credentials(last_name, password):
 
 def handle_login():
     if validate_fields():
+        login_success()
         open_ordering_ui()
-        Window.destroy()
 
 
 #WILL BE REMOVED IN FINAL || SKIPS Validation
 #btnSubmit = CTkButton(Window, text="Login", width=200, height=40).place(x=412,y=270)
-btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui).place(x=412,y=270)
+#btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui).place(x=412,y=270)
 
 
 
