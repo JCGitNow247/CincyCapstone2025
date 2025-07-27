@@ -17,6 +17,19 @@ function ToggleMenu(menuSelector, overlayId) {
     }
 }
 
+function AddFoodTruckTitleName() {
+    const name = localStorage.getItem("selectedTruckName");
+    if (name) {
+        let label = document.getElementById("foodTruckNameLabel");
+        if (!label) {
+            label = document.createElement("label");
+            label.id = "foodTruckNameLabel";
+            document.querySelector(".Top-Buttons")?.appendChild(label);
+        }
+        label.textContent = name;
+    }
+}
+
 // proceeds to the checkout page.
 function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"

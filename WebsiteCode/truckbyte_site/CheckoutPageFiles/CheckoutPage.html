@@ -12,7 +12,7 @@
             <div class="Top-Banner">
                 <div class="Top-Buttons">
                     <Button onclick="window.location.href='../OrderPage/OrderPage.html'" id="headerBackButton"> Back </Button>
-                    <label> Food Truck Name here</label>
+                    <label id="foodTruckNameLabel"> Food Truck Name here </label>
                     <Button onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')" id="headerCartButton"> Cart (0) </Button>
                 </div>
             </div>
@@ -120,4 +120,5 @@
     <script src="../assets/js/SharedFunctions.js"></script>
     <script src="../OrderPage/OrderScript.js"></script>
     <script src="CheckoutScript.js"></script>
+    <script>AddFoodTruckTitleName();</script>
 </html>

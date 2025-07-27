@@ -12,7 +12,7 @@
             <div class="Top-Banner">
                 <div class="Top-Buttons">
                     <Button onclick="window.location.href='../HomePage/TruckbyteIndex.html'" id="headerBackButton"> Back </Button>
-                    <label> Food Truck Name here</label>
+                    <label id="foodTruckNameLabel"> Food Truck Name here </label>
                     <Button onclick="ToggleMenu('.Cart-Menu', 'Cart-overlay')" id="headerCartButton"> Cart (0) </Button>
                 </div>
             </div>
@@ -69,4 +69,5 @@
     </body>
     <script src="../assets/js/SharedFunctions.js"></script>
     <script src="OrderScript.js"></script>
+    <script>AddFoodTruckTitleName();</script>
 </html>

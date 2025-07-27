@@ -226,15 +226,27 @@ function LoadMenuCards() {
             const card = document.createElement('div');
             card.className = 'menu-card';
 
-            card.innerHTML = `
-                <h2> ${item.name} </h2>
-                <p>
-                    ${item.description}
-                </p>
-                <p> $${item.price.toFixed(2)} </p>
-                <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Modify Item</button><br>
-                <button onclick="AddToCart('${item.name}', ${item.price})">Add To Cart</button>
-            `;
+            if(item.name == "Drinks") {
+                card.innerHTML = `
+                    <h2> ${item.name} </h2>
+                    <p>
+                        ${item.description}
+                    </p>
+                    <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Add Drinks</button><br>
+                `;
+            } else {
+                card.innerHTML = `
+                    <h2> ${item.name} </h2>
+                    <p>
+                        ${item.description}
+                    </p>
+                    <p> $${item.price.toFixed(2)} </p>
+                    <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Modify Item</button><br>
+                    <button onclick="AddToCart('${item.name}', ${item.price})">Add To Cart</button>
+                `;
+            }
+
+
 
             container.appendChild(card);
         });

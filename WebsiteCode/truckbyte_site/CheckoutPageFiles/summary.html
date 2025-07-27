@@ -13,7 +13,7 @@
             <div class="Top-Banner">
                 <div class="Top-Buttons">
                     <Button onclick="window.location.href='../HomePage/TruckbyteIndex.html'" id="headerBackButton"> Home </Button>
-                    <label> Food Truck Name here</label>
+                    <label id="foodTruckNameLabel"> Food Truck Name here </label>
                     <Button onclick="ToggleMenu('.AboutUs-Popup', 'AboutUs-overlay')"> About Us </Button>
                 </div>
             </div>
@@ -29,8 +29,11 @@
                     <h2>About Us</h2>
                     
                     <p> 
-                        We are Team B, the creators of Truckbyte POS; consisting of Jason Cope, Cole Whittaker and Adam Broderick.
-                        This site was built for Truckbyte POS, specifically for online ordering for food trucks.
+                        Project by Cole Whitaker, <br> 
+                        Adam Broderick 
+                        <br> & <br> 
+                        Jason Cope <br> 
+                        2025 Summer Capstone
                     </p>
                     
 
@@ -44,6 +47,7 @@
             <!------------------------------------------------------------------>
         <script src="../assets/js/SharedFunctions.js"></script>
         <script src="../OrderPage/OrderScript.js"></script>
-        <script src="CheckoutScript.js"></script>  
+        <script src="CheckoutScript.js"></script>
+        <script>AddFoodTruckTitleName();</script> 
     </body>
 </html>
