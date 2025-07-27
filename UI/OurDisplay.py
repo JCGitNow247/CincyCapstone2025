@@ -17,24 +17,21 @@ from customtkinter import *
 import subprocess
 
 
+#Used to read json file
+import json
+
 #Instantiate a window
 Window = CTk()
 
 
 
-#Variable to link back to SQL
-import json ############################################
+#Variable to link back to json file
 config_file = "config.json"
 if os.path.exists(config_file):
     with open(config_file, "r") as f:
         CompanyPlaceholder = json.load(f).get("CompanyPlaceholder", "<SQLCompanyName>")
 else:
     CompanyPlaceholder = "<SQLCompanyName>"
-
-
-
-
-    #config_file = "config.json"
     logo_path = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")  # default
 
 
@@ -48,6 +45,13 @@ else:
     else:
         print(f"Warning: Could not find logo at {logo_path}")
 
+
+
+def open_analytics_ui():
+    #This subprocess allows you to specify a program to open a specific file
+    subprocess.Popen(['python', 'UI/Analytics.py'])
+    #This closes the current page
+    Window.destroy()
 
 def open_ordering_ui():
     #This subprocess allows you to specify a program to open a specific file
@@ -92,6 +96,7 @@ def open_analytics_ui():
     Window.destroy()
 
 
+
 #Intantiate UI
 def Create_Window():
     #Create size of window
@@ -115,11 +120,7 @@ def Create_Window():
 
 
 
-#Intantiate Menubar
-"""
-Instead of a dedicated management page, maybe we should 
-just give extra dropdown options to people with management codes
-"""
+
 def Create_Menubar():
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
@@ -154,7 +155,7 @@ def Create_Menubar():
     Employee_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
 
 
-    
+    '''
     #Mgmt Menu Options
     Mgmt_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
@@ -170,6 +171,9 @@ def Create_Menubar():
 
     #Define Mgmt menu's submenu "Analytics"
     Mgmt_Menu.add_command(label="Analytics", font=14,command=open_analytics_ui)
+    '''
+
+
 
 def Display_Logos_two_thirds():
 
