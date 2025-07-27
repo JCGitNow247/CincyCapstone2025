@@ -1,3 +1,5 @@
 {
-    "is_logged_in": false
+    "is_logged_in": false,
+    "employee_id": null,
+    "employee_type_id": null
 }

@@ -77,82 +77,58 @@ def Create_Window():
 
 def Create_Menubar():
     global is_logged_in
+    employee_type_id = None
 
     try:
         with open(LOGIN_FILE, "r") as f:
-            is_logged_in = json.load(f).get("is_logged_in", False)
+            login_data = json.load(f)
+            is_logged_in = login_data.get("is_logged_in", False)
+            employee_type_id = login_data.get("employee_type_id", None)
     except Exception as e:
         print("Failed to load login state:", e)
         is_logged_in = False
+        employee_type_id = None
     
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
     Window.config(menu=menuBar) #,bg_color="#c80d0d")
     #menuBar.configure(bg_color="#c80d0d")
 
-    #Define a Menubar
-    file_menu = Menu(menuBar, tearoff=0)
+    file_menu = Menu(menuBar, tearoff=0) #Define a Menubar
 
-    #File Menu options
-    menuBar.add_cascade(label="File",
-                        font=14,
-                        menu=file_menu)
+    menuBar.add_cascade(label="File", font=14, menu=file_menu) #File Menu options
 
-    #Define File Menu's submenu "About"
-    file_menu.add_command(label="About",
-                          font=14,
-                          command=open_about_ui)
-
-     #Define File Menu's submenu "Close Program"
-    file_menu.add_command(label="Close Program",
-                          font=14,
-                          command=Window.quit)
+    file_menu.add_command(label="About", font=14, command=open_about_ui) #Define File Menu's submenu "About"
+    file_menu.add_command(label="Close Program", font=14, command=Window.quit) #Define File Menu's submenu "Close Program"
 
     #Adds a separator bar
     file_menu.add_separator()
     file_menu.add_separator()
     file_menu.add_separator()
-
 
     #Employee Menu Options
     Employee_Menu = Menu(menuBar, tearoff=0)
-    menuBar.add_cascade(label="Employee",
-                        menu=Employee_Menu)
+    menuBar.add_cascade(label="Employee", menu=Employee_Menu)
     
-
     if is_logged_in:
         #Define Employee menu's submenu "Log Out"
-        Employee_Menu.add_command(label="Logout",
-                                  font=14,
-                                  command=logout)
+        Employee_Menu.add_command(label="Logout", font=14, command=logout)
     else:
         #Define Employee menu's submenu "Log In"
-        Employee_Menu.add_command(label="Log In",
-                                font=14,
-                                command=open_login_ui)
-    
-    print(is_logged_in)
-
-    
+        Employee_Menu.add_command(label="Log In", font=14, command=open_login_ui)
 
 
-     #This would need to validate if the login was from a valid manager -- Leaving it out of code
-    #Mgmt Menu Options
-    Mgmt_Menu = Menu(menuBar, tearoff=0)
-    menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
+    # Show manager menu only if type_id == 2 (which is 'manager' in your SQL)
+    if is_logged_in and employee_type_id == 2:
+        Mgmt_Menu = Menu(menuBar, tearoff=0)
+        menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
+        Mgmt_Menu.add_command(label="Menu Builder", font=14, command=open_menu_builder_ui)
+        Mgmt_Menu.add_command(label="Business Profile", font=14, command=open_bus_builder_ui)
+        Mgmt_Menu.add_command(label="Analytics", font=14, command=open_analytics_ui)
 
-    #Define Mgmt menu's submenu "Menu Builder"
-    Mgmt_Menu.add_command(label="Menu Builder", font=14,command=open_menu_builder_ui)
-    
-    #Adds a separator bar
-    file_menu.add_separator()
-    
-    #Define Mgmt menu's submenu "Business Profile"
-    Mgmt_Menu.add_command(label="Business Profile", font=14,command=open_bus_builder_ui)
+    print("Logged in:", is_logged_in, " | Type:", employee_type_id)
 
-    #Define Mgmt menu's submenu "Analytics"
-    Mgmt_Menu.add_command(label="Analytics", font=14,command=open_analytics_ui)
-    
+
 
 
 # Fuctions to call other ui pages
@@ -177,6 +153,22 @@ def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
 def login_success():
     global is_logged_in
 
+
+def logout():
+    global is_logged_in
+
+    is_logged_in = False
+
+    login_data = {
+        "is_logged_in": False,
+        "employee_id": None,
+        "employee_type_id": None
+    }
+
+    with open("login.json", "w") as f:
+        json.dump(login_data, f, indent=4)
+
+    open_loyalty_ui()
 
 #Fuctions for UI setup type
 def Display_Logos_two_thirds():
