@@ -8,7 +8,7 @@ def setup_ui():
     #ButtonShape Variables
     w = 300
     h = 80
-    #f = ('Arial', 24)
+    f = ('Arial', 24)
 
     #Label For the whole page
     CTkLabel(Window,
@@ -19,28 +19,28 @@ def setup_ui():
     CTkButton(Window,text="Truckbytes Ordering",
               width=w,
               height=h,
-              font=('Arial', 24),
+              font=f,
               command=open_ordering_ui).place(x=222,y=119)
     
     CTkButton(Window, text="Analytics",
               width=w,
               height=h,
-              font=('Arial', 24),
+              font=f,
               command=open_analytics_ui).place(x=222,y=268)
     
     CTkButton(Window,
             text="Menu Builder",
               width=w,
               height=h,
-              font=('Arial', 24),
+              font=f,
               command=open_menu_builder_ui).place(x=222,y=415)
     
     CTkButton(Window, 
               text="UI & Location",
               width=w,
               height=h,
-              font=('Arial', 24),
-              command=open_analytics_ui).place(x=222,y=515)
+              font=f,
+              command=open_bus_builder_ui).place(x=222,y=515)
 
 
 #Intantiate UI options

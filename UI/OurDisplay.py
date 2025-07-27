@@ -1,8 +1,17 @@
 from tkinter import *
 import os
+
+#Used to read json file
+import json
+
+#Used to open new .py files
+import subprocess
+
+
+from tkinter import Menu, messagebox
+
 import tkinter.font as tkfont
-#For some reason messagebox is not included in the import *??
-from tkinter import messagebox
+
 
 #To istall, run the following on terminal:
 # pip install Pillow
@@ -13,12 +22,10 @@ from PIL import Image
 # pip install customtkinter & pip install customtkinter --upgrade
 from customtkinter import * 
 
-#Used to open new .py files
-import subprocess
 
 
-#Used to read json file
-import json
+
+
 
 #Instantiate a window
 Window = CTk()
@@ -26,74 +33,48 @@ Window = CTk()
 
 
 #Variable to link back to json file
-config_file = "config.json"
-if os.path.exists(config_file):
-    with open(config_file, "r") as f:
-        CompanyPlaceholder = json.load(f).get("CompanyPlaceholder", "<SQLCompanyName>")
+CONFIG_FILE = "config.json"
+
+
+
+
+DEFAULT_COMPANY_NAME = "<SQLCompanyName>"
+DEFAULT_LOGO_PATH = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")
+
+CompanyPlaceholder = DEFAULT_COMPANY_NAME
+logo_path = DEFAULT_LOGO_PATH
+
+if os.path.exists(CONFIG_FILE):
+    with open(CONFIG_FILE, "r") as config_file:
+        config_data = json.load(config_file)
+        CompanyPlaceholder = config_data.get("CompanyPlaceholder", DEFAULT_COMPANY_NAME)
+        logo_path = config_data.get("CompanyLogo", DEFAULT_LOGO_PATH)
+
+# Load company logo if it exists
+if os.path.exists(logo_path):
+    their_logo = Image.open(logo_path)
 else:
-    CompanyPlaceholder = "<SQLCompanyName>"
-    logo_path = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")  # default
-
-
-    if os.path.exists(config_file):
-        with open(config_file, "r") as f:
-            config = json.load(f)
-            logo_path = config.get("CompanyLogo", logo_path)
-
-    if os.path.exists(logo_path):
-        their_logo = Image.open(logo_path)
-    else:
-        print(f"Warning: Could not find logo at {logo_path}")
+    pass
+    #print(f"Warning: Could not find logo at {logo_path}")
 
 
 
-def open_analytics_ui():
-    #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'UI/Analytics.py'])
-    #This closes the current page
-    Window.destroy()
 
-def open_ordering_ui():
-    #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'UI/OrderingPage.py'])
-    #This closes the current page
-    Window.destroy()
+def _open_ui(filename, close_window=True):
+    """Helper to open a UI file and optionally close current window."""
+    subprocess.Popen(['python', f'UI/{filename}'])
+    if close_window:
+        Window.destroy()
 
-def open_about_ui():
-    subprocess.Popen(['python', 'UI/about.py'])
-    #Window.destroy()
 
-def open_login_ui():
-    subprocess.Popen(['python', 'UI/ShiftLogin.py'])
-    Window.destroy()
-
-def open_credit_ui():
-    subprocess.Popen(['python', 'UI/CreditCard.py'])
-    Window.destroy()
-
-def open_loyalty_ui():
-    #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'UI/Loyalty.py'])
-    #This closes the current page
-    Window.destroy()
-
-def open_menu_builder_ui():
-    #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'UI/MenuBuilder.py'])
-    #This closes the current page
-    Window.destroy()
-
-def open_bus_builder_ui():
-    #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'UI/UIBuilder.py'])
-    #This closes the current page
-    Window.destroy()
-
-def open_analytics_ui():
-    #This subprocess allows you to specify a program to open a specific file
-    subprocess.Popen(['python', 'UI/Analytics.py'])
-    #This closes the current page
-    Window.destroy()
+def open_analytics_ui(): _open_ui('Analytics.py')
+def open_ordering_ui(): _open_ui('OrderingPage.py')
+def open_about_ui(): _open_ui('about.py', close_window=False)
+def open_login_ui(): _open_ui('ShiftLogin.py')
+def open_credit_ui(): _open_ui('CreditCard.py')
+def open_loyalty_ui(): _open_ui('Loyalty.py')
+def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
+def open_bus_builder_ui(): _open_ui('UIBuilder.py')
 
 
 
@@ -101,6 +82,12 @@ def open_analytics_ui():
 def Create_Window():
     #Create size of window
     Window.geometry("1024x600")
+
+    #Prevents the resizing of the window
+    Window.resizable(False, False)
+
+    #Forces light mode
+    set_appearance_mode('light')
 
     #Display Titlebar Message
     Window.title(CompanyPlaceholder+" Powered by TruckBytes")
@@ -112,11 +99,7 @@ def Create_Window():
     else:
         print(f"Warning: Icon not found at {icon_path}. Skipping icon set.")
 
-    #Prevents the resizing of hte window
-    Window.resizable(False, False)
 
-    #Forces light mode
-    set_appearance_mode('light')
 
 
 
@@ -149,7 +132,7 @@ def Create_Menubar():
     Employee_Menu.add_command(label="Log In", font=14,command=open_login_ui)
     
     #Adds a separator bar
-    file_menu.add_separator()
+    #file_menu.add_separator()
     
     #Define Employee menu's submenu "Log Out"
     Employee_Menu.add_command(label="Logout", font=14,command=open_loyalty_ui)
@@ -178,16 +161,34 @@ def Create_Menubar():
 def Display_Logos_two_thirds():
 
     #Display "TruckBytes.png" file
+
+    
     original_logo = Image.open("UI/images/our_logos/TruckBytes.png")
     resized_logo = original_logo.resize((200,200),Image.Resampling.LANCZOS)
-    truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
-    CTkLabel(Window,image=truck_logo, text="").place(x=744,y=320)
+    truck_logo = CTkImage(light_image=resized_logo,
+                          dark_image=resized_logo,
+                          size=(250,250))
+    CTkLabel(Window,
+             image=truck_logo,
+             text="").place(x=744,y=320)
+    
 
+
+   # _display_logo("UI/images/our_logos/TruckBytes.png", (744, 320))
+   # _display_logo("UI/images/our_logos/CompanyLogo.png", (744, 33))
+
+
+  
     #Display "CompanyLogo.png" file
     company_logo = Image.open("UI/images/our_logos/CompanyLogo.png")
     resized_logo = company_logo.resize((200,200),Image.Resampling.LANCZOS)
-    truck2_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250,250))
-    CTkLabel(Window,image=truck2_logo, text="").place(x=744,y=33)
+    truck2_logo = CTkImage(light_image=resized_logo,
+                           dark_image=resized_logo,
+                           size=(250,250))
+    CTkLabel(Window,
+             image=truck2_logo,
+             text="").place(x=744,y=33)
+
 
 
 
@@ -196,7 +197,19 @@ def Display_Logo_Center():
     #Display Logo
     original_logo = Image.open("UI/images/our_logos/TruckBytes.png")
     resized_logo = original_logo.resize((200,200),Image.Resampling.LANCZOS)
-    truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(200,200))
+    truck_logo = CTkImage(light_image=resized_logo,
+                          dark_image=resized_logo,
+                          size=(200,200))
 
-    imgLogo = CTkLabel(Window,image=truck_logo, text="")
+    imgLogo = CTkLabel(Window,image=truck_logo,
+                       text="")
     imgLogo.place(x=412,y=340)
+
+
+'''
+def _display_logo(path, position, size=(250, 250)):
+    """Helper to display a single logo image at the given position."""
+    if not os.path.exists(path):
+        print(f"Warning: Logo not found at {path}. Skipping.")
+        return
+'''

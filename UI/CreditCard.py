@@ -72,14 +72,18 @@ def validate_fields():
 
 
 def CreateLabels():
+
+    Cost = "OrderingPage"
+
+
     #Create Label for "Customer Name"
     CTkLabel(Window, text="Name On Card", font=('Arial',24),).place(x=61,y=50)
     CTkLabel(Window, text="Card Number", font=('Arial',24)).place(x=372,y=50)
     CTkLabel(Window, text="Expiration Date", font=('Arial',14)).place(x=61,y=155)
     CTkLabel(Window, text="Security Code", font=('Arial',14)).place(x=211,y=155)
     CTkLabel(Window, text="Zip Code", font=('Arial',24)).place(x=372,y=155)
-
-
+    CTkLabel(Window, text="Total $:", font=('Arial',24)).place(x=72,y=455)
+    CTkLabel(Window, text= Cost, font=('Arial',24)).place(x=150,y=455)
 
 def CreateButtons():
     global bthTipOption1, bthTipOption2, bthTipOption3
@@ -90,7 +94,7 @@ def CreateButtons():
 
     
     #WILL BE REMOVED IN FINAL || SKIPS Validation
-    CTkButton(Window, font=('Arial', 24), text="Pay", width=300, height=100).place(x=192,y=450)
+    CTkButton(Window, font=('Arial', 24), text="Pay", width=300, height=100).place(x=292,y=450)
   
     #CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyality_ui)
 
