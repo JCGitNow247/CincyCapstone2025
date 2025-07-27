@@ -396,3 +396,32 @@ def get_sales_by_payment_type():
     rows = cursor.fetchall()
     conn.close()
     return rows
+
+def get_total_hours_worked():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT SUM(TIMESTAMPDIFF(HOUR, dtmShiftStart, dtmShiftEnd))
+        FROM employeesshifts
+    """)
+    total = cursor.fetchone()[0] or 0
+    conn.close()
+    return total
+
+def get_employee_payroll():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT 
+            e.intEmployeeID,
+            CONCAT(e.strFirstName, ' ', e.strLastName) AS full_name,
+            SUM(TIMESTAMPDIFF(HOUR, es.dtmShiftStart, es.dtmShiftEnd)) AS total_hours,
+            e.dblHourlyRate,
+            SUM(TIMESTAMPDIFF(HOUR, es.dtmShiftStart, es.dtmShiftEnd)) * e.dblHourlyRate AS total_pay
+        FROM employeesshifts es
+        JOIN Employees e ON es.intEmployeeID = e.intEmployeeID
+        GROUP BY e.intEmployeeID, full_name, e.dblHourlyRate
+    """)
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
