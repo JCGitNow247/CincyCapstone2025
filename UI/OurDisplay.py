@@ -124,7 +124,7 @@ def Create_Menubar():
         #Define Employee menu's submenu "Log Out"
         Employee_Menu.add_command(label="Logout",
                                   font=14,
-                                  command=logout)
+                                  command=open_loyalty_ui)
     else:
         #Define Employee menu's submenu "Log In"
         Employee_Menu.add_command(label="Log In",
@@ -148,11 +148,16 @@ def Create_Menubar():
     file_menu.add_separator()
     
     #Define Mgmt menu's submenu "Business Profile"
-    Mgmt_Menu.add_command(label="Business Profile", font=14,command=open_bus_builder_ui)
+    Mgmt_Menu.add_command(label="Business Profile", font=14,command=open_UIbuilder_ui)
 
     #Define Mgmt menu's submenu "Analytics"
     Mgmt_Menu.add_command(label="Analytics", font=14,command=open_analytics_ui)
     
+    #Define Mgmt menu's submenu "Inventory"
+    Mgmt_Menu.add_command(label="Inventory", font=14,command=inventory_builder_ui)
+
+
+
 
 
 # Fuctions to call other ui pages
@@ -169,8 +174,12 @@ def open_login_ui(): _open_ui('ShiftLogin.py')
 def open_credit_ui(): _open_ui('CreditCard.py')
 def open_loyalty_ui(): _open_ui('Loyalty.py')
 def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
-def open_bus_builder_ui(): _open_ui('UIBuilder.py')
+def open_UIbuilder_ui(): _open_ui('UIBuilder.py')
 def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
+
+
+
+
 
 
 # Will log the user in upon success

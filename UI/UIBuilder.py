@@ -11,25 +11,6 @@ import shutil
 
 
 
-#Variable to link back to json file
-CONFIG_FILE = "config.json"
-
-
-
-
-DEFAULT_COMPANY_NAME = "<SQLCompanyName>"
-DEFAULT_LOGO_PATH = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")
-
-CompanyPlaceholder = DEFAULT_COMPANY_NAME
-logo_path = DEFAULT_LOGO_PATH
-
-if os.path.exists(CONFIG_FILE):
-    with open(CONFIG_FILE, "r") as config_file:
-        config_data = json.load(config_file)
-        CompanyPlaceholder = config_data.get("CompanyPlaceholder", DEFAULT_COMPANY_NAME)
-
-
-
 
 
 
