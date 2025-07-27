@@ -1,7 +1,6 @@
 from tkinter import *
 import os
 import tkinter.font as tkfont
-
 #For some reason messagebox is not included in the import *??
 from tkinter import messagebox
 
@@ -48,21 +47,6 @@ else:
         their_logo = Image.open(logo_path)
     else:
         print(f"Warning: Could not find logo at {logo_path}")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def open_ordering_ui():
