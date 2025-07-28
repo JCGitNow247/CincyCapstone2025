@@ -38,7 +38,7 @@ def setup_ui():
     #Button
     CTkButton(Window, text="Login",
               width=w,
-              height=40,command=handle_login).place(x=412, y=270)
+              height=40,command=open_ordering_ui).place(x=412, y=270)
 
 
 

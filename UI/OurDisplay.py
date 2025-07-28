@@ -76,18 +76,6 @@ def Create_Window():
 
 
 def Create_Menubar():
-    global is_logged_in
-    employee_type_id = None
-
-    try:
-        with open(LOGIN_FILE, "r") as f:
-            login_data = json.load(f)
-            is_logged_in = login_data.get("is_logged_in", False)
-            employee_type_id = login_data.get("employee_type_id", None)
-    except Exception as e:
-        print("Failed to load login state:", e)
-        is_logged_in = False
-        employee_type_id = None
     
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
@@ -109,16 +97,7 @@ def Create_Menubar():
     #Employee Menu Options
     Employee_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
-    
-    #Define Employee menu's submenu "Log Out"
-    Employee_Menu.add_command(label="Logout", font=14, command=logout)
-    #Define Employee menu's submenu "Log In"
-    Employee_Menu.add_command(label="Log In", font=14, command=open_login_ui)
 
-
-
-
-    
     #Define Employee menu's submenu "Log Out"
     Employee_Menu.add_command(label="Logout",
                                   font=14,
@@ -129,18 +108,11 @@ def Create_Menubar():
                                 font=14,
                                 command=open_login_ui)
     
-    
 
 
     # Show manager menu only 
     Mgmt_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
-    Mgmt_Menu.add_command(label="Menu Builder", font=14, command=open_menu_builder_ui)
-    Mgmt_Menu.add_command(label="Business Profile", font=14, command=open_UIbuilder_ui)
-    Mgmt_Menu.add_command(label="Analytics", font=14, command=open_analytics_ui)
-
-
-
  
     #Define Mgmt menu's submenu "Menu Builder"
     Mgmt_Menu.add_command(label="Menu Builder", font=14,command=open_menu_builder_ui)
