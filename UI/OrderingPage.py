@@ -7,7 +7,9 @@ import DatabaseUtility as DB
 from OrderItem import OrderItem
 
 #Variables to link to SQL
-SQLTotal = " dblSellPrice Total"  ### This should be an aggregate of 
+lblOrderTotal = None
+SQLTotal = 0  ### This should be an aggregate of
+
 SQLSubMenuName= "SQL Sub Menu Name"
 
 CurrentOrder = "$: "
@@ -39,7 +41,7 @@ def open_sub_menu(ItemID):
     base_width = Window.winfo_width()
     base_height = Window.winfo_height()
 
-    scaled_width = int(base_width * scale * .26)
+    scaled_width = int(base_width * scale * .3)
     scaled_height = int(base_height * scale * .5)
 
     # Get sizes
@@ -53,13 +55,13 @@ def open_sub_menu(ItemID):
     y = main_y + (main_height // 2) - (scaled_height // 2)
 
     PopUpMenu = Toplevel()
-    #PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") ############
+    PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") ############
     #PopUpMenu.geometry("712x610")                                  ############
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.resizable(False, False)
 
     # Scrollable frame for checkboxes
-    scroll_frame = CTkScrollableFrame(PopUpMenu, width=300, height=60)
+    scroll_frame = CTkScrollableFrame(PopUpMenu, width=360, height=60)
     scroll_frame.place(x=15, y=20)
 
     # Fetch submenu items
@@ -69,9 +71,11 @@ def open_sub_menu(ItemID):
     for i, row in enumerate(SubMenuRows):
         item_id = row[0]
         item_name = row[1]
-        checkbox = CTkCheckBox(scroll_frame, text=item_name)
+        portion_price = row[2]
+        checkbox = CTkCheckBox(scroll_frame, text=f"(${portion_price}) {item_name}")
         checkbox.item_id = item_id
         checkbox.item_name = item_name
+        checkbox.portion_price = portion_price
         
         row_num = i // 2   # Every two items, start a new row
         col_num = i % 2    # 0 or 1 (column 1 or column 2)
@@ -90,7 +94,7 @@ def open_sub_menu(ItemID):
                          width=button_width,
                          height=50,
                          command=lambda: add_selected_items(PopUpMenu, checkboxes, ItemID))
-    add_item.place(x=75,y=250)
+    add_item.place(x=100,y=250)
 
     # Close button
     my_button = CTkButton(PopUpMenu,
@@ -99,7 +103,7 @@ def open_sub_menu(ItemID):
                           width=button_width,
                           height=50,
                           command=PopUpMenu.destroy)
-    my_button.place(x=75,y=320)
+    my_button.place(x=100,y=320)
 
     # Update sub menu name
     sub_menu_name = DB.get_sub_menu_name(ItemID)
@@ -109,39 +113,47 @@ def open_sub_menu(ItemID):
 
 
 def add_side_item(ItemID):
-    global OrderDisplay
+    global OrderDisplay, SQLTotal
 
     order_item = OrderItem()
     order_item.set_id(ItemID)
     order_item.set_name(DB.get_menu_item_name(ItemID))
+    order_item.set_price(DB.get_menu_item_price(ItemID))
 
     OrderItemsList.append(order_item)
 
     if OrderDisplay:
         OrderDisplay.configure(state="normal")
-        OrderDisplay.insert("end", f"{order_item.get_name()}\n", "bold")
+        OrderDisplay.insert("end", f"{order_item.get_name()}  ${order_item.get_price():.2f}\n", "bold")
         OrderDisplay.insert("end", "\n")
         OrderDisplay.configure(state="disabled")
+
+    SQLTotal += order_item.get_price()
+    update_order_total(SQLTotal)
 
 
 
 def add_selected_items(PopUpMenu, checkboxes, ItemID):
 
-    global OrderDisplay
+    global OrderDisplay, SQLTotal, lblOrderTotal
     
     order_item = OrderItem()
     order_item.set_id(ItemID)
     order_item.set_name(DB.get_menu_item_name(ItemID))
 
+    item_price = 0
     for checkbox in checkboxes:
         if checkbox.get():
             order_item.add_food_item(checkbox.item_id, checkbox.item_name)
+            item_price += checkbox.portion_price
+    item_price += DB.get_menu_item_price(ItemID)
+    order_item.set_price(item_price)
 
     OrderItemsList.append(order_item)
 
     if OrderDisplay:
         OrderDisplay.configure(state="normal")
-        OrderDisplay.insert("end", f"{order_item.get_name()}\n", "bold")
+        OrderDisplay.insert("end", f"{order_item.get_name()}  ${order_item.get_price():.2f}\n", "bold")
 
         for food in order_item.m_aFoodItems:
             OrderDisplay.insert("end", f"   {food['name']}\n")
@@ -149,32 +161,41 @@ def add_selected_items(PopUpMenu, checkboxes, ItemID):
 
         OrderDisplay.configure(state="disabled")
 
+    SQLTotal += order_item.get_price()
+
+    update_order_total(SQLTotal)
+
     PopUpMenu.destroy()
 
 
 
 def remove_last_item():
-    global OrderItemsList, OrderDisplay
+    global OrderItemsList, OrderDisplay, SQLTotal, lblOrderTotal
 
     if OrderItemsList:
-        OrderItemsList.pop()  # Remove the last order item
+        last_item = OrderItemsList.pop()  # Remove the last order item
 
+        SQLTotal -= last_item.get_price()
+        update_order_total(SQLTotal)
+        
         # Clear and re-display remaining items
         OrderDisplay.configure(state="normal")
         OrderDisplay.delete("1.0", "end")
 
         for order_item in OrderItemsList:
-            OrderDisplay.insert("end", f"{order_item.get_name()}\n", "bold")
+            OrderDisplay.insert("end", f"{order_item.get_name()}  ${order_item.get_price():.2f}\n", "bold")
             for food in order_item.m_aFoodItems:
                 OrderDisplay.insert("end", f"   {food['name']}\n")
             OrderDisplay.insert("end", "\n")
-
         OrderDisplay.configure(state="disabled")
 
 
 
 
+def update_order_total(SQLTotal):
+    global lblOrderTotal
 
+    lblOrderTotal.configure(text=f"Your Total: ${SQLTotal:.2f}")
 
 
 
@@ -195,6 +216,8 @@ def CreateTextBox():
 
 
 def CreateLabel():
+    global lblOrderTotal
+
     CTkLabel(Window,
              text="Welcome To The Ordering Page",
              font=('Arial', 32, 'bold')).place(x=108,y=40)
@@ -204,9 +227,10 @@ def CreateLabel():
              font=('Arial',20)).place(x=708,y=125)
     '''
 
-    CTkLabel(Window,
-             text="Your Total: $"+SQLTotal,
-             font=('Arial',20)).place(x=735,y=525)
+    lblOrderTotal = CTkLabel(Window,
+             text=f"Your Total: ${SQLTotal:.2f}",
+             font=('Arial',20))
+    lblOrderTotal.place(x=735,y=525)
 
 
 
