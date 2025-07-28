@@ -76,6 +76,29 @@ def get_menu_item_name(ItemID):
     return menu_item_name
 
 
+
+def get_menu_item_price(ItemID):
+    """
+    <b>Name:</b> get_menu_item_price<br>
+    <b>Abstract:</b> Get the price of a menu item from an id<br>
+    <b>Param:</b> <i>ItemID</i> - input for menu item id<br>
+    <b>Return:</b> <i>price</i> - price of menu item
+    """
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT dblPrice FROM MenuItems WHERE intMenuItemID = ?', (ItemID,))
+
+    row = cursor.fetchone()
+
+    price = row[0]
+
+    return price
+
+
+
 def get_sub_menu_items(ItemID):
     """
     <b>Name:</b> get_sub_menu_items<br>
@@ -88,7 +111,7 @@ def get_sub_menu_items(ItemID):
 
     cursor = conn.cursor()
 
-    cursor.execute('SELECT SubMenuItemID, SubMenuItem FROM VSubMenuItems WHERE MenuItem = ?', (ItemID,))
+    cursor.execute('SELECT SubMenuItemID, SubMenuItem, PortionPrice FROM VSubMenuItems WHERE MenuItem = ?', (ItemID,))
     rows = cursor.fetchall()
 
     return rows
@@ -140,6 +163,11 @@ def get_menu_item_type(ItemID):
 
 
 def get_menus():
+    """
+    <b>Name:</b> get_menus<br>
+    <b>Abstract:</b> Returns a list of menu types of id and name<br>
+    <b>Return:</b> <i>Menus</i> - list of menu types
+    """
 
     Menus = {}
     intMenuIndex = 0
@@ -170,6 +198,12 @@ def get_menus():
 
 
 def get_menu_id(menu_name):
+    """
+    <b>Name:</b> get_menu_id<br>
+    <b>Abstract:</b> Returns the menu type id from a menu name<br>
+    <b>Param:</b> <i>menu_name</i> - input for menu type name<br>
+    <b>Return:</b> <i>Menus</i> - list of menu types
+    """
 
     conn = get_connection()
 
@@ -188,6 +222,11 @@ def get_menu_id(menu_name):
 
 
 def get_sub_menus():
+    """
+    <b>Name:</b> get_sub_menus<br>
+    <b>Abstract:</b> Returns a list of SubMenus of id and name<br>
+    <b>Return:</b> <i>SubMenus</i> - list of SubMenus types
+    """
 
     SubMenus = {}
     intSubMenuIndex = 0
