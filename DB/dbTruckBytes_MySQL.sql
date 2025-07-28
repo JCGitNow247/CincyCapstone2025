@@ -397,6 +397,7 @@ CREATE OR REPLACE VIEW VSubMenuItems AS
 SELECT
 	 F.intFoodID AS SubMenuItemID,
     F.strFoodName AS SubMenuItem,
+    F.dblSellPrice AS PortionPrice,
     MI.intMenuItemID AS MenuItem
 FROM
     MenuItems AS MI
