@@ -1,8 +1,14 @@
 function handleCheckout(event) {
     event.preventDefault(); // Prevent form refresh
-    
-    const baseTotal = parseFloat(localStorage.getItem("cartTotal")) || 0;
-    let tipAmount = handleTip(baseTotal);
+
+    const drinkSelect = document.getElementById('freeDrinkSelect');
+    if (drinkSelect && drinkSelect.offsetParent !== null) {
+        if (drinkSelect.value === "") {
+            alert("Please select a free drink to proceed.");
+            return;
+        }
+        localStorage.setItem("freeDrink", drinkSelect.value); // Save selected drink
+    }
 
     const inputs = document.querySelectorAll('#CheckoutForm input[type="text"]');
     for (let input of inputs) {
@@ -12,16 +18,27 @@ function handleCheckout(event) {
         }
     }
 
-    const finalTotal = (baseTotal + tipAmount).toFixed(2);
-    localStorage.setItem("finalTotal", finalTotal);
+    // Get the discounted subtotal from the displayed label
+    const displayedTotalText = document.querySelector('#CheckoutForm .Total label')?.textContent;
+    let discountedSubtotal = parseFloat(localStorage.getItem("cartTotal")) || 0;
 
+    if (displayedTotalText) {
+        const match = displayedTotalText.match(/\$([\d.]+)/);
+        if (match) {
+            discountedSubtotal = parseFloat(match[1]);
+        }
+    }
+
+    // Apply tip to the discounted subtotal
+    const tipAmount = handleTip(discountedSubtotal);
+    const finalTotal = (discountedSubtotal + tipAmount).toFixed(2);
+
+    localStorage.setItem("finalTotal", finalTotal);
     localStorage.setItem("orderConfirmed", "true");
 
-    //console.log("The base total is: ", baseTotal) for testing
-    //console.log("The tip amount is: ", tipAmount) for testing
-
-    window.location.href = "summary.html" // Redirect
+    window.location.href = "summary.html"; // Redirect
 }
+
 
 function handleTip(baseTotal) {
     // Tip handling
@@ -50,11 +67,178 @@ function showOrderSummary() {
     cartItems.forEach(item => {
         summaryHTML += `<li style="margin-bottom: 5px;">${item.html || item}</li>`;
     });
+    const freeDrink = localStorage.getItem("freeDrink");
+    if (freeDrink) {
+        summaryHTML += `<li style="margin-bottom: 5px;"><em>Free Drink: ${freeDrink}</em></li>`;
+    }
     summaryHTML += `</ul><p><strong>Total Paid:</strong> $${finalTotal}</p>`;
 
     summaryDiv.innerHTML = summaryHTML;
 
     localStorage.removeItem("cartItems");
+}
+
+function validateLoyalty() {
+
+    const customerInformation = GetCustomerInformation();
+
+    if (!customerInformation) {
+        return false;
+    }  
+
+    return true
+}
+
+async function checkLoyalty() {
+    let validation = validateLoyalty();
+    if (!validation) return;
+
+    const customerInformation = GetCustomerInformation();
+    
+
+    const res = await fetch('http://localhost:5000/check-customer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(customerInformation)
+    });
+
+    const data = await res.json();
+
+    if (data.exists) {
+        ToggleMenu('#Login', 'LoginBlock-overlay');
+    } else {
+        if (confirm("Would you like to sign up?")) {
+            ToggleMenu('#Register', 'RegisterBlock-overlay');            
+        } else {
+            return;
+        }
+        
+    }
+}
+
+
+async function submitRegistration() {
+    const info = GetCustomerInformation();
+    const username = document.getElementById('newUsername').value.trim();
+    const password = document.getElementById('newPassword').value.trim();
+
+    if (!username || !password) {
+        alert("Username and password are required.");
+        return;
+    }
+
+    const payload = {
+        ...info,
+        username,
+        password
+    };
+
+    const res = await fetch('http://localhost:5000/register-customer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+        alert("Account created successfully!");
+        ToggleMenu('#Register', 'RegisterBlock-overlay');
+    } else {
+        alert("Failed to create account.");
+    }
+}
+
+async function submitLogin() {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
+    if (!username || !password) {
+        alert("Please enter your login credentials.");
+        return;
+    }
+
+    const res = await fetch("http://localhost:5000/login-customer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        alert("Login successful!");
+        ToggleMenu('#Login', 'LoginBlock-overlay');
+        localStorage.setItem("customerID", data.customerID);
+        localStorage.setItem("loyaltyReward", data.reward || "None");
+
+        const reward = data.reward || "None";
+        const rewardDiv = document.getElementById('loyaltyRewardInfo');
+        rewardDiv.style.display = 'block';
+
+        if (reward.includes('%')) {
+            rewardDiv.innerHTML = `<div style="text-align: center;"><em>Loyalty Reward: ${reward} discount applied.</em></div>`;
+            applyPercentageDiscount(reward);
+        } else if (reward.toLowerCase().includes('drink')) {
+            rewardDiv.innerHTML = `
+                <div class="loyaltyBlock" style="text-align: center; margin-bottom: 30px;">
+                    <p><strong>Loyalty Reward:</strong> Free Drink</p>
+                    <select id="freeDrinkSelect" required>
+                        <option value="" disabled selected>Select a drink</option>
+                    </select>
+                </div>
+            `;
+        }
+        populateDrinkDropdown();  // Fetch drinks from backend
+    } else {
+        alert("Login failed. Invalid username or password.");
+    }
+}
+
+function applyPercentageDiscount(reward) {
+    const percentage = parseFloat(reward.replace('%', ''));
+
+    // Find the label in the checkout form specifically
+    const totalLabel = document.querySelector('#CheckoutForm .Total label');
+
+    if (!totalLabel) {
+        console.error("Checkout total label not found.");
+        return;
+    }
+
+    const match = totalLabel.textContent.match(/\$([\d.]+)/);
+    if (!match) {
+        console.error("Checkout total label format is invalid.");
+        return;
+    }
+
+    const originalTotal = parseFloat(match[1]);
+    const discounted = (originalTotal * (1 - percentage / 100)).toFixed(2);
+
+    totalLabel.textContent = `Total: $${discounted}`;
+    localStorage.setItem("finalTotal", discounted);
+}
+
+function populateDrinkDropdown() {
+    const select = document.getElementById("freeDrinkSelect");
+    if (!select) {
+        console.warn("Dropdown not found. Skipping drink population.");
+        return;
+    }
+
+    fetch("http://localhost:5000/get-drinks")
+        .then(res => res.json())
+        .then(drinks => {
+            drinks.forEach(drink => {
+                const option = document.createElement("option");
+                option.value = drink;
+                option.textContent = drink;
+                select.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Failed to load drinks:", error);
+        });
 }
 
 window.addEventListener('DOMContentLoaded', () => {

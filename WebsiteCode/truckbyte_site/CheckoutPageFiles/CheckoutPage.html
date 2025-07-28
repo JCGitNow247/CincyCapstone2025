@@ -25,27 +25,30 @@
                         <div class="Input-Row">
                             <div class="Form-Field">
                                 <label>First Name</label> <br>
-                                <input type="text" placeholder="John" required>
+                                <input type="text" id="firstName" placeholder="John" required>
                             </div>
                             <div class="Form-Field">
                                 <label>Last Name</label> <br>
-                                <input type="text" placeholder="Doe" required>
+                                <input type="text" id="lastName" placeholder="Doe" required>
                             </div>                        
                         </div>
 
                         <div class="Input-Row">
                             <div class="Form-Field">
                                 <label>Phone Number</label> <br>
-                                <input type="tel" pattern="\d{3}-\d{3}-\d{4}" maxlength="12" placeholder="123-456-7890" title="Format: 123-456-7890" required>
+                                <input type="tel" id="phone" pattern="\d{3}-\d{3}-\d{4}" maxlength="12" placeholder="123-456-7890" title="Format: 123-456-7890" required>
                             </div>
                             <div class="Form-Field">
                                 <label>Email Address</label> <br>
-                                <input type="text" placeholder="JohnDoe@gmail.com" required>
+                                <input type="text" id="email" placeholder="JohnDoe@gmail.com" required>
                             </div>                      
                         </div>
                         <br>
                     </div>
-
+                    
+                    <div class="Loyalty-Member-Check">
+                        <button type="button" onclick="checkLoyalty()">Check Loyalty</button>
+                    </div>
 
                     <div class="Card-Information">
                         <div class="Input-Row">
@@ -84,6 +87,8 @@
                             <input type="radio" value="0.20" name="TipOption">
                         </div>
                     </div>
+                    
+                    <div id="loyaltyRewardInfo" style="display:none; margin-bottom: 10px;"></div>
 
                     <div class="Total">              
                         <label>Total: $0.00</label>
@@ -102,7 +107,9 @@
                     <div class="Cart-Item-Grid">
                         
                     </div>
-
+                    
+                    <p id="loyaltyRewardDisplay" style="font-size: 120%; font-weight: bold;"></p>
+                    
                     <div class="Cart-Bottom-Bar">
                         <div class="Total">
                             <label>Total: $0.00 </label>
@@ -116,6 +123,45 @@
                 </div>
             </div>
             <!------------------------------------------------------------------>
+
+
+            <!-- LOGIN EXISTING USER -->
+             <div class="overlay" id="LoginBlock-overlay">
+                <div id="Login" class="AccountBlock">
+                    <h3>Enter existing log in:</h3>
+                    
+                    <div class="text-fields">
+                        <input type="text" id="loginUsername" placeholder="Username"><br>
+                        <input type="password" id="loginPassword" placeholder="Password"><br>
+                    </div>
+
+                    <div class="bottom-buttons">
+                        <button onclick="submitLogin()">Log In</button>
+                        <button type="submit" onclick="ToggleMenu('#Login', 'LoginBlock-overlay')">Close</button>
+                    </div>
+
+                </div>
+             </div>
+
+             <!-- CREATE NEW ACCOUNT -->
+            <div class="overlay" id="RegisterBlock-overlay">    
+                <div id="Register" class="AccountBlock">
+                    <h3> Sign up:</h3>
+                    <div class="text-fields">
+                        <input type="text" id="newUsername" placeholder="Create Username"><br>
+                        <input type="password" id="newPassword" placeholder="Create Password"><br>
+                    </div>
+
+                    
+                    <div class="bottom-buttons">
+                        <button onclick="submitRegistration()">Create Account</button>
+                        <button type="submit" onclick="ToggleMenu('#Register', 'RegisterBlock-overlay')">Close</button>
+                    </div>
+                </div>             
+            </div>
+            
+
+        </div>
     </body>
     <script src="../assets/js/SharedFunctions.js"></script>
     <script src="../OrderPage/OrderScript.js"></script>

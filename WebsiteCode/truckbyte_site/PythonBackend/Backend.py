@@ -3,6 +3,7 @@ import mariadb
 
 from flask_cors import CORS
 
+import random
 
 app = Flask(__name__)
 CORS(app)  # This enables access from file:// and any other origins
@@ -87,6 +88,110 @@ def get_trucks():
     rows = cursor.fetchall()
     trucks = [{"id": row[0], "name": row[1]} for row in rows]
     return jsonify(trucks)
+
+@app.route('/check-customer', methods=['POST'])
+def check_customer():
+    data = request.get_json()
+
+    first = data['firstName'].strip()
+    last = data['lastName'].strip()
+    phone = data['phone'].strip()
+    email = data['email'].strip()
+
+    print(f"Checking: {first} {last}, {phone}, {email}")  # For debugging
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT intCustomerID
+        FROM Customers
+        WHERE strFirstName = %s AND strLastName = %s AND strPhoneNumber = %s AND strEmail = %s
+    """, (first, last, phone, email))
+
+    result = cursor.fetchone()
+    conn.close()
+
+    return jsonify({ "exists": result is not None })
+
+
+
+@app.route('/register-customer', methods=['POST'])
+def register_customer():
+    data = request.get_json()
+
+    first = data['firstName'].strip()
+    last = data['lastName'].strip()
+    phone = data['phone'].strip()
+    email = data['email'].strip()
+    username = data['username'].strip()
+    password = data['password'].strip()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # Insert new customer
+    cursor.execute("""
+        INSERT INTO Customers (strFirstName, strLastName, strUserName, strEmail, strPassword, strPhoneNumber)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """, (first, last, username, email, password, phone))
+
+    # Optional: assign random reward if LoyaltyRewards table exists
+    cursor.execute("SELECT intLoyaltyRewardID FROM LoyaltyRewards ORDER BY RAND() LIMIT 1")
+    reward = cursor.fetchone()
+    customer_id = cursor.lastrowid
+
+    if reward:
+        cursor.execute("""
+            INSERT INTO LoyaltyMembers (intCustomerID, intLoyaltyRewardID)
+            VALUES (%s, %s)
+        """, (customer_id, reward[0]))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({ "success": True })
+
+@app.route('/login-customer', methods=['POST'])
+def login_customer():
+    data = request.get_json()
+    username = data['username'].strip()
+    password = data['password'].strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Check user exists
+    cursor.execute("""
+        SELECT c.intCustomerID, r.strLoyaltyRewardType
+        FROM Customers c
+        LEFT JOIN LoyaltyMembers lm ON c.intCustomerID = lm.intCustomerID
+        LEFT JOIN LoyaltyRewards r ON lm.intLoyaltyRewardID = r.intLoyaltyRewardID
+        WHERE c.strUserName = %s AND c.strPassword = %s
+    """, (username, password))
+
+    result = cursor.fetchone()
+    conn.close()
+
+    if result:
+        return jsonify({
+            "success": True,
+            "customerID": result["intCustomerID"],
+            "reward": result["strLoyaltyRewardType"]
+        })
+    else:
+        return jsonify({ "success": False })
+
+@app.route('/get-drinks', methods=['GET'])
+def get_drinks():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT strFoodName FROM foods WHERE intFoodTypeID = 3")
+    drinks = [row[0] for row in cursor.fetchall()]
+    cursor.close()
+    conn.close()
+    return jsonify(drinks)
+
 
 
 if __name__ == '__main__':

@@ -47,9 +47,34 @@ function BuildTruckList() {
         .catch(err => console.error("Error loading trucks:", err));
 }
 
+function GetCustomerInformation() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+
+    if (!firstName) console.error("Missing input: #firstName");
+    if (!lastName) console.error("Missing input: #lastName");
+    if (!email) console.error("Missing input: #email");   
+    if (!phone) console.error("Missing input: #phone");
+
+    if (!firstName || !lastName || !phone || !email) {
+        return null;
+    }
+
+    return {
+        firstName,
+        lastName,
+        email,
+        phone
+    };
+}
+
 // proceeds to the checkout page.
 function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"
 }
 
+window.GetCustomerInformation = GetCustomerInformation;
 window.BuildTruckList = BuildTruckList;
