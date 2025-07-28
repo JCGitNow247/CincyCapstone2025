@@ -1,14 +1,6 @@
 # Reset login state at startup (ONLY done here)
 import json
 
-# RESET variables upon first entry with the application
-with open("login.json", "w") as f:
-    json.dump({
-        "is_logged_in": False,
-        "employee_id": None,
-        "employee_type_id": None
-    }, f)
-
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 

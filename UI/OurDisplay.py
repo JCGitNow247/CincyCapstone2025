@@ -229,7 +229,6 @@ def Display_Logos_two_thirds():
              text="").place(x=744,y=33)
 
 
-
 def Display_Logo_Center():
     
     #Display Logo

@@ -104,7 +104,7 @@ def open_sub_menu(ItemID):
     # Update sub menu name
     sub_menu_name = DB.get_sub_menu_name(ItemID)
 
-    PopUpMenu.title(sub_menu_name+ " menu")
+    PopUpMenu.title("This is the "+sub_menu_name+ " menu")
 
 
 
