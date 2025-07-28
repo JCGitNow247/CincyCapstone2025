@@ -115,30 +115,33 @@ def Create_Menubar():
     #Define Employee menu's submenu "Log In"
     Employee_Menu.add_command(label="Log In", font=14, command=open_login_ui)
 
-    if is_logged_in:
-        #Define Employee menu's submenu "Log Out"
-        Employee_Menu.add_command(label="Logout",
+
+
+
+    
+    #Define Employee menu's submenu "Log Out"
+    Employee_Menu.add_command(label="Logout",
                                   font=14,
                                   command=open_loyalty_ui)
-    else:
-        #Define Employee menu's submenu "Log In"
-        Employee_Menu.add_command(label="Log In",
+    
+    #Define Employee menu's submenu "Log In"
+    Employee_Menu.add_command(label="Log In",
                                 font=14,
                                 command=open_login_ui)
     
-    print(is_logged_in)
-
-    # Show manager menu only if type_id == 2 (which is 'manager' in your SQL)
-    if is_logged_in and employee_type_id == 2:
-        Mgmt_Menu = Menu(menuBar, tearoff=0)
-        menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
-        Mgmt_Menu.add_command(label="Menu Builder", font=14, command=open_menu_builder_ui)
-        Mgmt_Menu.add_command(label="Business Profile", font=14, command=open_bus_builder_ui)
-        Mgmt_Menu.add_command(label="Analytics", font=14, command=open_analytics_ui)
-
-    print("Logged in:", is_logged_in, " | Type:", employee_type_id)
+    
 
 
+    # Show manager menu only 
+    Mgmt_Menu = Menu(menuBar, tearoff=0)
+    menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
+    Mgmt_Menu.add_command(label="Menu Builder", font=14, command=open_menu_builder_ui)
+    Mgmt_Menu.add_command(label="Business Profile", font=14, command=open_UIbuilder_ui)
+    Mgmt_Menu.add_command(label="Analytics", font=14, command=open_analytics_ui)
+
+
+
+ 
     #Define Mgmt menu's submenu "Menu Builder"
     Mgmt_Menu.add_command(label="Menu Builder", font=14,command=open_menu_builder_ui)
     
@@ -154,7 +157,7 @@ def Create_Menubar():
     #Define Mgmt menu's submenu "Inventory"
     Mgmt_Menu.add_command(label="Inventory", font=14,command=inventory_builder_ui)
 
-
+   
 
 
 
