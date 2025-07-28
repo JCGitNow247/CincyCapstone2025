@@ -36,11 +36,11 @@ def open_sub_menu(ItemID):
     
     scale = Window.tk.call('tk', 'scaling')
 
-    base_width = 600
-    base_height = 500
+    base_width = Window.winfo_width()
+    base_height = Window.winfo_height()
 
-    scaled_width = min(int(base_width * scale), 360)
-    scaled_height = min(int(base_height * scale), 380)
+    scaled_width = int(base_width * scale * .26)
+    scaled_height = int(base_height * scale * .5)
 
     # Get sizes
     main_x = Window.winfo_x()
@@ -54,7 +54,7 @@ def open_sub_menu(ItemID):
 
     PopUpMenu = Toplevel()
     #PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") ############
-    PopUpMenu.geometry("712x610")                                  ############
+    #PopUpMenu.geometry("712x610")                                  ############
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
     PopUpMenu.resizable(False, False)
 
