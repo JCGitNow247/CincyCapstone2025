@@ -4,11 +4,9 @@ import re
 
 
 #Variable placeholders to link to db
-tipOpt1= "15%"
+tipOpt1= 15
 tipOpt2= "18%"
 tipOpt3= "20%"
-
-
 
 
 # Get cost passed from OrderingPage.py or fallback to 0.00
@@ -27,16 +25,10 @@ def apply_tip(percentage):
     """Apply a tip percentage to the base cost and update label."""
     global total_with_tip
 
-    
+
     tip_amount = cost * percentage
     total_with_tip = cost + tip_amount
     lblTotal.configure(text=f"{total_with_tip:.2f}")
-
-
-
-
-
-
 
 
 
@@ -61,26 +53,115 @@ def CreateFields():
     CardNumberField.place(x=372,y=90)
 
     #Accept Entry For "Expiration Date"
-    Expiration_DateField = CTkEntry(Window,
+    Expiration_DateField = CTkTextbox(Window,
                                        width=100,
                                        height=40,
                                        font=('Arial',24))
     Expiration_DateField.place(x=61,y=200)
 
     #Accept Entry For "Security Code"
-    SecurityCodeField = CTkEntry(Window,
+    SecurityCodeField = CTkTextbox(Window,
                                     width=100,
                                     height=40,
                                     font=('Arial',24))
     SecurityCodeField.place(x=211,y=200)
 
     #Accept Entry For "Zip Code"
-    ZipCodeField = CTkEntry(Window,
+    ZipCodeField = CTkTextbox(Window,
                                width=100,
                                height=40,
                                font=('Arial',24))
     ZipCodeField.place(x=372,y=200)
   
+
+def setup_ui():
+    global bthTipOption1, bthTipOption2, bthTipOption3
+    font1 = ('Arial',24)
+    font2 = ('Arial',14)
+
+
+
+
+
+
+
+
+    #Create Labels
+    CTkLabel(Window,
+             font=font1,
+             text="Name On Card"
+             ).place(x=61,y=50)
+    
+    CTkLabel(Window, 
+             font=font1,
+             text="Card Number"
+             ).place(x=372,y=50)
+    
+    CTkLabel(Window,
+             font=font2,
+             text="Expiration Date",
+             ).place(x=61,y=155)
+    
+    CTkLabel(Window,
+             font=font2,
+             text="Security Code"
+             ).place(x=211,y=155)
+    
+    CTkLabel(Window,
+             font=font1,
+             text="Zip Code"
+             ).place(x=372,y=155)
+    
+    CTkLabel(Window,
+             font=font1,
+             text="Total: $"   
+             ).place(x=72,y=455)
+    
+    
+    #Number from Ordering Page
+    CTkLabel(Window,
+             font=font1,
+             text=f"{cost:.2f}"
+             ).place(x=150,y=455)
+
+    CTkLabel(Window,
+            font=font1,
+            text=f"{total_with_tip:.2f}"
+            ).place(x=150, y=455)
+
+
+    #Buttons
+    bthTipOption1 = CTkButton(Window,
+                              font=font1,
+                              text=tipOpt1,
+                              width=120,
+                              height=80
+                              ).place(x=81,y=320)
+    
+    bthTipOption2 = CTkButton(Window,
+                              font=font1,
+                              text=tipOpt2,
+                              width=120,
+                              height=80
+                              ).place(x=282,y=320)
+    
+    bthTipOption3 = CTkButton(Window,
+                              font=font1,
+                              text=tipOpt3,
+                              width=120,
+                              height=80
+                              ).place(x=482,y=320)
+
+
+    CTkButton(Window,
+              font=font1,
+              text="Pay",
+              width=200,
+              height=80,
+              command=validate_fields
+              ).place(x=292,y=450) #open_loyalty_ui).place(x=292,y=450)
+
+
 
 
 # User Input Validation
@@ -116,38 +197,6 @@ def validate_fields():
 
 
 
-def CreateLabels():
-
-    #Cost = "OrderingPage"
-
-    #Create Label for "Customer Name"
-    CTkLabel(Window, text="Name On Card", font=('Arial',24),).place(x=61,y=50)
-    CTkLabel(Window, text="Card Number", font=('Arial',24)).place(x=372,y=50)
-    CTkLabel(Window, text="Expiration Date", font=('Arial',14)).place(x=61,y=155)
-    CTkLabel(Window, text="Security Code", font=('Arial',14)).place(x=211,y=155)
-    CTkLabel(Window, text="Zip Code", font=('Arial',24)).place(x=372,y=155)
-    CTkLabel(Window, text="Total $:", font=('Arial',24)).place(x=72,y=455)
-    #CTkLabel(Window, text= Cost, font=('Arial',24)).place(x=150,y=455)
-    CTkLabel(Window, text=f"{cost:.2f}", font=('Arial',24)).place(x=150,y=455)
-
-    lblTotal = CTkLabel(Window, text=f"{total_with_tip:.2f}", font=('Arial', 24))
-    lblTotal.place(x=150, y=455)
-
-
-def CreateButtons():
-    global bthTipOption1, bthTipOption2, bthTipOption3
-
-    bthTipOption1 = CTkButton(Window, font=('Arial', 24), text=tipOpt1, width=120, height=80).place(x=81,y=320)
-    bthTipOption2 = CTkButton(Window, font=('Arial', 24), text=tipOpt2, width=120, height=80).place(x=282,y=320)
-    bthTipOption3 = CTkButton(Window, font=('Arial', 24), text=tipOpt3, width=120, height=80).place(x=482,y=320)
-
-    
-    #WILL BE REMOVED IN FINAL || SKIPS Validation
-    #CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=open_loyalty_ui).place(x=292,y=450)
-    CTkButton(Window, font=('Arial', 24), text="Pay", width=200, height=80, command=validate_fields).place(x=292,y=450)
-
-
-
 #Intantiate UI options
 Create_Window()
 Create_Menubar()
@@ -155,8 +204,7 @@ Display_Logos_two_thirds()
 
 #Intantiate UI specific to this page
 CreateFields()
-CreateLabels()
-CreateButtons()
+setup_ui()
 
 
 
