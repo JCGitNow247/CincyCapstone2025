@@ -8,6 +8,10 @@ import random
 app = Flask(__name__)
 CORS(app)  # This enables access from file:// and any other origins
 
+# Path to here to start python backend servers.
+# cd WebsiteCode\truckbyte_site\PythonBackend
+# run python Backend.py to start the script.
+
 def get_connection():
     try:
         conn = mariadb.connect(
