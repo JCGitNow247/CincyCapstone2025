@@ -256,7 +256,7 @@ def get_sub_menus():
 
 
 
-def insert_food(name, amount, purchase_price, sell_price, food_type_id):
+def insert_food(name, amount, purchase_price, sell_price, food_type_id, sub_menu_id):
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -269,6 +269,16 @@ def insert_food(name, amount, purchase_price, sell_price, food_type_id):
 
     cursor.execute("SELECT LAST_INSERT_ID()")
     food_id = cursor.fetchone()[0]
+
+    if sub_menu_id is not None:
+
+        sql = """
+            INSERT INTO SubMenusFoods (intSubMenuID, intFoodID)
+            VALUES (%s, %s)
+        """
+
+        cursor.execute(sql, (sub_menu_id, food_id))
+        conn.commit()
 
     cursor.close()
     conn.close()
@@ -316,6 +326,10 @@ def get_food_types():
 
 
 
+
+
+
+
 def get_all_foods():
     conn = get_connection()
     cursor = conn.cursor()
@@ -341,6 +355,52 @@ def get_all_foods():
         }
         for row in rows
     ]
+
+
+
+def get_food_card_sub_menu(food_id):
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        f"""
+        SELECT SM.strSubMenuName
+        FROM   SubMenus AS SM JOIN SubMenusFoods AS SMF
+        ON     SM.intSubMenuID = SMF.intSubMenuID
+        JOIN   Foods AS F
+        ON     F.intFoodID = SMF.intFoodID
+        WHERE  F.intFoodID = {food_id}
+        """
+    )
+
+    row = cursor.fetchone()
+
+    if row != None:
+        sub_menu_name = row[0]
+    else:
+        sub_menu_name = None
+
+    return sub_menu_name
+
+
+
+def get_sub_menu_id(sub_menu_name):
+    
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT SubMenuID FROM VSubMenus WHERE SubMenuName = ?', (sub_menu_name,))
+
+    row = cursor.fetchone()
+
+    if row is not None:
+        sub_menu_id = row[0]
+    else:
+        sub_menu_id = None
+
+    return sub_menu_id
 
 
 
@@ -385,6 +445,43 @@ def update_food_item(food_id, updated_data):
 
 
 
+def update_food_sub_menu(food_id, sub_menu_name):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sub_menu_id = get_sub_menu_id(sub_menu_name)
+
+    cursor.execute("SELECT intSubMenuFoodID FROM SubMenusFoods WHERE intFoodID = ?", (food_id,))
+
+    row = cursor.fetchone()
+
+    if row is not None:
+        if sub_menu_id is not None:
+            sql = """
+                UPDATE SubMenusFoods
+                SET intSubMenuID = %s
+                WHERE intFoodID = %s
+            """
+
+            cursor.execute(sql, (sub_menu_id, food_id))
+            conn.commit()
+        else:
+            cursor.execute("DELETE FROM SubMenusFoods WHERE intFoodID = ?", (food_id,))
+            conn.commit()
+    else:
+
+        sql = """
+            INSERT INTO SubMenusFoods (intSubMenuID, intFoodID)
+            VALUES (%s, %s)
+        """
+
+        cursor.execute(sql, (sub_menu_id, food_id))
+        conn.commit()
+
+    cursor.close()
+    conn.close()
+
+
 def delete_food_by_id(food_id):
     """
     Delete a food record from the Foods table by its ID.
@@ -394,6 +491,14 @@ def delete_food_by_id(food_id):
     """
     conn = get_connection()
     cursor = conn.cursor()
+
+    cursor.execute("SELECT intSubMenuFoodID FROM SubMenusFoods WHERE intFoodID = ?", (food_id,))
+
+    row = cursor.fetchone()
+
+    if row is not None:
+            cursor.execute("DELETE FROM SubMenusFoods WHERE intFoodID = ?", (food_id,))
+            conn.commit()
 
     sql = "DELETE FROM Foods WHERE intFoodID = %s"
     cursor.execute(sql, (food_id,))
