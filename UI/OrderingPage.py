@@ -4,7 +4,11 @@ from OurDisplay import *
 #Import database utilities
 import DatabaseUtility as DB
 
+import subprocess
+
 from OrderItem import OrderItem
+
+
 
 #Variables to link to SQL
 lblOrderTotal = None
@@ -31,10 +35,34 @@ OrderDisplay = None
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 def open_credit_ui():
     """Open CreditCard.py and pass the current total as an argument."""
     subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal)])
     Window.destroy()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -243,6 +271,10 @@ def CreateLabel():
 
 
 
+
+
+
+
 def CreateButtons():
     CTkButton(Window, text="Place Order",
               font=('Arial',20),
@@ -256,6 +288,7 @@ def CreateButtons():
               width= button_width,
               height=50,
               command=remove_last_item).place(x=735,y=445)
+
 
 
 

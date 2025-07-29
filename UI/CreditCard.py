@@ -4,31 +4,28 @@ import re
 import sys
 
 
-
-
-
 # Get cost passed from OrderingPage.py or fallback to 0.00
 try:
     cost = float(sys.argv[1])
 except (IndexError, ValueError):
     cost = 0.00
 
-
+#Total including tip
 total_with_tip = cost
 lblTotal = None 
 
 
-#Variable placeholders to link to db
+#Variable placeholders to link to db or json
 tipOpt1= "15%"
 tipOpt2= "18%"
 tipOpt3= "20%"
-
 
 
 """Apply a tip percentage to the base cost and update label."""
 def apply_tip(percentage):
     
     global total_with_tip
+    global lblTotal
 
     tip_amount = cost * percentage
     total_with_tip = cost + tip_amount
@@ -36,28 +33,17 @@ def apply_tip(percentage):
 
 
 
-
-
 def setup_ui():
     #Must be global to validate
     global CustomerNameField, CardNumberField, ZipCodeField, SecurityCodeField, Expiration_DateField
-
     global bthTipOption1, bthTipOption2, bthTipOption3
 
     font1 = ('Arial',24)
     font2 = ('Arial',14)
 
-
-
-
-    
- 
-    
     #Accept Entry for "Customer Name"
     CustomerNameField = CTkTextbox(Window,
-                                   font=font1,
-                               width=250,
-                               height=40)
+                                   font=font1,width=250,height=40)
     CustomerNameField.place(x=61,y=90)
     CustomerNameField.focus_set()
     
@@ -66,30 +52,30 @@ def setup_ui():
                                  font=font1,
                                   width=250,
                                   height=40,
-                                  ).place(x=372,y=90)
+                                  )
+    CardNumberField.place(x=372,y=90)
 
     #Accept Entry For "Expiration Date"
     Expiration_DateField = CTkTextbox(Window,
                                       font=font1,
                                        width=100,
-                                       height=40,
-                                       ).place(x=61,y=200)
+                                       height=40)
+    Expiration_DateField.place(x=61,y=200)
 
     #Accept Entry For "Security Code"
     SecurityCodeField = CTkTextbox(Window,
                                    font=font1,
                                     width=100,
-                                    height=40,
-                                    ).place(x=211,y=200)
+                                    height=40)                                
+    SecurityCodeField.place(x=211,y=200)
 
     #Accept Entry For "Zip Code"
     ZipCodeField = CTkTextbox(Window,
                               font=font1,
                                width=100,
-                               height=40
-                               ).place(x=372,y=200)
+                               height=40)
+    ZipCodeField.place(x=372,y=200)
   
-
     #Create Labels
     CTkLabel(Window,
              font=font1,
@@ -121,17 +107,17 @@ def setup_ui():
              text="Total: $"   
              ).place(x=72,y=455)
     
-    
     #Number from Ordering Page
     CTkLabel(Window,
              font=font1,
              text=f"{cost:.2f}"
              ).place(x=150,y=455)
 
-    CTkLabel(Window,
-            font=font1,
-            text=f"{total_with_tip:.2f}"
-            ).place(x=150, y=455)
+    #Uptate Total with tip amount
+    lblTotal = CTkLabel(Window,
+                        font=font1,
+                        text=f"{total_with_tip:.2f}")
+    lblTotal.place(x=150, y=455)
 
 
     #Buttons
@@ -159,7 +145,6 @@ def setup_ui():
                               command=lambda: apply_tip(0.20)
                               ).place(x=482,y=320)
 
-
     CTkButton(Window,
               font=font1,
               text="Pay",
@@ -167,7 +152,6 @@ def setup_ui():
               height=80,
               command=validate_fields
               ).place(x=292,y=450) #open_loyalty_ui).place(x=292,y=450)
-
 
 
 
@@ -210,7 +194,6 @@ Create_Menubar()
 Display_Logos_two_thirds()
 
 #Intantiate UI specific to this page
-
 setup_ui()
 
 
