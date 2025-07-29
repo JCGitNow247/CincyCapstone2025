@@ -1,12 +1,10 @@
 #Import TruckBytes Standard UI options
 from OurDisplay import *
 import re
+import sys
 
 
-#Variable placeholders to link to db
-tipOpt1= 15
-tipOpt2= "18%"
-tipOpt3= "20%"
+
 
 
 # Get cost passed from OrderingPage.py or fallback to 0.00
@@ -20,11 +18,17 @@ total_with_tip = cost
 lblTotal = None 
 
 
+#Variable placeholders to link to db
+tipOpt1= "15%"
+tipOpt2= "18%"
+tipOpt3= "20%"
 
+
+
+"""Apply a tip percentage to the base cost and update label."""
 def apply_tip(percentage):
-    """Apply a tip percentage to the base cost and update label."""
+    
     global total_with_tip
-
 
     tip_amount = cost * percentage
     total_with_tip = cost + tip_amount
@@ -32,59 +36,59 @@ def apply_tip(percentage):
 
 
 
-def CreateFields():
+
+
+def setup_ui():
     #Must be global to validate
     global CustomerNameField, CardNumberField, ZipCodeField, SecurityCodeField, Expiration_DateField
 
-    
-    #Accept Entry for "Customer Name"
-    CustomerNameField = CTkTextbox(Window,
-                               width=250,
-                               height=40,
-                               font=('Arial',24))
-    CustomerNameField.place(x=61,y=90)
-    CustomerNameField.focus_set()
-    
-    #Accept Entry for "Card Number"
-    CardNumberField = CTkTextbox(Window,
-                                  width=250,
-                                  height=40,
-                                  font=('Arial',24))
-    CardNumberField.place(x=372,y=90)
-
-    #Accept Entry For "Expiration Date"
-    Expiration_DateField = CTkTextbox(Window,
-                                       width=100,
-                                       height=40,
-                                       font=('Arial',24))
-    Expiration_DateField.place(x=61,y=200)
-
-    #Accept Entry For "Security Code"
-    SecurityCodeField = CTkTextbox(Window,
-                                    width=100,
-                                    height=40,
-                                    font=('Arial',24))
-    SecurityCodeField.place(x=211,y=200)
-
-    #Accept Entry For "Zip Code"
-    ZipCodeField = CTkTextbox(Window,
-                               width=100,
-                               height=40,
-                               font=('Arial',24))
-    ZipCodeField.place(x=372,y=200)
-  
-
-def setup_ui():
     global bthTipOption1, bthTipOption2, bthTipOption3
+
     font1 = ('Arial',24)
     font2 = ('Arial',14)
 
 
 
 
+    
+ 
+    
+    #Accept Entry for "Customer Name"
+    CustomerNameField = CTkTextbox(Window,
+                                   font=font1,
+                               width=250,
+                               height=40)
+    CustomerNameField.place(x=61,y=90)
+    CustomerNameField.focus_set()
+    
+    #Accept Entry for "Card Number"
+    CardNumberField = CTkTextbox(Window,
+                                 font=font1,
+                                  width=250,
+                                  height=40,
+                                  ).place(x=372,y=90)
 
+    #Accept Entry For "Expiration Date"
+    Expiration_DateField = CTkTextbox(Window,
+                                      font=font1,
+                                       width=100,
+                                       height=40,
+                                       ).place(x=61,y=200)
 
+    #Accept Entry For "Security Code"
+    SecurityCodeField = CTkTextbox(Window,
+                                   font=font1,
+                                    width=100,
+                                    height=40,
+                                    ).place(x=211,y=200)
 
+    #Accept Entry For "Zip Code"
+    ZipCodeField = CTkTextbox(Window,
+                              font=font1,
+                               width=100,
+                               height=40
+                               ).place(x=372,y=200)
+  
 
     #Create Labels
     CTkLabel(Window,
@@ -135,21 +139,24 @@ def setup_ui():
                               font=font1,
                               text=tipOpt1,
                               width=120,
-                              height=80
+                              height=80,
+                              command=lambda: apply_tip(0.15)
                               ).place(x=81,y=320)
     
     bthTipOption2 = CTkButton(Window,
                               font=font1,
                               text=tipOpt2,
                               width=120,
-                              height=80
+                              height=80,
+                              command=lambda: apply_tip(0.18)
                               ).place(x=282,y=320)
     
     bthTipOption3 = CTkButton(Window,
                               font=font1,
                               text=tipOpt3,
                               width=120,
-                              height=80
+                              height=80,
+                              command=lambda: apply_tip(0.20)
                               ).place(x=482,y=320)
 
 
@@ -203,7 +210,7 @@ Create_Menubar()
 Display_Logos_two_thirds()
 
 #Intantiate UI specific to this page
-CreateFields()
+
 setup_ui()
 
 
