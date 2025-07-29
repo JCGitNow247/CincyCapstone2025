@@ -4,6 +4,7 @@ class OrderItem:
         self.m_intMenuItemID = 0
         self.m_strMenuItemName = ""
         self.m_aFoodItems = []
+        self.m_dblPrice = 0
 
     
 
@@ -20,6 +21,13 @@ class OrderItem:
 
     def get_name(self):
         return self.m_strMenuItemName
+    
+
+    def set_price(self, dblPrice):
+        self.m_dblPrice = dblPrice
+
+    def get_price(self):
+        return self.m_dblPrice
     
 
 
