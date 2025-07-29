@@ -57,15 +57,16 @@ def setup_ui():
              font=('Arial',24)).place(x=150,y=145)
 
     #Create Label For "Email Address"
-    CTkLabel(Window, text="Email Address", font=('Arial',24)).place(x=150,y=190)
+    CTkLabel(Window,
+             text="Email Address",
+             font=('Arial',24)).place(x=150,y=190)
 
 
     #Create button to Check Loyalty
-    CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80, command=check_loyality).place(x=222,y=270)
-
-    #This SKIPS Validation = Will Be Removed in Final. Use above code to validate
-   
-    #CTkButton(Window, font=('Arial', 24), text="Check Loyalty", width=300, height=80).place(x=222,y=270)
+    CTkButton(Window, font=('Arial', 24),
+              text="Check Loyalty\nJoin Loyalty",
+              width=300,
+              height=80,command=check_loyality).place(x=222,y=270)
 
 
     #Create button to Skip Loyalty
@@ -77,61 +78,24 @@ def setup_ui():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def show_user_entrys():
     ######  I could not get the ".get()" to work, not sure why.
-    phone = "I can not get the .get() function"        ##### txtPhoneNumbField.get("1.0", "end").strip()
-    email = "to work"                                  ##### txtEmailAddyField.get("1.0", "end").strip()
+    phone = txtPhoneNumbField.get("1.0", "end").strip()
+    email = txtEmailAddyField.get("1.0", "end").strip()
     
     message = f"Sorry that does not match our records.\nYou entered:\n {phone}\n{email} \nWould You like to create Loyality account with this information?" #\n {phone}\n {email}"
     #message = f"That does not match our records.\nYou entered:  \nWould You like to create Loyality account with this information?" #\n {phone}\n {email}"
     result = messagebox.askquestion("First Time Loyality Signup", message)
 
     if result == "yes":
+       
+        #########################
+        # SQL Create New Customer
+        #########################
+
        yesMsg = f"You have been added"
        messagebox.showinfo("Created New Account", yesMsg)#, command=open_ordering_ui)
       #########  Hitting OK needs to lead to the ordering page. ##############
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -149,6 +113,10 @@ def check_loyality():
     
         #This closes the current page
         Window.destroy()
+
+
+
+
 
 
 
