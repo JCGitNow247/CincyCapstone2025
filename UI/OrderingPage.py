@@ -29,6 +29,15 @@ SQLItemOrdered = ""
 OrderItemsList = []
 OrderDisplay = None
 
+
+
+def open_credit_ui():
+    """Open CreditCard.py and pass the current total as an argument."""
+    subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal)])
+    Window.destroy()
+
+
+
 def open_sub_menu(ItemID):
 
     MenuItemType = DB.get_menu_item_type(ItemID)
@@ -235,11 +244,6 @@ def CreateLabel():
 
 
 def CreateButtons():
-
-
-
-
-
     CTkButton(Window, text="Place Order",
               font=('Arial',20),
               width= button_width,

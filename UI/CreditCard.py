@@ -10,6 +10,36 @@ tipOpt3= "20%"
 
 
 
+
+# Get cost passed from OrderingPage.py or fallback to 0.00
+try:
+    cost = float(sys.argv[1])
+except (IndexError, ValueError):
+    cost = 0.00
+
+
+total_with_tip = cost
+lblTotal = None 
+
+
+
+def apply_tip(percentage):
+    """Apply a tip percentage to the base cost and update label."""
+    global total_with_tip
+
+    
+    tip_amount = cost * percentage
+    total_with_tip = cost + tip_amount
+    lblTotal.configure(text=f"{total_with_tip:.2f}")
+
+
+
+
+
+
+
+
+
 def CreateFields():
     #Must be global to validate
     global CustomerNameField, CardNumberField, ZipCodeField, SecurityCodeField, Expiration_DateField
@@ -88,7 +118,7 @@ def validate_fields():
 
 def CreateLabels():
 
-    Cost = "OrderingPage"
+    #Cost = "OrderingPage"
 
     #Create Label for "Customer Name"
     CTkLabel(Window, text="Name On Card", font=('Arial',24),).place(x=61,y=50)
@@ -97,7 +127,12 @@ def CreateLabels():
     CTkLabel(Window, text="Security Code", font=('Arial',14)).place(x=211,y=155)
     CTkLabel(Window, text="Zip Code", font=('Arial',24)).place(x=372,y=155)
     CTkLabel(Window, text="Total $:", font=('Arial',24)).place(x=72,y=455)
-    CTkLabel(Window, text= Cost, font=('Arial',24)).place(x=150,y=455)
+    #CTkLabel(Window, text= Cost, font=('Arial',24)).place(x=150,y=455)
+    CTkLabel(Window, text=f"{cost:.2f}", font=('Arial',24)).place(x=150,y=455)
+
+    lblTotal = CTkLabel(Window, text=f"{total_with_tip:.2f}", font=('Arial', 24))
+    lblTotal.place(x=150, y=455)
+
 
 def CreateButtons():
     global bthTipOption1, bthTipOption2, bthTipOption3
