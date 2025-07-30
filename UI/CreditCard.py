@@ -25,25 +25,23 @@ tipOpt3= "20%"
 def apply_tip(percentage):
     
     global total_with_tip
-    global lblTotal
-
     tip_amount = cost * percentage
     total_with_tip = cost + tip_amount
     lblTotal.configure(text=f"{total_with_tip:.2f}")
-
 
 
 def setup_ui():
     #Must be global to validate
     global CustomerNameField, CardNumberField, ZipCodeField, SecurityCodeField, Expiration_DateField
     global bthTipOption1, bthTipOption2, bthTipOption3
-
+    global lblTotal
     font1 = ('Arial',24)
     font2 = ('Arial',14)
 
     #Accept Entry for "Customer Name"
     CustomerNameField = CTkTextbox(Window,
-                                   font=font1,width=250,height=40)
+                                   font=font1,
+                                   width=250,height=40)
     CustomerNameField.place(x=61,y=90)
     CustomerNameField.focus_set()
     
@@ -108,17 +106,17 @@ def setup_ui():
              ).place(x=72,y=455)
     
     #Number from Ordering Page
-    CTkLabel(Window,
+    lblTotal = CTkLabel(Window,
              font=font1,
-             text=f"{cost:.2f}"
-             ).place(x=150,y=455)
+             text=f"{cost:.2f}")
+    lblTotal.place(x=150,y=455)
 
     #Uptate Total with tip amount
     lblTotal = CTkLabel(Window,
                         font=font1,
                         text=f"{total_with_tip:.2f}")
     lblTotal.place(x=150, y=455)
-
+    lblTotal.configure(text=f"{total_with_tip:.2f}")
 
     #Buttons
     bthTipOption1 = CTkButton(Window,
