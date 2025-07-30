@@ -35,34 +35,10 @@ OrderDisplay = None
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 def open_credit_ui():
     """Open CreditCard.py and pass the current total as an argument."""
     subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal)])
     Window.destroy()
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -268,10 +244,6 @@ def CreateLabel():
              text=f"Your Total: ${SQLTotal:.2f}",
              font=('Arial',20))
     lblOrderTotal.place(x=735,y=525)
-
-
-
-
 
 
 

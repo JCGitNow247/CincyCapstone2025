@@ -89,10 +89,6 @@ def Create_Menubar():
     file_menu.add_command(label="About", font=14, command=open_about_ui) #Define File Menu's submenu "About"
     file_menu.add_command(label="Close Program", font=14, command=Window.quit) #Define File Menu's submenu "Close Program"
 
-    #Adds a separator bar
-    file_menu.add_separator()
-    file_menu.add_separator()
-    file_menu.add_separator()
 
     #Employee Menu Options
     Employee_Menu = Menu(menuBar, tearoff=0)
@@ -129,7 +125,8 @@ def Create_Menubar():
     #Define Mgmt menu's submenu "Inventory"
     Mgmt_Menu.add_command(label="Inventory", font=14,command=inventory_builder_ui)
 
-   
+    #Define Mgmt menu's submenu "Order Menu"
+    Mgmt_Menu.add_command(label="Order Menu", font=14,command=open_ordering_ui)
 
 
 

@@ -18,6 +18,7 @@ def setup_ui():
              font=('Arial', 32)).place(x=235,y=45)
     
 
+
     # Button configuration: (text, command)
     buttons = [
         ("Truckbytes Ordering", open_ordering_ui),
@@ -27,9 +28,8 @@ def setup_ui():
         ("Inventory", inventory_builder_ui),
     ]
 
-
     # Layout calculation
-    start_x, start_y = 100, 140  # top-left corner of button grid
+    start_x, start_y = 91, 151  # top-left corner of button grid
     x_spacing, y_spacing = 350, 120  # horizontal & vertical spacing
     columns = 2
 

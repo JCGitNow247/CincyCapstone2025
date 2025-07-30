@@ -95,8 +95,9 @@ def show_user_entrys():
 
        yesMsg = f"You have been added"
        messagebox.showinfo("Created New Account", yesMsg)#, command=open_ordering_ui)
-      #########  Hitting OK needs to lead to the ordering page. ##############
-
+       #open_menu_builder_ui()
+    ###ISSUE### ###  Hitting "OK" NEEDS to lead to the ordering page, currently it closes everything ##############
+    #Does this need to be a different type of messagebox?
 
 
 #Used to open OrderingPage.py with validation
