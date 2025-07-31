@@ -592,3 +592,40 @@ def get_employee_payroll():
     rows = cursor.fetchall()
     conn.close()
     return rows
+
+
+
+def get_loyalty_customer(phone, email):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"SELECT intCustomerID FROM Customers WHERE strPhoneNumber = '{phone}' AND strEmail = '{email}'")
+
+    row = cursor.fetchone()
+
+    if row is not None:
+        customerID = row[0]
+    else:
+        customerID = 0
+
+    return customerID
+
+
+
+def create_loyalty_customer(phone, email):
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"INSERT INTO Customers (strEmail, strPhoneNumber) VALUES ('{email}', '{phone}')")
+
+    conn.commit()
+
+    cursor.execute("SELECT LAST_INSERT_ID()")
+
+    row = cursor.fetchone()
+
+    customerID = row[0]
+
+    return customerID
