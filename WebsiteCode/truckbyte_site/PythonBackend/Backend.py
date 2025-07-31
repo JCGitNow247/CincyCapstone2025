@@ -197,6 +197,35 @@ def get_drinks():
     return jsonify(drinks)
 
 
+@app.route('/login-employee', methods=['POST'])
+def login_employee():
+    data = request.get_json()
+    username = data['username'].strip()
+    password = data['password'].strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT e.intEmployeeID, et.strEmployeeType
+        FROM Employees e
+        JOIN EmployeeTypes et ON e.intEmployeeTypeID = et.intEmployeeTypeID
+        WHERE e.strUserName = %s AND e.strPassword = %s
+    """, (username, password))
+
+    result = cursor.fetchone()
+    conn.close()
+
+    if result:
+        return jsonify({
+            "success": True,
+            "employeeID": result["intEmployeeID"],
+            "role": result["strEmployeeType"]
+        })
+    else:
+        return jsonify({ "success": False })
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

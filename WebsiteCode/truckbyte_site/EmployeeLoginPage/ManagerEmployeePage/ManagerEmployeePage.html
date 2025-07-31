@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/global.css">
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -14,22 +14,14 @@
                 <div class="Top-Buttons">
                     <Button onclick="ToggleMenu('.AboutUs-Popup', 'AboutUs-overlay')"> About Us </Button>
                     <label> Truckbyte's Online Ordering</label> 
-                    <Button onclick="window.location.href='../EmployeeLoginPage/LoginPage.html'" id="headerEmployeeLoginButton"> Employee Login </Button>
+                    <Button onclick="window.location.href='../LoginPage.html'" id="headerEmployeeLoginButton"> Employee Login </Button>
                     
                 </div>
             </div>
 
             <div class="centered">
-                <h1>Welcome to Truckbyte</h1>
-                <img src="../assets/images/TruckBytes.POS.Blue.png" alt="Truckbyte" width="400" height="400">
+                <h1>Manager KDS</h1>
                 
-                <div class="button-container">
-                    <button onclick="OrderNow()">Order Now</button>
-                    <select id="foodTruckDropdown">
-                        <option value="" disabled selected>Select a Location</option>
-
-                    </select>
-                </div>
             </div>
 
             <!-- This is the pop up menu for the about us page-->
@@ -57,7 +49,7 @@
 
 
         </div>
-        <script src="../assets/js/SharedFunctions.js"></script>
+        <script src="../../assets/js/SharedFunctions.js"></script>
         <script> BuildTruckList(); </script>
         <script src="script.js"></script>
     </body>

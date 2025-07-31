@@ -12,24 +12,23 @@
         <div class="page-wrapper">
             <div class="Top-Banner">
                 <div class="Top-Buttons">
-                    <Button onclick="ToggleMenu('.AboutUs-Popup', 'AboutUs-overlay')"> About Us </Button>
+                    <Button onclick="window.location.href='TruckbyteIndex.html'"> Home </Button>
                     <label> Truckbyte's Online Ordering</label> 
-                    <Button onclick="window.location.href='../EmployeeLoginPage/LoginPage.html'" id="headerEmployeeLoginButton"> Employee Login </Button>
-                    
+                    <Button onclick="ToggleMenu('.AboutUs-Popup', 'AboutUs-overlay')"> About Us </Button>
                 </div>
             </div>
 
             <div class="centered">
-                <h1>Welcome to Truckbyte</h1>
+                <h1>Employee Login</h1>
                 <img src="../assets/images/TruckBytes.POS.Blue.png" alt="Truckbyte" width="400" height="400">
                 
-                <div class="button-container">
-                    <button onclick="OrderNow()">Order Now</button>
-                    <select id="foodTruckDropdown">
-                        <option value="" disabled selected>Select a Location</option>
-
-                    </select>
+                <div class="EmployeeLogin">
+                    <input type="text" id="employeeUsername" placeholder="Username"><br>
+                    <input type="password" id="employeePassword" placeholder="Password"><br>
+                    <button onclick="submitEmployeeLogin()">Log In</button>
                 </div>
+
+
             </div>
 
             <!-- This is the pop up menu for the about us page-->

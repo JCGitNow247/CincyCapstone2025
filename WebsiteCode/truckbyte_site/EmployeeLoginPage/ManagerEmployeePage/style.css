@@ -1,0 +1,49 @@
+.centered {
+  text-align: center;
+}
+
+.button-container {
+    margin-top: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.button-container button {
+  font-size: 2em;
+  padding: 30px 30px;
+  height: auto;
+}
+
+.button-container select {
+  font-size: 1em;
+  padding: 10px 10px;
+  width: auto;
+  margin-top: 10%;
+}
+
+.AboutUs-Popup {
+  display: none;
+  width: 85vw;
+  height: 85vh;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  background: #cacaca;
+  border-radius: 6px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+}
+
+.AboutUs-Popup h2 {
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.AboutUs-Popup button {font-size: 2em; width: auto; padding: 10px 20px; align-self: center; margin-bottom: 1em;}
+.AboutUs-Popup p {font-size: clamp(1rem, 2.5vw, 2em); margin: 0 2em; line-height: 1.5; text-align: center;}
