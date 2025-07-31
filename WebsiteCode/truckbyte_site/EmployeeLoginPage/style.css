@@ -2,6 +2,20 @@
   text-align: center;
 }
 
+.EmployeeLogin input {
+  font-size: 1.5em;
+  padding: 15px;
+  width: 300px;
+  margin: 10px 0;
+}
+
+.EmployeeLogin button {
+  font-size: 1.5em;
+  padding: 15px 30px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
 .AboutUs-Popup {
   display: none;
   width: 85vw;
