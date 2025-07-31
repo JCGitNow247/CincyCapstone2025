@@ -9,6 +9,8 @@ import re
 
 from tkinter import messagebox
 
+import DatabaseUtility as DB
+
 
 #User input validation
 def validate_fields():
@@ -78,10 +80,7 @@ def setup_ui():
 
 
 
-def show_user_entrys():
-    ######  I could not get the ".get()" to work, not sure why.
-    phone = txtPhoneNumbField.get("1.0", "end").strip()
-    email = txtEmailAddyField.get("1.0", "end").strip()
+def show_user_entrys(phone, email):
     
     message = f"Sorry that does not match our records.\nYou entered:\n {phone}\n{email} \nWould You like to create Loyality account with this information?" #\n {phone}\n {email}"
     #message = f"That does not match our records.\nYou entered:  \nWould You like to create Loyality account with this information?" #\n {phone}\n {email}"
@@ -89,32 +88,34 @@ def show_user_entrys():
 
     if result == "yes":
        
-        #########################
-        # SQL Create New Customer
-        #########################
+        customerID = DB.create_loyalty_customer(phone, email)
 
-       yesMsg = f"You have been added"
-       messagebox.showinfo("Created New Account", yesMsg)
+        yesMsg = f"You have been added"
+        messagebox.showinfo("Created New Account", yesMsg)
+    else:
+        customerID = 0
+    
+    return customerID
 
 
 #Used to open OrderingPage.py with validation
 def check_loyality():
     if validate_fields():
-        show_user_entrys()
-        
-        ##############################
-        #### ADD CODE TO QUERY DB ####
-        ##############################
+
+        phone = txtPhoneNumbField.get("1.0", "end").strip()
+        email = txtEmailAddyField.get("1.0", "end").strip()
+        customerID = DB.get_loyalty_customer(phone, email)
+
+        if customerID == 0:
+            customerID = show_user_entrys(phone, email)
+            if customerID == 0:
+                return
 
         #This subprocess allows you to specify a program to open a specific file
-        subprocess.Popen(['python', 'UI/OrderingPage.py'])
+        subprocess.Popen(['python', 'UI/OrderingPage.py', str(customerID)])
     
         #This closes the current page
         Window.destroy()
-
-
-
-
 
 
 
@@ -125,8 +126,6 @@ Display_Logos_two_thirds()
 
 #Intantiate UI specific to this page
 setup_ui()
-
-
 
 #Create mainloop to run program
 Window.mainloop()
