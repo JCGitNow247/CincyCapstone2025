@@ -448,11 +448,11 @@ DELIMITER $$
 CREATE PROCEDURE uspAddMenuItem (
     IN strMenuItemNameIN VARCHAR(255),
     IN imgMenuItemImageIN BLOB,
-	IN intMenuItemTypeIDIN INT,
+	 IN intMenuItemTypeIDIN INT,
     IN strDescriptionIN VARCHAR(1000),
     IN dblPriceIN DECIMAL(10,2),
-	IN intSubMenuIDIN INT,
-	IN strTaxableItemIN VARCHAR(1)
+	 IN intSubMenuIDIN INT,
+	 IN strTaxableItemIN VARCHAR(1)
 )
 BEGIN
     INSERT INTO MenuItems (strMenuItemName, imgMenuItemImage, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID, strTaxableItem)
