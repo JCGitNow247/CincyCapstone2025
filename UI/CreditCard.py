@@ -10,6 +10,14 @@ try:
 except (IndexError, ValueError):
     cost = 0.00
 
+# Get customerID passed from OrderingPage.py or fallback to 0
+try:
+    customerID = int(sys.argv[2])
+except (IndexError, ValueError):
+    customerID = 0
+
+print(customerID)
+
 #Total including tip
 total_with_tip = cost
 lblTotal = None 
