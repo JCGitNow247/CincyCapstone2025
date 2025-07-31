@@ -9,7 +9,12 @@ import tkinter as tk
 
 from OrderItem import OrderItem
 
-
+# get customerID passed from Loyalty.py or fallback to 0
+try:
+    customerID = int(sys.argv[1])
+except (IndexError, ValueError):
+    customerID = 0
+print(customerID)
 
 #Variables to link to SQL
 lblOrderTotal = None
@@ -28,6 +33,7 @@ y_padding = 25
 
 
 
+
 "This needs to display which buttons were pushed"
 SQLItemOrdered = ""
 
@@ -38,7 +44,7 @@ OrderDisplay = None
 
 def open_credit_ui():
     """Open CreditCard.py and pass the current total as an argument."""
-    subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal)])
+    subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal), str(customerID)])
     Window.destroy()
 
 
