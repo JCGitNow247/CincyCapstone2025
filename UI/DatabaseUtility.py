@@ -1,6 +1,5 @@
 import mariadb
 
-
 def get_connection():
     """
     <b>Name:</b> get_connection<br>
@@ -20,6 +19,21 @@ def get_connection():
 
     return conn
 
+
+
+def insert_menu_item(menu_item):
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = f"""
+        CALL dbTruckBytes.uspAddMenuItem('{menu_item.get_name()}', {menu_item.get_image()}, {menu_item.get_typeID()}, '{menu_item.get_description()}', {menu_item.get_price()}, {menu_item.get_sub_menuID()}, '{menu_item.get_taxable()}');
+    """
+    cursor.execute(sql)
+
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 
 def get_menu_items():
@@ -54,6 +68,7 @@ def get_menu_items():
         intMenuItemIndex += 1
 
     return dictMenuItems
+
 
 
 def get_menu_item_name(ItemID):
@@ -197,6 +212,7 @@ def get_menus():
     return Menus
 
 
+
 def get_menu_id(menu_name):
     """
     <b>Name:</b> get_menu_id<br>
@@ -219,6 +235,7 @@ def get_menu_id(menu_name):
         menu_id = None
 
     return menu_id
+
 
 
 def get_sub_menus():
@@ -323,10 +340,6 @@ def get_food_types():
     conn.close()
 
     return {row[0]: row[1] for row in rows}
-
-
-
-
 
 
 
@@ -482,6 +495,7 @@ def update_food_sub_menu(food_id, sub_menu_name):
     conn.close()
 
 
+
 def delete_food_by_id(food_id):
     """
     Delete a food record from the Foods table by its ID.
@@ -508,6 +522,7 @@ def delete_food_by_id(food_id):
     conn.close()
 
 
+
 def get_total_sales():
     conn = get_connection()
     cursor = conn.cursor()
@@ -515,6 +530,8 @@ def get_total_sales():
     result = cursor.fetchone()[0]
     conn.close()
     return result or 0
+
+
 
 def get_sales_by_day():
     conn = get_connection()
@@ -529,6 +546,8 @@ def get_sales_by_day():
     conn.close()
     return rows
 
+
+
 def get_sales_by_payment_type():
     conn = get_connection()
     cursor = conn.cursor()
@@ -541,6 +560,8 @@ def get_sales_by_payment_type():
     conn.close()
     return rows
 
+
+
 def get_total_hours_worked():
     conn = get_connection()
     cursor = conn.cursor()
@@ -551,6 +572,8 @@ def get_total_hours_worked():
     total = cursor.fetchone()[0] or 0
     conn.close()
     return total
+
+
 
 def get_employee_payroll():
     conn = get_connection()
