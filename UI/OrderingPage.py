@@ -5,6 +5,7 @@ from OurDisplay import *
 import DatabaseUtility as DB
 
 import subprocess
+import tkinter as tk
 
 from OrderItem import OrderItem
 
@@ -68,6 +69,9 @@ def open_sub_menu(ItemID):
     y = main_y + (main_height // 2) - (scaled_height // 2)
 
     PopUpMenu = Toplevel()
+    PopUpMenu.grab_set()
+    PopUpMenu.focus_force()
+    PopUpMenu.transient(Window)
     PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") ############
     #PopUpMenu.geometry("712x610")                                  ############
     PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
@@ -80,25 +84,46 @@ def open_sub_menu(ItemID):
     # Fetch submenu items
     SubMenuRows = DB.get_sub_menu_items(ItemID)
 
+    is_drink = MenuItemType == "Drinks"
+    selected_drink = tk.StringVar() if is_drink else None
+    options = []
     checkboxes = []
-    for i, row in enumerate(SubMenuRows):
-        item_id = row[0]
-        item_name = row[1]
-        portion_price = row[2]
-        checkbox = CTkCheckBox(scroll_frame, text=f"(${portion_price}) {item_name}")
-        checkbox.item_id = item_id
-        checkbox.item_name = item_name
-        checkbox.portion_price = portion_price
-        
-        row_num = i // 2   # Every two items, start a new row
-        col_num = i % 2    # 0 or 1 (column 1 or column 2)
+    if is_drink:
+        for i, row in enumerate(SubMenuRows):
+            item_id = row[0]
+            item_name = row[1]
 
-        checkbox.grid(row=row_num,
-                      column=col_num,
-                      padx=10,
-                      pady=5, 
-                      sticky="w")
-        checkboxes.append(checkbox)
+            radio = CTkRadioButton(scroll_frame,
+                                   text=f"{item_name}",
+                                   variable=selected_drink,
+                                   value=str(item_id))
+            radio.item_id = item_id
+            radio.item_name = item_name
+
+            row_num = i // 2
+            col_num = i % 2
+
+            radio.grid(row=row_num, column=col_num, padx=10, pady=5, sticky="w")
+            options.append(radio)
+    else:
+        for i, row in enumerate(SubMenuRows):
+            item_id = row[0]
+            item_name = row[1]
+            portion_price = row[2]
+            checkbox = CTkCheckBox(scroll_frame, text=f"(${portion_price}) {item_name}")
+            checkbox.item_id = item_id
+            checkbox.item_name = item_name
+            checkbox.portion_price = portion_price
+            
+            row_num = i // 2   # Every two items, start a new row
+            col_num = i % 2    # 0 or 1 (column 1 or column 2)
+
+            checkbox.grid(row=row_num,
+                        column=col_num,
+                        padx=10,
+                        pady=5, 
+                        sticky="w")
+            checkboxes.append(checkbox)
 
     #Add Item button
     add_item = CTkButton(PopUpMenu,
@@ -106,7 +131,7 @@ def open_sub_menu(ItemID):
                          font=('Arial',20),
                          width=button_width,
                          height=50,
-                         command=lambda: add_selected_items(PopUpMenu, checkboxes, ItemID))
+                         command=lambda: add_selected_items(PopUpMenu, checkboxes, options, selected_drink, is_drink, ItemID))
     add_item.place(x=100,y=250)
 
     # Close button
@@ -146,7 +171,7 @@ def add_side_item(ItemID):
 
 
 
-def add_selected_items(PopUpMenu, checkboxes, ItemID):
+def add_selected_items(PopUpMenu, checkboxes, options, selected_drink, is_drink, ItemID):
 
     global OrderDisplay, SQLTotal, lblOrderTotal
     
@@ -155,11 +180,23 @@ def add_selected_items(PopUpMenu, checkboxes, ItemID):
     order_item.set_name(DB.get_menu_item_name(ItemID))
 
     item_price = 0
-    for checkbox in checkboxes:
-        if checkbox.get():
-            order_item.add_food_item(checkbox.item_id, checkbox.item_name)
-            item_price += checkbox.portion_price
-    item_price += DB.get_menu_item_price(ItemID)
+    if is_drink:
+        selected_id = selected_drink.get()
+        if selected_id:
+            for radio in options:
+                if str(radio.item_id) == selected_id:
+                    order_item.add_food_item(radio.item_id, radio.item_name)
+                    item_price += DB.get_menu_item_price(ItemID)
+                    break
+        else:
+            return
+    else:
+        for checkbox in checkboxes:
+            if checkbox.get():
+                order_item.add_food_item(checkbox.item_id, checkbox.item_name)
+                item_price += checkbox.portion_price
+        item_price += DB.get_menu_item_price(ItemID)
+
     order_item.set_price(item_price)
 
     OrderItemsList.append(order_item)
