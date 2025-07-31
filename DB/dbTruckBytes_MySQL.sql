@@ -156,11 +156,7 @@ CREATE TABLE SalesPaymentTypes (
 
 CREATE TABLE Customers (
 	intCustomerID INT AUTO_INCREMENT,
-	strFirstName VARCHAR(50) NOT NULL,
-	strLastName VARCHAR(255) NOT NULL,
-	strUserName VARCHAR(255) NOT NULL,
 	strEmail VARCHAR(255) NOT NULL,
-	strPassword VARCHAR(255) NOT NULL,
 	strPhoneNumber VARCHAR(12) NOT NULL,
 	PRIMARY KEY (intCustomerID)
 );
@@ -562,10 +558,10 @@ INSERT INTO LoyaltyRewards (strLoyaltyRewardType) VALUES
   ('1 free drink');
 
 -- Customers
-INSERT INTO Customers (strFirstName, strLastName, strUserName, strEmail, strPassword, strPhoneNumber) VALUES
-  ('Hal', 'Jordan', 'GreenLantern', 'hjordan@gmail.com', 'test2', '513-111-1111'),
-  ('Lex', 'Luthor', 'EvilGuy', 'lluthor@gmail.com', 'test2', '513-222-2222'),
-  ('Jason', 'Todd', 'RedHood', 'jtodd@gmail.com', 'test2', '513-333-3333');
+INSERT INTO Customers (strEmail, strPhoneNumber) VALUES
+  ('hjordan@gmail.com', '5131111111'),
+  ('lluthor@gmail.com', '5132222222'),
+  ('jtodd@gmail.com', '5133333333');
 
 -- LoyaltyMembers
 INSERT INTO LoyaltyMembers (intCustomerID, intLoyaltyRewardID) VALUES
