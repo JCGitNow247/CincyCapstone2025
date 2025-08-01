@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import mariadb
 
 from flask_cors import CORS
-
+import datetime
 import random
 
 app = Flask(__name__)
@@ -226,6 +226,57 @@ def login_employee():
         return jsonify({ "success": False })
 
 
+active_orders_cache = []
+
+@app.route('/get-active-orders')
+def get_active_orders():
+    # Return just the orders stored in the cache (placed via /submit-order)
+    return jsonify(active_orders_cache)  # reverse to show newest first
+
+
+@app.route('/submit-order', methods=['POST'])
+def submit_order():
+    data = request.get_json()
+    items = data.get("items", [])
+    total = float(data.get("total", 0))
+    customer_id = data.get("customerID")
+    free_drink = data.get("freeDrink")
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # Insert Sale
+    cursor.execute("""
+        INSERT INTO Sales (dblSaleAmount, dtmDate, intSalesPaymentTypeID)
+        VALUES (%s, NOW(), 1)
+    """, (total,))
+    sale_id = cursor.lastrowid
+
+    # Insert Order
+    cursor.execute("""
+        INSERT INTO Orders (intTruckID, intSaleID, intCustomerID)
+        VALUES (1, %s, %s)
+    """, (sale_id, customer_id if customer_id else None))
+    order_id = cursor.lastrowid
+
+    conn.commit()
+    conn.close()
+
+    # Combine all items into 1 string description
+    description_lines = [item.get("html", "") for item in items]
+    if free_drink:
+        description_lines.append(f"<em>Free Drink: {free_drink}</em>")
+
+    description_html = "<br>".join(description_lines)
+
+    # Store in the temporary cache
+    active_orders_cache.append({
+        "id": order_id,
+        "time": datetime.datetime.now().isoformat(),
+        "description": description_html
+    })
+
+    return jsonify({ "success": True })
 
 if __name__ == '__main__':
     app.run(debug=True)

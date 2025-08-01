@@ -36,7 +36,33 @@ function handleCheckout(event) {
     localStorage.setItem("finalTotal", finalTotal);
     localStorage.setItem("orderConfirmed", "true");
 
-    window.location.href = "summary.html"; // Redirect
+
+    // New section: post order to backend
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const freeDrink = localStorage.getItem('freeDrink') || null;
+    const customerID = localStorage.getItem('customerID') || null;
+
+    const orderPayload = {
+        items: cartItems,
+        total: finalTotal,
+        customerID,
+        freeDrink
+    };
+
+    fetch("http://localhost:5000/submit-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload)
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Order submission result:", data);
+        window.location.href = "summary.html"; // redirect AFTER inserting
+    })
+    .catch(err => {
+        alert("There was an issue submitting your order.");
+        console.error("Error:", err);
+    });
 }
 
 

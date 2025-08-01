@@ -71,6 +71,35 @@ function GetCustomerInformation() {
     };
 }
 
+function LoadActiveOrders() {
+    fetch('http://localhost:5000/get-active-orders')
+        .then(res => res.json())
+        .then(orders => {
+            const container = document.querySelector('.active-order-container');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            orders.forEach(order => {
+                const card = document.createElement('div');
+                card.className = 'order-card';
+
+                const timeText = order.time ? `<p>Placed: ${new Date(order.time).toLocaleTimeString()}</p>` : '';
+
+                card.innerHTML = `
+                    <h2> #${order.id} </h2>
+                    <p>
+                        ${'+', order.description}
+                    </p>
+                    <p> ${timeText} </p>
+                    <button>Complete Order</button>
+                `;
+                container.appendChild(card);
+            });
+        })
+        .catch(err => console.error("Failed to load active orders:", err));
+}
+
 // proceeds to the checkout page.
 function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"
