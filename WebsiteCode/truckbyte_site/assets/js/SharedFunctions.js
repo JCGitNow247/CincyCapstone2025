@@ -75,12 +75,15 @@ function LoadActiveOrders() {
     fetch('http://localhost:5000/get-active-orders')
         .then(res => res.json())
         .then(orders => {
+            const completed = JSON.parse(localStorage.getItem("completedOrders") || "[]");
             const container = document.querySelector('.active-order-container');
             if (!container) return;
 
             container.innerHTML = '';
 
             orders.forEach(order => {
+                if (completed.includes(order.id)) return; // Skip completed
+
                 const card = document.createElement('div');
                 card.className = 'order-card';
 
@@ -88,17 +91,26 @@ function LoadActiveOrders() {
 
                 card.innerHTML = `
                     <h2> #${order.id} </h2>
-                    <p>
-                        ${'+', order.description}
-                    </p>
-                    <p> ${timeText} </p>
-                    <button>Complete Order</button>
+                    <p>${order.description || ''}</p>
+                    <p>${timeText}</p>
                 `;
+
+                const completeBtn = document.createElement('button');
+                completeBtn.textContent = 'Complete Order';
+                completeBtn.addEventListener('click', () => {
+                    card.remove();
+                    const updatedCompleted = [...completed, order.id];
+                    localStorage.setItem("completedOrders", JSON.stringify(updatedCompleted));
+                });
+
+                card.appendChild(completeBtn);
                 container.appendChild(card);
             });
         })
         .catch(err => console.error("Failed to load active orders:", err));
 }
+
+
 
 // proceeds to the checkout page.
 function ProceedToCheckout() {
