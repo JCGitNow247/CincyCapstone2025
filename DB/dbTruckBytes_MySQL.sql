@@ -515,11 +515,18 @@ INSERT INTO Employees (strFirstName, strLastName, strUserName, strPassword, dblH
   ('Adam', 'Broderick', 'AB', 'test1', 20.50, 2, 'Y'),
   ('Jason', 'Cope', 'JC', 'test1', 20.50, 2, 'Y'),
   ('Bruce', 'Wayne', 'BW', 'test1', 18.75, 3, 'N'),
-  ('Clark', 'Kent', 'CK', 'test1', 18.75, 3, 'Y'),
-  ('Oliver', 'Queen', 'OQ', 'test1', 18.75, 3, 'N'),
-  ('Barry', 'Allen', 'BA', 'test1', 18.75, 1, 'Y'),
-  ('Barbara', 'Gordon', 'BG', 'test1', 18.75, 1, 'N'),
-  ('Harvey', 'Dent', 'HD', 'test1', 18.75, 1, 'Y');
+  ('Cory', 'Stone', 'CS', '9524', 18.75, 3, 'Y'),
+  ('Eric', 'Shepard', 'OQ', '2791', 18.75, 3, 'N'),
+  ('Tyler', 'Hauestein', 'BA', '7421', 18.75, 1, 'Y'),
+  ('Brandon', 'Brinkman', 'BG', '5417', 18.75, 1, 'N'),
+  ('Enzo', 'Ekouevi', 'HD', '7071', 18.75, 1, 'Y'),
+  ('Brenden', 'McMillin', 'OQ', '1735', 18.75, 3, 'N'),
+  ('David', 'Davis', 'BA', '4567', 18.75, 1, 'Y'),
+  ('Seth', 'Niefield', 'BG', '4949', 18.75, 1, 'N'),
+  ('Seth', 'Brown', 'HD', '1782', 28.75, 1, 'Y'),
+  ('Brandon', 'Burton', 'OQ', '1181', 18.75, 3, 'N'),
+  ('James', 'Glenn', 'BA', '2882', 18.75, 1, 'Y'),
+  ('Bob', 'Nields', 'BN', '2063', 18.75, 1, 'N');
 
 -- Shifts
 INSERT INTO Shifts (dtmShiftDate) VALUES
@@ -786,11 +793,11 @@ INSERT INTO MenuItemsTypes (strMenuItemType) VALUES
 -- MenuItems
 INSERT INTO MenuItems (strMenuItemName, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID, strTaxableItem) VALUES
   ('Burger', 1, 'Build your own burger from a list of toppings', 9.50, 1, 'N'),
-  ('Taco',  1, 'Build your own taco from a list of toppings', 3.25, 2, 'N'),
-  ('Fries',  2, 'Fried in beef talo', 1.50, NULL, 'N'),
-  ('Pizza', 1, 'Build your own pizza from a list of toppings', 7.00, 3, 'N'),
-  ('Hotdog', 1, 'Build your own hotdog from a list of toppings', 3.50, 4, 'N'),
-  ('Drinks', 3, 'Choose your drink', 1.50, 5, 'Y');
+  ('Taco',  1, 'A single flour tortilla filled with your choice of ingredients', 3.25, 2, 'N'),
+  ('Fries',  2, 'Russet potatoes fried in beef talo', 1.50, NULL, 'N'),
+  ('Pizza', 1, 'A 10 inch personal pizza with red sauce and your choice of toppings', 7.00, 3, 'N'),
+  ('Hotdog', 1, 'A footlong hotdog with your choice of toppings', 3.50, 4, 'N'),
+  ('Drinks', 3, 'Quench your thirst with a delicious beverage', 1.50, 5, 'Y');
 
 INSERT INTO MenuItemsFoods (intMenuItemID, intFoodID, dblFoodWeight) VALUES
     -- Burger (MenuItemID 1)
