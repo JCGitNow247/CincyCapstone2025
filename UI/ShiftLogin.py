@@ -10,35 +10,54 @@ def setup_ui():
 
     #Standard width
     w = 200
+    font1 = ('Arial', 24)
     
     #Labels
-    CTkLabel(Window, text="Employee Login",
-             font=('Arial', 32)).place(x=400, y=50)
+    CTkLabel(Window,
+             font=('Arial', 32, 'bold'),
+             text="Employee Login"
+             ).place(x=400, y=50)
     
     CTkLabel(Window, text="Last Name:",
-             font=('Arial', 20)).place(x=240, y=170)
+             font=font1).place(x=240, y=170)
     
-    CTkLabel(Window, text="Password:",
-             font=('Arial', 20)).place(x=240, y=215)
+    CTkLabel(Window,
+             font=font1,
+            text="Password:"
+            ).place(x=240, y=215)
 
     #Entry Field
     txtUsernameField = CTkEntry(Window,
+                                font=font1,
                                   width=w,
-                                  height=35,
-                                  font=('Arial', 24))
+                                  height=35)
     txtUsernameField.place(x=412, y=170)
 
     txtPasswordField = CTkEntry(Window,
+                                font=font1,
                                 width=w,
                                 height=35,
-                                font=('Arial', 24),
                                 show="*")
     txtPasswordField.place(x=412, y=215)
 
+
+    #Data to beat validation
+    def dummyData():
+        txtUsernameField.insert(0, "BW")
+        txtPasswordField.insert(0, "test1")
+        pass
+   
+    dummyData()
+
+
+
     #Button
     CTkButton(Window, text="Login",
+              font=font1,
               width=w,
-              height=40,command=open_ordering_ui).place(x=412, y=270)
+              height=40,
+              command=open_ordering_ui
+              ).place(x=412, y=270)
 
 
 
@@ -126,6 +145,11 @@ def handle_login():
 #WILL BE REMOVED IN FINAL || SKIPS Validation
 #btnSubmit = CTkButton(Window, text="Login", width=200, height=40).place(x=412,y=270)
 #btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui).place(x=412,y=270)
+
+
+
+
+
 
 
 

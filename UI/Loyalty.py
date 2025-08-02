@@ -32,51 +32,69 @@ def validate_fields():
     
 
 def setup_ui():
+
+    font1 = ('Arial',24)
+
     global txtPhoneNumbField, txtEmailAddyField
 
     #Create Entry For "Phone Number"
     txtPhoneNumbField = CTkTextbox(Window,
+                                   font= font1,
                                    width=250,
-                                   height=40,
-                                   font=('Arial',24))
+                                   height=40)
     txtPhoneNumbField.place(x=360,y=143)
 
     #Create  for "Email Address"
     txtEmailAddyField = CTkTextbox(Window,
+                                   font= font1,
                                    width=250,
-                                   height=40,
-                                   font=('Arial',24))
+                                   height=40)
     txtEmailAddyField.place(x=360,y=190)
+
+    #Data to beat validation
+    def dummyData():
+        txtPhoneNumbField.insert(0.0, "5131111111")
+        txtEmailAddyField.insert(0.0, "hjordan@gmail.com")
+        pass
+   
+    dummyData()
 
     #Label of the page
     CTkLabel(Window,
-             text="Customer Loyalty",
-             font=('Arial', 32, "bold")).place(x=235,y=45)
+             font=('Arial', 32, "bold"),
+             text="Customer Loyalty"
+             ).place(x=235,y=45)
     
     #Create Label For "Phone Number"
     CTkLabel(Window,
-             text="Phone Number",
-             font=('Arial',24)).place(x=150,y=145)
+             font=font1,
+             text="Phone Number"
+             ).place(x=150,y=145)
 
     #Create Label For "Email Address"
     CTkLabel(Window,
-             text="Email Address",
-             font=('Arial',24)).place(x=150,y=190)
+             font=font1,
+             text="Email Address"
+             ).place(x=150,y=190)
 
 
     #Create button to Check Loyalty
-    CTkButton(Window, font=('Arial', 24),
+    CTkButton(Window,
+              font=font1,
               text="Check Loyalty\nJoin Loyalty",
               width=300,
-              height=80,command=check_loyality).place(x=222,y=270)
+              height=80,command=check_loyality
+              ).place(x=222,y=270)
 
 
     #Create button to Skip Loyalty
-    CTkButton(Window, font=('Arial', 24),
+    CTkButton(Window,
+              font=font1,
               text="Skip Loyalty\n Order Food",
               width=300,
               height=80,
-              command=open_ordering_ui).place(x=222,y=415)
+              command=open_ordering_ui
+              ).place(x=222,y=415)
 
 
 

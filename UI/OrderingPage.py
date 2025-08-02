@@ -292,14 +292,14 @@ def CreateLabel():
 
 def CreateButtons():
     CTkButton(Window, text="Place Order",
-              font=('Arial',20),
+              font=('Arial',24),
               width= button_width,
               height=50,
               command=open_credit_ui).place(x=735,y=45)
     
     CTkButton(Window,
               text="Remove Last",
-              font=('Arial',20),
+              font=('Arial',24),
               width= button_width,
               height=50,
               command=remove_last_item).place(x=735,y=445)
