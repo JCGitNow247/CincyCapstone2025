@@ -278,5 +278,69 @@ def submit_order():
 
     return jsonify({ "success": True })
 
+
+@app.route('/get-analytics-summary')
+def get_analytics_summary():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Total Sales + By Day
+    cursor.execute("""
+        SELECT 
+            SUM(dblSaleAmount) AS total_sales
+        FROM Sales
+    """)
+    total_sales = cursor.fetchone()['total_sales'] or 0
+
+    cursor.execute("""
+        SELECT 
+            DATE(dtmDate) AS sale_date,
+            SUM(dblSaleAmount) AS amount
+        FROM Sales
+        GROUP BY sale_date
+        ORDER BY sale_date
+    """)
+    sales_by_day = cursor.fetchall()
+
+    # Sales by Payment Type
+    cursor.execute("""
+        SELECT 
+            spt.strSalesPaymentType AS type,
+            SUM(s.dblSaleAmount) AS total
+        FROM Sales s
+        JOIN SalesPaymentTypes spt ON s.intSalesPaymentTypeID = spt.intSalesPaymentTypeID
+        GROUP BY spt.strSalesPaymentType
+    """)
+    payment_breakdown = cursor.fetchall()
+
+    # Total Hours Worked
+    cursor.execute("""
+        SELECT 
+            SUM(TIMESTAMPDIFF(HOUR, dtmShiftStart, dtmShiftEnd)) AS total_hours
+        FROM EmployeesShifts
+    """)
+    total_hours = cursor.fetchone()['total_hours']
+
+    # Employee Payroll Breakdown
+    cursor.execute("""
+        SELECT 
+            CONCAT(e.strFirstName, ' ', e.strLastName) AS name,
+            e.dblHourlyRate AS rate,
+            SUM(TIMESTAMPDIFF(HOUR, es.dtmShiftStart, es.dtmShiftEnd)) AS hours
+        FROM EmployeesShifts es
+        JOIN Employees e ON es.intEmployeeID = e.intEmployeeID
+        GROUP BY e.intEmployeeID
+    """)
+    payroll = cursor.fetchall()
+
+    conn.close()
+    return jsonify({
+        "total_sales": total_sales,
+        "sales_by_day": sales_by_day,
+        "payment_breakdown": payment_breakdown,
+        "total_hours": total_hours,
+        "payroll": payroll
+    })
+
 if __name__ == '__main__':
     app.run(debug=True)

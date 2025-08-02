@@ -1,0 +1,58 @@
+.analytics-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: rgb(230, 219, 219);
+  border-radius: 12px;
+  box-shadow: 0 0 10px #0002;
+}
+
+.analytics-wrapper h2,
+.analytics-wrapper h3 {
+  text-align: center;
+  margin: 0;
+}
+
+.analytics-section-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.analytics-box {
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 220px;
+  flex: 1;
+}
+
+
+.payroll {
+  font-size: 1em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.analytics-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.analytics-inner-box {
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.analytics-inner-box p{
+  text-align: center;
+}
