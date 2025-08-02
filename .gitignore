@@ -1,13 +1,7 @@
 
-__pycache__/OrderingPage.cpython-313.pyc
-
 Docs/~$Needs.docx
 
-UI/__pycache__/OurDisplay.cpython-313.pyc
-
-UI/__pycache__/DatabaseUtility.cpython-313.pyc
-
-UI/__pycache__/OrderItem.cpython-313.pyc
+Docs/~$nal.Demo.docx
 
 UI/debug.log
 
@@ -15,4 +9,4 @@ UI/debug.log
 
 UI/__pycache__/
 
-UI/images/our_logos/CompanyLogo.png
+*.tmp
