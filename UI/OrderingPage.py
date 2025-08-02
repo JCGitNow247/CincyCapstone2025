@@ -258,30 +258,25 @@ def update_order_total(SQLTotal):
 
 
 def CreateTextBox():
-    global OrderDisplay
-    OrderDisplay = CTkTextbox(Window,
-                              font=('Arial', 20),
-                              width=200,
-                              height=300)
-    OrderDisplay.configure(state="disabled")
-    OrderDisplay.place(x=735,y=125)
 
-    # Create a bold font
-    bold_font = tkfont.Font(family="Arial", size=15, weight="bold")
-    OrderDisplay._textbox.tag_configure("bold", font=bold_font)
-
+    pass
 
 def CreateLabel():
+
+    pass
+
+
+def CreateButtons():
+
+
+
     global lblOrderTotal
 
     CTkLabel(Window,
              text="Welcome To The Ordering Page",
-             font=('Arial', 32, 'bold')).place(x=108,y=40)
+             font=titleFont
+             ).place(x=108,y=40)
     
-    '''CTkLabel(Window,
-             text=SQLItemOrdered,
-             font=('Arial',20)).place(x=708,y=125)
-    '''
 
     lblOrderTotal = CTkLabel(Window,
              text=f"Your Total: ${SQLTotal:.2f}",
@@ -289,8 +284,21 @@ def CreateLabel():
     lblOrderTotal.place(x=735,y=525)
 
 
+    global OrderDisplay
+    OrderDisplay = CTkTextbox(Window,
+                              font=('Arial', 20),
+                              width=210,
+                              height=300)
+    OrderDisplay.configure(state="disabled")
+    OrderDisplay.place(x=730,y=125)
 
-def CreateButtons():
+    # Create a bold font
+    bold_font = tkfont.Font(family="Arial", size=15, weight="bold")
+    OrderDisplay._textbox.tag_configure("bold", font=bold_font)
+
+
+
+
     CTkButton(Window, text="Place Order",
               font=('Arial',24),
               width= button_width,

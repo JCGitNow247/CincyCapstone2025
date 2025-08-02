@@ -10,16 +10,17 @@ def setup_ui():
 
     #Standard width
     w = 200
-    font1 = ('Arial', 24)
     
     #Labels
     CTkLabel(Window,
-             font=('Arial', 32, 'bold'),
+             font=titleFont,
              text="Employee Login"
              ).place(x=400, y=50)
     
-    CTkLabel(Window, text="Last Name:",
-             font=font1).place(x=240, y=170)
+    CTkLabel(Window,
+             font=font1,
+            text="Last Name:"
+             ).place(x=240, y=170)
     
     CTkLabel(Window,
              font=font1,

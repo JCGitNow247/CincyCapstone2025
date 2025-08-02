@@ -15,8 +15,18 @@ from PIL import Image ##--## To istall run the following on terminal: pip instal
 
 from customtkinter import * ##--## #To istall, run the following on terminal: pip install customtkinter & pip install customtkinter --upgrade
 
+
+
+
+
 #Instantiate a window
 Window = CTk()
+
+
+## Global UI Variables ##
+font1 = ('Arial', 24)
+titleFont = ('Arial', 32, 'bold')
+
 
 #Variable to link back to json file
 CONFIG_FILE = "config.json"
@@ -51,7 +61,6 @@ else:
 
 
 
-
 #Intantiate UI
 def Create_Window():
     #Create size of window
@@ -76,18 +85,28 @@ def Create_Window():
 
 
 def Create_Menubar():
-    
+    ########################################################
     #Need to change menubars color, Neither of these worked
     menuBar = Menu(Window)# , background='blue')
     Window.config(menu=menuBar) #,bg_color="#c80d0d")
     #menuBar.configure(bg_color="#c80d0d")
+    ########################################################
 
+
+    #File Menu Options
     file_menu = Menu(menuBar, tearoff=0) #Define a Menubar
 
-    menuBar.add_cascade(label="File", font=14, menu=file_menu) #File Menu options
+    menuBar.add_cascade(label="File",
+                        font=14, 
+                        menu=file_menu) #File Menu options
 
-    file_menu.add_command(label="About", font=14, command=open_about_ui) #Define File Menu's submenu "About"
-    file_menu.add_command(label="Close Program", font=14, command=Window.quit) #Define File Menu's submenu "Close Program"
+    file_menu.add_command(label="About",
+                          font=14, 
+                          command=open_about_ui) #Define File Menu's submenu "About"
+    
+    file_menu.add_command(label="Close Program",
+                          font=14,
+                          command=Window.quit) #Define File Menu's submenu "Close Program"
 
 
     #Employee Menu Options
@@ -105,28 +124,38 @@ def Create_Menubar():
                                 command=open_login_ui)
     
 
-
     # Show manager menu only 
     Mgmt_Menu = Menu(menuBar, tearoff=0)
-    menuBar.add_cascade(label="Management", menu=Mgmt_Menu)
+    menuBar.add_cascade(label="Management",
+                        menu=Mgmt_Menu)
  
     #Define Mgmt menu's submenu "Menu Builder"
-    Mgmt_Menu.add_command(label="Menu Builder", font=14,command=open_menu_builder_ui)
+    Mgmt_Menu.add_command(label="Menu Builder",
+                          font=14,
+                          command=open_menu_builder_ui)
     
     #Adds a separator bar
     file_menu.add_separator()
     
     #Define Mgmt menu's submenu "Business Profile"
-    Mgmt_Menu.add_command(label="Business Profile", font=14,command=open_UIbuilder_ui)
+    Mgmt_Menu.add_command(label="Business Profile",
+                          font=14,
+                          command=open_UIbuilder_ui)
 
     #Define Mgmt menu's submenu "Analytics"
-    Mgmt_Menu.add_command(label="Analytics", font=14,command=open_analytics_ui)
+    Mgmt_Menu.add_command(label="Analytics",
+                          font=14,
+                          command=open_analytics_ui)
     
     #Define Mgmt menu's submenu "Inventory"
-    Mgmt_Menu.add_command(label="Inventory", font=14,command=inventory_builder_ui)
+    Mgmt_Menu.add_command(label="Inventory",
+                          font=14,
+                          command=inventory_builder_ui)
 
     #Define Mgmt menu's submenu "Order Menu"
-    Mgmt_Menu.add_command(label="Order Menu", font=14,command=open_ordering_ui)
+    Mgmt_Menu.add_command(label="Order Menu",
+                          font=14,
+                          command=open_ordering_ui)
 
 
 
@@ -149,13 +178,9 @@ def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
 
 
 
-
-
-
 # Will log the user in upon success
 def login_success():
     global is_logged_in
-
 
 def logout():
     global is_logged_in
@@ -173,6 +198,8 @@ def logout():
 
     open_loyalty_ui()
 
+
+
 #Fuctions for UI setup type
 def Display_Logos_two_thirds():
 
@@ -184,7 +211,8 @@ def Display_Logos_two_thirds():
                           size=(250,250))
     CTkLabel(Window,
              image=truck_logo,
-             text="").place(x=744,y=320)
+             text=""
+             ).place(x=744,y=320)
     
   
     #Display "CompanyLogo.png" file
@@ -195,7 +223,9 @@ def Display_Logos_two_thirds():
                            size=(250,250))
     CTkLabel(Window,
              image=truck2_logo,
-             text="").place(x=744,y=33)
+             text=""
+             ).place(x=744,y=33)
+
 
 
 def Display_Logo_Center():

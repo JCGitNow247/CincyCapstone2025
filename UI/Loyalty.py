@@ -32,9 +32,6 @@ def validate_fields():
     
 
 def setup_ui():
-
-    font1 = ('Arial',24)
-
     global txtPhoneNumbField, txtEmailAddyField
 
     #Create Entry For "Phone Number"
@@ -61,7 +58,7 @@ def setup_ui():
 
     #Label of the page
     CTkLabel(Window,
-             font=('Arial', 32, "bold"),
+             font=titleFont,
              text="Customer Loyalty"
              ).place(x=235,y=45)
     

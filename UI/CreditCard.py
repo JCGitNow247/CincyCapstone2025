@@ -43,7 +43,7 @@ def setup_ui():
     global CustomerNameField, CardNumberField, ZipCodeField, SecurityCodeField, Expiration_DateField
     global bthTipOption1, bthTipOption2, bthTipOption3
     global lblTotal
-    font1 = ('Arial',24)
+
     font2 = ('Arial',14)
 
     #Accept Entry for "Customer Name"
@@ -84,8 +84,8 @@ def setup_ui():
 
     #Data to beat validation
     def dummyData():
-        CustomerNameField.insert(0.0, "Tim Taco")
-        CardNumberField.insert(0.0, "0000111122223333")
+        CustomerNameField.insert(0.0, "Tony Taco")
+        CardNumberField.insert(0.0, "4444888844448888")
         Expiration_DateField.insert(0.0, "0813")
         SecurityCodeField.insert(0.0, "911")
         ZipCodeField.insert(0.0, "55555")
