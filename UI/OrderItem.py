@@ -5,7 +5,7 @@ class OrderItem:
         self.m_strMenuItemName = ""
         self.m_aFoodItems = []
         self.m_dblPrice = 0
-
+        self.m_description = ""
     
 
     def set_id(self, intMenuItemID):
@@ -14,7 +14,6 @@ class OrderItem:
     def get_id(self):
         return self.m_intMenuItemID
     
-
 
     def set_name(self, strMenuItemName):
         self.m_strMenuItemName = strMenuItemName
@@ -28,6 +27,13 @@ class OrderItem:
 
     def get_price(self):
         return self.m_dblPrice
+    
+
+    def set_description(self, description):
+        self.m_description = description
+
+    def get_description(self):
+        return self.m_description
     
 
 
