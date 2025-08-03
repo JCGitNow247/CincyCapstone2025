@@ -17,8 +17,6 @@ from customtkinter import * ##--## #To istall, run the following on terminal: pi
 
 
 
-
-
 #Instantiate a window
 Window = CTk()
 
@@ -26,6 +24,7 @@ Window = CTk()
 ## Global UI Variables ##
 font1 = ('Arial', 24)
 titleFont = ('Arial', 32, 'bold')
+fontsub = ('Arial', 20)
 
 
 #Variable to link back to json file
