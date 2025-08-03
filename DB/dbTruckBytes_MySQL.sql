@@ -6,6 +6,9 @@ USE dbTruckBytes;
 -- ----------------------------------------------------------
 -- Drop Tables
 -- ----------------------------------------------------------
+DROP TABLE IF EXISTS OrderItemsOrders;
+DROP TABLE IF EXISTS OrderItemsFoods;
+DROP TABLE IF EXISTS OrderItems;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS EmployeesShifts;
 DROP TABLE IF EXISTS TrucksShifts;
@@ -137,7 +140,22 @@ CREATE TABLE Orders (
 	intTruckID INT NOT NULL,
 	intSaleID INT NOT NULL,
 	intCustomerID INT,
+	strStatus VARCHAR(50) NOT NULL,
 	PRIMARY KEY (intOrderID)
+);
+
+CREATE TABLE OrderItems (
+	intOrderItemID INT AUTO_INCREMENT,
+	strOrderITemName VARCHAR(255) NOT NULL,
+	intAmount INT NOT NULL,
+	PRIMARY KEY (intOrderItemID)
+);
+
+CREATE TABLE OrderItemsOrders (
+	intOrderItemOrderID INT AUTO_INCREMENT,
+	intOrderID INT NOT NULL,
+	intOrderItemID INT NOT NULL,
+	PRIMARY KEY (intOrderItemOrderID)
 );
 
 CREATE TABLE Sales (
@@ -196,6 +214,13 @@ CREATE TABLE Foods (
 	dblSellPrice DECIMAL(3,2) NOT NULL,
 	intFoodTypeID INT NOT NULL,
 	PRIMARY KEY (intFoodID)
+);
+
+CREATE TABLE OrderItemsFoods (
+	intOrderItemFoodID INT AUTO_INCREMENT,
+	intOrderItemID INT NOT NULL,
+	intFoodID INT NOT NULL,
+	PRIMARY KEY (intOrderItemFoodID)
 );
 
 CREATE TABLE FoodTypes (
@@ -264,6 +289,9 @@ CREATE TABLE KitchenSupplyTypes (
 -- 23. SubMenus					MenuItems				intSubMenuID
 -- 24. SubMenus					SubMenusFoods			intSubMenuID
 -- 25. Foods					SubMenusFoods			intFoodID
+-- 26. Foods					OrderItemsFoods			intFoodID
+-- 27. Orders					OrderItemsOrders		intOrderID
+-- 28. OrderItems				OrderItemsOrders		intOrderItemID
 
 -- 1.
 ALTER TABLE Orders ADD CONSTRAINT Orders_Trucks_FK
@@ -364,6 +392,18 @@ FOREIGN KEY (intSubMenuID) REFERENCES SubMenus (intSubMenuID);
 -- 25.
 ALTER TABLE SubMenusFoods ADD CONSTRAINT SubMenusFoods_Foods_FK
 FOREIGN KEY (intFoodID) REFERENCES Foods (intFoodID);
+
+-- 26.
+ALTER TABLE OrderItemsFoods ADD CONSTRAINT OrderItemsFoods_Foods_FK
+FOREIGN KEY (intFoodID) REFERENCES Foods (intFoodID);
+
+-- 27.
+ALTER TABLE OrderItemsOrders ADD CONSTRAINT OrderItemsOrders_Orders_FK
+FOREIGN KEY (intOrderID) REFERENCES Orders (intOrderID);
+
+-- 28.
+ALTER TABLE OrderItemsOrders ADD CONSTRAINT OrderItemsOrders_OrderItems_FK
+FOREIGN KEY (intOrderItemID) REFERENCES OrderItems (intOrderItemID);
 
 
 -- ----------------------------------------------------------
@@ -601,22 +641,22 @@ INSERT INTO Sales (dblSaleAmount, dtmDate, intSalesPaymentTypeID) VALUES
   (6.30, '2025-07-03 13:00:00', 1);
 
 -- Orders
-INSERT INTO Orders (intTruckID, intSaleID, intCustomerID) VALUES
-  (1, 1, NULL),
-  (1, 2, 1),
-  (1, 3, NULL),
-  (1, 4, NULL),
-  (1, 5, 2),
-  (1, 6, NULL),
-  (1, 7, 3),
-  (1, 8, 1),
-  (1, 9, NULL),
-  (1, 10, NULL),
-  (1, 11, NULL),
-  (1, 12, 2),
-  (1, 13, NULL),
-  (1, 14, NULL),
-  (1, 15, 3);
+INSERT INTO Orders (intTruckID, intSaleID, intCustomerID, strStatus) VALUES
+  (1, 1, NULL, 'Paid'),
+  (1, 2, 1, 'Paid'),
+  (1, 3, NULL, 'Paid'),
+  (1, 4, NULL, 'Paid'),
+  (1, 5, 2, 'Paid'),
+  (1, 6, NULL, 'Paid'),
+  (1, 7, 3, 'Paid'),
+  (1, 8, 1, 'Paid'),
+  (1, 9, NULL, 'Paid'),
+  (1, 10, NULL, 'Paid'),
+  (1, 11, NULL, 'Paid'),
+  (1, 12, 2, 'Paid'),
+  (1, 13, NULL, 'Paid'),
+  (1, 14, NULL, 'Paid'),
+  (1, 15, 3, 'Paid');
 
 -- KitchenSupplyTypes
 INSERT INTO KitchenSupplyTypes (strKitchenSupplyTypeName) VALUES
