@@ -8,14 +8,14 @@ def setup_ui():
     #ButtonShape Variables
     w = 300
     h = 80
-    f = ('Arial', 24)
     button_size = {'width': 250, 'height': 80}
 
 
     #Label For the whole page
     CTkLabel(Window,
-             text="Management Page",
-             font=('Arial', 32)).place(x=235,y=45)
+             font=titleFont,
+             text="Management Page"
+             ).place(x=235,y=45)
     
 
 
@@ -38,7 +38,11 @@ def setup_ui():
         row = index // columns
         x_position = start_x + col * x_spacing
         y_position = start_y + row * y_spacing
-        CTkButton(Window, text=text, font=f, command=command, **button_size).place(x=x_position, y=y_position)
+        CTkButton(Window,
+                   font=font1,
+                   text=text,
+                   command=command,
+                   **button_size).place(x=x_position, y=y_position)
 
 
 # Initialize window and menus
