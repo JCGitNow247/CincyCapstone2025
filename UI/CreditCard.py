@@ -8,7 +8,7 @@ import sys
 try:
     cost = float(sys.argv[1])
 except (IndexError, ValueError):
-    cost = 0.00
+    cost = 0.00               ### $0 minnimum charge ###
 
 # Get customerID passed from OrderingPage.py or fallback to 0
 try:
@@ -182,7 +182,7 @@ def validate_fields():
 
     name_regex = r"^[A-Za-z\s\-']{2,50}$"
     if not re.match(name_regex, name_on_card):
-        messagebox.showerror("Invalid Name", "Please enter a valid name (letters, spaces, hyphens, apostrophes only).")
+        messagebox.showerror("Invalid Name", "Please enter a valid name\n(letters, spaces, hyphens, apostrophes only).")
         return False
     
     if not (card_number.isdigit() and len(card_number) == 16):
@@ -200,9 +200,27 @@ def validate_fields():
     if not (zip_code.isdigit() and len(zip_code) == 5):
         messagebox.showerror("Invalid Zip", "Zip Code must be 5 digits.")
         return False
-    
+    else:
+        messagebox.showinfo("Order Placed","Thank You For Your Purchase")
+
+        #Remove fields once item is paid
+        clear_fields()
+
     return True
 
+
+
+#Resets fields after creating a new item
+def clear_fields():
+    CustomerNameField.delete(0.0, 'end')
+    CardNumberField.delete(0.0, 'end')
+    ZipCodeField.delete(0.0, 'end')
+    SecurityCodeField.delete(0.0, 'end')
+    Expiration_DateField.delete(0.0, 'end')
+
+    ## THIS DOESNT COMPLETELY CLEAR
+    lblTotal.configure(text=f"0.00")
+ 
 
 
 #Intantiate UI options
