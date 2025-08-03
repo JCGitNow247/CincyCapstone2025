@@ -21,8 +21,13 @@ lblOrderTotal = None
 SQLTotal = 0  ### This should be an aggregate of
 
 SQLSubMenuName= "SQL Sub Menu Name"
-
 CurrentOrder = "$: "
+
+"This needs to display which buttons were pushed"
+SQLItemOrdered = ""
+
+OrderItemsList = []
+OrderDisplay = None
 
 
 
@@ -33,12 +38,6 @@ y_padding = 25
 
 
 
-
-"This needs to display which buttons were pushed"
-SQLItemOrdered = ""
-
-OrderItemsList = []
-OrderDisplay = None
 
 
 
@@ -78,14 +77,29 @@ def open_sub_menu(ItemID):
     PopUpMenu.grab_set()
     PopUpMenu.focus_force()
     PopUpMenu.transient(Window)
-    PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") ############
-    #PopUpMenu.geometry("712x610")                                  ############
-    PopUpMenu.title("This is the "+ SQLSubMenuName + " Submenu")
+    PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") 
     PopUpMenu.resizable(False, False)
+
+
+
+
+    ## Currently crashes when you select "Fries" - Fries is not a mainItem it is a ____ so the function will not work
+    #MenuItemDescription = DB.get_menu_item_description(ItemID)
+    MenuItemDescription = "Hello"    #DB.get_menu_item_description(ItemID)
+    Description = CTkLabel(PopUpMenu,
+                           width=360,
+                           height=10,
+                           text=MenuItemDescription)
+    Description.place(x=15,y=5)
+
+    
 
     # Scrollable frame for checkboxes
     scroll_frame = CTkScrollableFrame(PopUpMenu, width=360, height=60)
-    scroll_frame.place(x=15, y=20)
+    scroll_frame.place(x=15, y=90)
+
+
+
 
     # Fetch submenu items
     SubMenuRows = DB.get_sub_menu_items(ItemID)
@@ -138,16 +152,16 @@ def open_sub_menu(ItemID):
                          width=button_width,
                          height=50,
                          command=lambda: add_selected_items(PopUpMenu, checkboxes, options, selected_drink, is_drink, ItemID))
-    add_item.place(x=100,y=250)
+    add_item.place(x=180,y=330)
 
     # Close button
     my_button = CTkButton(PopUpMenu,
-                          text="close",
+                          text="Cancel",
                           font=('Arial',20),
-                          width=button_width,
+                          width=70,
                           height=50,
                           command=PopUpMenu.destroy)
-    my_button.place(x=100,y=320)
+    my_button.place(x=55,y=330)
 
     # Update sub menu name
     sub_menu_name = DB.get_sub_menu_name(ItemID)
@@ -256,19 +270,7 @@ def update_order_total(SQLTotal):
 
 
 
-
-def CreateTextBox():
-
-    pass
-
-def CreateLabel():
-
-    pass
-
-
-def CreateButtons():
-
-
+def create_basic_ui():
 
     global lblOrderTotal
 
@@ -297,21 +299,20 @@ def CreateButtons():
     OrderDisplay._textbox.tag_configure("bold", font=bold_font)
 
 
-
-
     CTkButton(Window, text="Place Order",
               font=('Arial',24),
               width= button_width,
               height=50,
-              command=open_credit_ui).place(x=735,y=45)
+              command=open_credit_ui
+              ).place(x=735,y=45)
     
     CTkButton(Window,
               text="Remove Last",
               font=('Arial',24),
               width= button_width,
               height=50,
-              command=remove_last_item).place(x=735,y=445)
-
+              command=remove_last_item
+              ).place(x=735,y=445)
 
 
 
@@ -357,9 +358,8 @@ Create_Window()
 Create_Menubar()
 
 #Intantiate UI specific to this page
-CreateButtons()
-CreateLabel()
-CreateTextBox()
+create_basic_ui()
+
 
 
 
