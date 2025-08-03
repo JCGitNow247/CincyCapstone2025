@@ -5,6 +5,11 @@ import re
 
 import DatabaseUtility as DB
 
+
+
+
+
+
 def setup_ui():
     global txtUsernameField, txtPasswordField
 
@@ -42,24 +47,25 @@ def setup_ui():
     txtPasswordField.place(x=412, y=215)
 
 
-    #Data to beat validation
-    def dummyData():
-        txtUsernameField.insert(0, "BW")
-        txtPasswordField.insert(0, "test1")
-        pass
-   
-    dummyData()
-
-
-
-    #Button
+    #Login Button
     CTkButton(Window, text="Login",
               font=font1,
               width=w,
               height=40,
-              command=open_ordering_ui
+              command=validate_fields
               ).place(x=412, y=270)
 
+
+
+    #Valid Data to speed though validation
+    def dummyData():
+        txtUsernameField.insert(0, "Davis")
+        txtPasswordField.insert(0, "4567")
+        pass
+
+
+    #Call for insert of valid data
+    dummyData()
 
 
 def show_invalid_msg():
@@ -69,7 +75,7 @@ def show_invalid_msg():
     pop_button= Button(Window,text="", command=show_invalid_msg)
     pop_button.pack(padx=30, pady=45)
     
-    
+
 
 #Validate user inputs
 def validate_fields():
@@ -84,18 +90,32 @@ def validate_fields():
     
 
     #Validates Passwords
-    if (len(password) <= 2):
-        messagebox.showerror("Invalid Password", "Password must be at least 2 digits.")
+    if (len(password) <= 3):
+        messagebox.showerror("Invalid Password", "Password must be at least 4 digits.")
 
         #Because the password was rejected, the password is removed
         txtPasswordField.delete(0, 'end')
         return False
     
     if not validate_employee_credentials(employee_name, password):
-        messagebox.showerror("login Failed", "Invalid last name or password")
+        messagebox.showerror("Login Failed", "Invalid last name or password")
         return False
-  
+    else:
+
+        #Sucessful Login
+
+
+        ###################################
+         ###################################
+        messagebox.showinfo("Login Sucessful","Employee:\n"+ employee_name + "\nHas logged in.")
+        ## INSERT Coding to track hours here ??##
+        ###################################
+        ###################################
+
+
+
     return True
+  
 
 # Validates to see if employee credentials are in the database.
 def validate_employee_credentials(last_name, password):
@@ -142,16 +162,6 @@ def handle_login():
 
         login_success()
         open_ordering_ui()
-
-#WILL BE REMOVED IN FINAL || SKIPS Validation
-#btnSubmit = CTkButton(Window, text="Login", width=200, height=40).place(x=412,y=270)
-#btnSubmit = CTkButton(Window, text="Login", width=200, height=40, command=open_ordering_ui).place(x=412,y=270)
-
-
-
-
-
-
 
 
 #Intantiate UI specific to this page
