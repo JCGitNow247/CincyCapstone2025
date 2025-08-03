@@ -256,19 +256,23 @@ function LoadMenuCards() {
     });
 }
 
+// Recalculates and updates the total cart price.
+// Updates both the displayed price on screen and the value in localStorage.
 function updateTotalPrice() {
     const items = document.querySelectorAll('.Cart-Item');
     let total = 0;
 
+     // Sum up all prices stored in the cart item data attributes
     items.forEach(item => {
         const price = parseFloat(item.getAttribute('data-price')) || 0;
         total += price;
     });
 
+    // Save the updated total to localStorage
     localStorage.setItem("cartTotal", total.toFixed(2));
 
+    // Update all elements labeled as .Total with the new price
     const totalLabels = document.querySelectorAll('.Total label');
-
     totalLabels.forEach(totalLabel => {
         if (totalLabel) {
             totalLabel.textContent = `Total: $${total.toFixed(2)}`;
@@ -276,8 +280,12 @@ function updateTotalPrice() {
     })
 }
 
+// If on the OrderPage, load the menu cards
 if (document.querySelector('.menu-container')){
     LoadMenuCards();
 }
+// Restore cart items from localStorage if any exist
 restoreCartFromStorage();
+
+// Setup delete buttons and logic for all cart items
 SetupCartItemDeletion();
