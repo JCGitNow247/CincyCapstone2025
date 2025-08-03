@@ -687,10 +687,10 @@ INSERT INTO FoodTypes (strFoodType) VALUES
 
 -- SubMenus
 INSERT INTO SubMenus (strSubMenuName) VALUES
-  ('Sandwich toppings'),
-  ('Taco toppings'),
-  ('Pizza toppings'),
-  ('Hotdog condiment'),
+  ('Sandwich Topping'),
+  ('Taco Topping'),
+  ('Pizza Topping'),
+  ('Hotdog Condiment'),
   ('Drink');
 
 -- Foods
@@ -792,12 +792,12 @@ INSERT INTO MenuItemsTypes (strMenuItemType) VALUES
 
 -- MenuItems
 INSERT INTO MenuItems (strMenuItemName, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID, strTaxableItem) VALUES
-  ('Burger', 1, 'Build your own burger from a list of toppings', 9.50, 1, 'N'),
-  ('Taco',  1, 'A single flour tortilla filled with your choice of ingredients', 3.25, 2, 'N'),
-  ('Fries',  2, 'Russet potatoes fried in beef talo', 1.50, NULL, 'N'),
-  ('Pizza', 1, 'A 10 inch personal pizza with red sauce and your choice of toppings', 7.00, 3, 'N'),
-  ('Hotdog', 1, 'A footlong hotdog with your choice of toppings', 3.50, 4, 'N'),
-  ('Drinks', 3, 'Quench your thirst with a delicious beverage', 1.50, 5, 'Y');
+  ('Burger', 1, 'Build your own burger from a list of toppings.', 9.50, 1, 'N'),
+  ('Taco',  1, 'A single flour tortilla filled with your choice of ingredients.', 3.25, 2, 'N'),
+  ('Fries',  2, 'Russet potatoes fried in beef talo.', 1.50, NULL, 'N'),
+  ('Pizza', 1, 'A personal size pizza with red sauce and your choice of toppings.', 7.00, 3, 'N'),
+  ('Hotdog', 1, 'A footlong hotdog with your choice of toppings.', 3.50, 4, 'N'),
+  ('Drinks', 3, 'Quench your thirst with a delicious beverage.', 1.50, 5, 'Y');
 
 INSERT INTO MenuItemsFoods (intMenuItemID, intFoodID, dblFoodWeight) VALUES
     -- Burger (MenuItemID 1)
