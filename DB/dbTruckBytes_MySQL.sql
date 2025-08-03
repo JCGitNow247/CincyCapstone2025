@@ -568,6 +568,7 @@ INSERT INTO LoyaltyRewards (strLoyaltyRewardType) VALUES
 INSERT INTO Customers (strEmail, strPhoneNumber) VALUES
   ('hjordan@gmail.com', '5131111111'),
   ('lluthor@gmail.com', '5132222222'),
+  ('asmith@gmail.com', '8593334444'),
   ('jtodd@gmail.com', '5133333333');
 
 -- LoyaltyMembers

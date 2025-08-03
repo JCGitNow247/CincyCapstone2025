@@ -50,8 +50,8 @@ def setup_ui():
 
     #Data to beat validation
     def dummyData():
-        txtPhoneNumbField.insert(0.0, "5131111111")
-        txtEmailAddyField.insert(0.0, "hjordan@gmail.com")
+        txtPhoneNumbField.insert(0.0, "8593334444")
+        txtEmailAddyField.insert(0.0, "asmith@gmail.com")
         pass
    
     dummyData()
@@ -98,7 +98,6 @@ def setup_ui():
 def show_user_entrys(phone, email):
     
     message = f"Sorry that does not match our records.\nYou entered:\n {phone}\n{email} \nWould You like to create Loyality account with this information?" #\n {phone}\n {email}"
-    #message = f"That does not match our records.\nYou entered:  \nWould You like to create Loyality account with this information?" #\n {phone}\n {email}"
     result = messagebox.askquestion("First Time Loyality Signup", message)
 
     if result == "yes":
