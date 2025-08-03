@@ -113,6 +113,30 @@ def get_menu_item_price(ItemID):
     return price
 
 
+####################################################
+####################################################
+def get_menu_item_description(ItemID):
+    """
+    <b>Name:</b> get_menu_item_description<br>
+    <b>Abstract:</b> Get the description of a menu item from an id<br>
+    <b>Param:</b> <i>ItemID</i> - input for menu item id<br>
+    <b>Return:</b> <i>description</i> - description of menu item
+    """
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT strDescription FROM MenuItems WHERE intMenuItemID = ?', (ItemID,))
+
+    row = cursor.fetchone()
+
+    menu_item_description = row[0]
+
+    return menu_item_description
+####################################################
+####################################################
+
 
 def get_sub_menu_items(ItemID):
     """

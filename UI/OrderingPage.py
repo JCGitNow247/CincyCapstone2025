@@ -81,11 +81,8 @@ def open_sub_menu(ItemID):
     PopUpMenu.resizable(False, False)
 
 
-
-
-    ## Currently crashes when you select "Fries" - Fries is not a mainItem it is a ____ so the function will not work
-    #MenuItemDescription = DB.get_menu_item_description(ItemID)
-    MenuItemDescription = "Hello"    #DB.get_menu_item_description(ItemID)
+    #Gets the Menu Item Description
+    MenuItemDescription = DB.get_menu_item_description(ItemID)
     Description = CTkLabel(PopUpMenu,
                            width=360,
                            height=10,
@@ -93,12 +90,9 @@ def open_sub_menu(ItemID):
     Description.place(x=15,y=5)
 
     
-
     # Scrollable frame for checkboxes
     scroll_frame = CTkScrollableFrame(PopUpMenu, width=360, height=60)
     scroll_frame.place(x=15, y=90)
-
-
 
 
     # Fetch submenu items
