@@ -7,9 +7,6 @@ import DatabaseUtility as DB
 
 
 
-
-
-
 def setup_ui():
     global txtUsernameField, txtPasswordField
 
@@ -101,7 +98,6 @@ def validate_fields():
         messagebox.showerror("Login Failed", "Invalid last name or password")
         return False
     else:
-
         #Sucessful Login
 
 
@@ -113,9 +109,9 @@ def validate_fields():
         ###################################
 
 
-
     return True
   
+
 
 # Validates to see if employee credentials are in the database.
 def validate_employee_credentials(last_name, password):
@@ -131,6 +127,7 @@ def validate_employee_credentials(last_name, password):
     conn.close()
 
     return result > 0
+
 
 
 def handle_login():
@@ -162,6 +159,7 @@ def handle_login():
 
         login_success()
         open_ordering_ui()
+
 
 
 #Intantiate UI specific to this page
