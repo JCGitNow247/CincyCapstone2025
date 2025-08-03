@@ -2,6 +2,7 @@
 from OurDisplay import *
 import re
 import sys
+import DatabaseUtility as DB
 
 
 # Get cost passed from OrderingPage.py or fallback to 0.00
@@ -10,13 +11,13 @@ try:
 except (IndexError, ValueError):
     cost = 0.00
 
-# Get customerID passed from OrderingPage.py or fallback to 0
+# Get orderID passed from OrderingPage.py or fallback to 0
 try:
-    customerID = int(sys.argv[2])
+    orderID = int(sys.argv[2])
 except (IndexError, ValueError):
-    customerID = 0
+    orderID = 0
 
-print(customerID)
+print(orderID)
 
 #Total including tip
 total_with_tip = cost
@@ -167,7 +168,7 @@ def setup_ui():
               text="Pay",
               width=200,
               height=80,
-              command=validate_fields
+              command=lambda: pay_for_order(orderID)
               ).place(x=292,y=450) #open_loyalty_ui).place(x=292,y=450)
 
 
@@ -203,6 +204,19 @@ def validate_fields():
     
     return True
 
+
+
+def pay_for_order(orderID):
+
+    if validate_fields() == True:
+        DB.mark_recent_order_paid(orderID)
+        messagebox.showinfo("Purchase Complete", "Thank you for your purchase, your order will be ready soon")
+        open_loyalty()
+
+
+def open_loyalty():
+    subprocess.Popen(['python', 'UI/Loyalty.py'])
+    Window.destroy()
 
 
 #Intantiate UI options
