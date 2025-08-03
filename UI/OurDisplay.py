@@ -113,8 +113,8 @@ def Create_Menubar():
     Employee_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
 
-    #Define Employee menu's submenu "Log Out"
-    Employee_Menu.add_command(label="Logout",
+    #Define Employee menu's submenu "Open Loyalty"
+    Employee_Menu.add_command(label="Open Loyalty",
                                   font=14,
                                   command=open_loyalty_ui)
     
@@ -123,6 +123,11 @@ def Create_Menubar():
                                 font=14,
                                 command=open_login_ui)
     
+        #Define Employee menu's submenu "Log Out"
+    Employee_Menu.add_command(label="Log Out",
+                                font=14,
+                                command=open_log_out_ui)
+
 
     # Show manager menu only 
     Mgmt_Menu = Menu(menuBar, tearoff=0)
@@ -181,7 +186,7 @@ def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
 def open_UIbuilder_ui(): _open_ui('UIBuilder.py')
 def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
 def open_KDS_ui(): _open_ui('KDS.py')
-
+def open_log_out_ui(): _open_ui('ShiftLogOut.py')
 
 # Will log the user in upon success
 def login_success():
