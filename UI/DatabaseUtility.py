@@ -653,3 +653,70 @@ def create_loyalty_customer(phone, email):
     customerID = row[0]
 
     return customerID
+
+
+
+def build_order(OrderItemsList, SQLTotal, customerID):
+
+    if customerID == 0:
+        customerID = "NULL"
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute(f"INSERT INTO Sales (dblSaleAmount, dtmDate, intSalesPaymentTypeID) VALUES ({SQLTotal}, NOW(), 2)")
+    conn.commit()
+
+    cursor.execute("SELECT intSaleID FROM Sales ORDER BY intSaleID DESC LIMIT 1")
+
+    row = cursor.fetchone()
+
+    recent_saleID = row[0]
+
+    cursor.execute(f"INSERT INTO Orders (intTruckID, intSaleID, intCustomerID, strStatus) VALUES (1, {recent_saleID}, {customerID}, 'Unpaid')")
+    conn.commit()
+
+    cursor.execute("SELECT intOrderID FROM Orders ORDER BY intOrderID DESC LIMIT 1")
+
+    row = cursor.fetchone()
+
+    recent_orderID = row[0]
+
+    for OrderItem in OrderItemsList:
+
+        name = OrderItem.get_name()
+
+        cursor.execute(f"INSERT INTO OrderItems (strOrderItemName, intAmount) VALUES ('{name}', 1)")
+        conn.commit()
+
+        cursor.execute("SELECT intOrderItemID FROM OrderItems ORDER BY intOrderItemID DESC LIMIT 1")
+
+        row = cursor.fetchone()
+
+        recent_order_itemID = row[0]
+
+        cursor.execute(f"INSERT INTO OrderItemsOrders (intOrderID, intOrderItemID) VALUES ({recent_orderID}, {recent_order_itemID})")
+        conn.commit()
+
+        food_items = OrderItem.get_food_items()
+
+        if food_items is not None:
+            for food in food_items:
+                foodID = food["id"]
+
+                cursor.execute(f"INSERT INTO OrderItemsFoods (intOrderItemID, intFoodID) VALUES ({recent_order_itemID}, {foodID})")
+                conn.commit()
+
+        return recent_orderID
+    
+
+
+def mark_recent_order_paid(orderID):
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute(f"UPDATE Orders SET strStatus = 'Paid' WHERE intOrderID = {orderID}")
+    conn.commit()

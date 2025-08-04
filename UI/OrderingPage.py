@@ -42,10 +42,12 @@ y_padding = 25
 
 
 def open_credit_ui():
-    """Open CreditCard.py and pass the current total as an argument."""
-    subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal), str(customerID)])
-    Window.destroy()
 
+    orderID = DB.build_order(OrderItemsList, SQLTotal, customerID)
+
+    """Open CreditCard.py and pass the current total as an argument."""
+    subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal), str(orderID)])
+    Window.destroy()
 
 
 def open_sub_menu(ItemID):

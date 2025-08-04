@@ -1,3 +1,8 @@
+// Handles the final checkout process:
+// - Validates input fields and drink selection
+// - Calculates final total including tip
+// - Sends the order data to the backend
+// - Redirects to summary page if successful
 function handleCheckout(event) {
     event.preventDefault(); // Prevent form refresh
 
@@ -65,7 +70,7 @@ function handleCheckout(event) {
     });
 }
 
-
+// Calculates and returns the tip amount based on selected radio option
 function handleTip(baseTotal) {
     // Tip handling
     let tipAmount = 0;
@@ -82,6 +87,7 @@ function handleTip(baseTotal) {
     return tipAmount
 }
 
+// Displays a summary of the order on the summary page using data from localStorage
 function showOrderSummary() {
     const summaryDiv = document.getElementById('orderSummary')
     if (!summaryDiv) return; // Only run this on the summary page
@@ -104,24 +110,12 @@ function showOrderSummary() {
     localStorage.removeItem("cartItems");
 }
 
-function validateLoyalty() {
-
-    const customerInformation = GetCustomerInformation();
-
-    if (!customerInformation) {
-        return false;
-    }  
-
-    return true
-}
-
+// Checks if the customer already exists in the system and offers to apply loyalty or register
 async function checkLoyalty() {
-    let validation = validateLoyalty();
-    if (!validation) return;
-
     const customerInformation = GetCustomerInformation();
-    
+    if (!customerInformation) return; 
 
+    try {
     const res = await fetch('http://localhost:5000/check-customer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -131,70 +125,63 @@ async function checkLoyalty() {
     const data = await res.json();
 
     if (data.exists) {
-        ToggleMenu('#Login', 'LoginBlock-overlay');
+        if (confirm("Your account is already registered. apply the loyalty reward?")) {
+            applyLoyalty();            
+        }
     } else {
         if (confirm("Would you like to sign up?")) {
-            ToggleMenu('#Register', 'RegisterBlock-overlay');            
-        } else {
-            return;
+            submitRegistration();        
         }
-        
+    }
+    } catch (error) {
+        console.error("Loyalty check failed:", error);
+        alert("Failed to check loyalty status. Please try again later.");
     }
 }
 
-
+// Registers a new customer and immediately applies loyalty if successful
 async function submitRegistration() {
     const info = GetCustomerInformation();
-    const username = document.getElementById('newUsername').value.trim();
-    const password = document.getElementById('newPassword').value.trim();
 
-    if (!username || !password) {
-        alert("Username and password are required.");
+    if (!info) {
+        alert("Phone number and email are required.");
         return;
     }
-
-    const payload = {
-        ...info,
-        username,
-        password
-    };
 
     const res = await fetch('http://localhost:5000/register-customer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(info)
     });
 
     const result = await res.json();
 
     if (result.success) {
         alert("Account created successfully!");
-        ToggleMenu('#Register', 'RegisterBlock-overlay');
+        applyLoyalty(); // apply the reward immediately after signup
     } else {
         alert("Failed to create account.");
     }
 }
 
-async function submitLogin() {
-    const username = document.getElementById('loginUsername').value.trim();
-    const password = document.getElementById('loginPassword').value.trim();
+// Retrieves and applies the customer's loyalty reward to the UI and pricing
+async function applyLoyalty() {
+    const customerInformation = GetCustomerInformation();
+    if (!customerInformation) return;
 
-    if (!username || !password) {
-        alert("Please enter your login credentials.");
-        return;
-    }
-
-    const res = await fetch("http://localhost:5000/login-customer", {
+    const res = await fetch("http://localhost:5000/apply-loyalty", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({
+            strEmail: customerInformation.email,
+            strPhoneNumber: customerInformation.phone
+        })
     });
 
     const data = await res.json();
 
     if (data.success) {
-        alert("Login successful!");
-        ToggleMenu('#Login', 'LoginBlock-overlay');
+        alert("Loyalty reward applied!");
         localStorage.setItem("customerID", data.customerID);
         localStorage.setItem("loyaltyReward", data.reward || "None");
 
@@ -214,13 +201,14 @@ async function submitLogin() {
                     </select>
                 </div>
             `;
+            populateDrinkDropdown();
         }
-        populateDrinkDropdown();  // Fetch drinks from backend
     } else {
-        alert("Login failed. Invalid username or password.");
+        alert("Could not apply loyalty reward.");
     }
 }
 
+// Applies a percentage-based discount to the displayed cart total
 function applyPercentageDiscount(reward) {
     const percentage = parseFloat(reward.replace('%', ''));
 
@@ -245,6 +233,7 @@ function applyPercentageDiscount(reward) {
     localStorage.setItem("finalTotal", discounted);
 }
 
+// Fetches available drinks from backend and populates the dropdown for free drink rewards
 function populateDrinkDropdown() {
     const select = document.getElementById("freeDrinkSelect");
     if (!select) {
@@ -267,6 +256,7 @@ function populateDrinkDropdown() {
         });
 }
 
+// On page load, show the order summary if on the summary page
 window.addEventListener('DOMContentLoaded', () => {
     showOrderSummary();
 });

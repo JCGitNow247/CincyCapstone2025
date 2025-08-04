@@ -6,12 +6,13 @@ import datetime
 import random
 
 app = Flask(__name__)
-CORS(app)  # This enables access from file:// and any other origins
+CORS(app, resources={r"/*": {"origins": ["null", "http://localhost:5000"]}})  # This enables access from file:// and any other origins
 
 # Path to here to start python backend servers.
 # cd WebsiteCode\truckbyte_site\PythonBackend
 # run python Backend.py to start the script.
 
+# Connects to the MariaDB database
 def get_connection():
     try:
         conn = mariadb.connect(
@@ -25,6 +26,7 @@ def get_connection():
     except mariadb.Error as e:
         return jsonify({"error": str(e)})
 
+# Gets a list of all menu items
 @app.route('/get-menu')
 def get_menu():
 
@@ -45,7 +47,7 @@ def get_menu():
     conn.close()
     return jsonify(items)
 
-
+# Gets available modifier options for a specific menu item
 @app.route('/get-modifiers')
 def get_modifiers():
     item_name = request.args.get('item')  # Get ?item= from URL
@@ -84,6 +86,7 @@ def get_modifiers():
     modifiers = [{"name": row.strFoodName, "price": float(row.dblSellPrice)} for row in rows]
     return jsonify(modifiers)
 
+# Returns a list of available trucks
 @app.route('/get-trucks')
 def get_trucks():
     conn = get_connection()
@@ -93,16 +96,15 @@ def get_trucks():
     trucks = [{"id": row[0], "name": row[1]} for row in rows]
     return jsonify(trucks)
 
+# Checks if a customer exists based on phone/email
 @app.route('/check-customer', methods=['POST'])
 def check_customer():
     data = request.get_json()
 
-    first = data['firstName'].strip()
-    last = data['lastName'].strip()
     phone = data['phone'].strip()
     email = data['email'].strip()
 
-    print(f"Checking: {first} {last}, {phone}, {email}")  # For debugging
+    print(f"Checking loyalty for {email}, {phone}")
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -110,35 +112,30 @@ def check_customer():
     cursor.execute("""
         SELECT intCustomerID
         FROM Customers
-        WHERE strFirstName = %s AND strLastName = %s AND strPhoneNumber = %s AND strEmail = %s
-    """, (first, last, phone, email))
+        WHERE strPhoneNumber = %s AND strEmail = %s
+    """, (phone, email))
 
     result = cursor.fetchone()
     conn.close()
 
     return jsonify({ "exists": result is not None })
 
-
-
+# Registers a new customer and assigns a random loyalty reward
 @app.route('/register-customer', methods=['POST'])
 def register_customer():
     data = request.get_json()
 
-    first = data['firstName'].strip()
-    last = data['lastName'].strip()
     phone = data['phone'].strip()
     email = data['email'].strip()
-    username = data['username'].strip()
-    password = data['password'].strip()
 
     conn = get_connection()
     cursor = conn.cursor()
 
     # Insert new customer
     cursor.execute("""
-        INSERT INTO Customers (strFirstName, strLastName, strUserName, strEmail, strPassword, strPhoneNumber)
-        VALUES (%s, %s, %s, %s, %s, %s)
-    """, (first, last, username, email, password, phone))
+        INSERT INTO Customers (strEmail, strPhoneNumber)
+        VALUES (%s, %s)
+    """, (email, phone))
 
     # Optional: assign random reward if LoyaltyRewards table exists
     cursor.execute("SELECT intLoyaltyRewardID FROM LoyaltyRewards ORDER BY RAND() LIMIT 1")
@@ -156,23 +153,24 @@ def register_customer():
 
     return jsonify({ "success": True })
 
-@app.route('/login-customer', methods=['POST'])
-def login_customer():
+# Applies loyalty rewards for an existing customer
+@app.route('/apply-loyalty', methods=['POST'])
+def apply_loyalty():
     data = request.get_json()
-    username = data['username'].strip()
-    password = data['password'].strip()
+    email = data['strEmail'].strip()
+    phone = data['strPhoneNumber'].strip()
 
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # Check user exists
+    # Corrected query using actual column names
     cursor.execute("""
         SELECT c.intCustomerID, r.strLoyaltyRewardType
         FROM Customers c
         LEFT JOIN LoyaltyMembers lm ON c.intCustomerID = lm.intCustomerID
         LEFT JOIN LoyaltyRewards r ON lm.intLoyaltyRewardID = r.intLoyaltyRewardID
-        WHERE c.strUserName = %s AND c.strPassword = %s
-    """, (username, password))
+        WHERE c.strEmail = %s AND c.strPhoneNumber = %s
+    """, (email, phone))
 
     result = cursor.fetchone()
     conn.close()
@@ -186,6 +184,7 @@ def login_customer():
     else:
         return jsonify({ "success": False })
 
+# Gets list of available drinks (used for free drink loyalty reward)        
 @app.route('/get-drinks', methods=['GET'])
 def get_drinks():
     conn = get_connection()
@@ -196,7 +195,7 @@ def get_drinks():
     conn.close()
     return jsonify(drinks)
 
-
+# Handles employee login by matching username and password
 @app.route('/login-employee', methods=['POST'])
 def login_employee():
     data = request.get_json()
@@ -225,15 +224,16 @@ def login_employee():
     else:
         return jsonify({ "success": False })
 
-
+# Temporary in-memory storage of submitted orders
 active_orders_cache = []
 
+# Returns list of currently active orders
 @app.route('/get-active-orders')
 def get_active_orders():
     # Return just the orders stored in the cache (placed via /submit-order)
     return jsonify(active_orders_cache)  # reverse to show newest first
 
-
+# Handles new order submission, saves to DB, and caches the order for display
 @app.route('/submit-order', methods=['POST'])
 def submit_order():
     data = request.get_json()
@@ -278,7 +278,7 @@ def submit_order():
 
     return jsonify({ "success": True })
 
-
+# Provides summary analytics including total sales, sales by day, and payroll info
 @app.route('/get-analytics-summary')
 def get_analytics_summary():
     conn = get_connection()

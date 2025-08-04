@@ -43,3 +43,6 @@ class OrderItem:
             'id': intFoodID,
             'name': strFoodName
         })
+
+    def get_food_items(self):
+        return self.m_aFoodItems

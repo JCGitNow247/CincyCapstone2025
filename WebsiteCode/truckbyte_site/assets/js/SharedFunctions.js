@@ -17,6 +17,8 @@ function ToggleMenu(menuSelector, overlayId) {
     }
 }
 
+// Adds the selected truck name from localStorage to the page header.
+// If the label doesn't exist yet, it creates and appends it to the .Top-Buttons div.
 function AddFoodTruckTitleName() {
     const name = localStorage.getItem("selectedTruckName");
     if (name) {
@@ -30,6 +32,7 @@ function AddFoodTruckTitleName() {
     }
 }
 
+// Fetches the list of available food trucks from the backend and populates the dropdown menu.
 function BuildTruckList() {
     fetch('http://localhost:5000/get-trucks')
         .then(response => response.json())
@@ -47,30 +50,23 @@ function BuildTruckList() {
         .catch(err => console.error("Error loading trucks:", err));
 }
 
+// Retrieves the customer's phone number and email from the checkout form.
+// If either field is empty, it shows an alert and returns null.
+// Otherwise, it returns an object containing the phone and email.
 function GetCustomerInformation() {
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
+    const phone = document.getElementById("phone")?.value.trim();
+    const email = document.getElementById("email")?.value.trim();
 
-
-    if (!firstName) console.error("Missing input: #firstName");
-    if (!lastName) console.error("Missing input: #lastName");
-    if (!email) console.error("Missing input: #email");   
-    if (!phone) console.error("Missing input: #phone");
-
-    if (!firstName || !lastName || !phone || !email) {
+    if (!phone || !email) {
+        alert("Phone number and email are required.");
         return null;
     }
 
-    return {
-        firstName,
-        lastName,
-        email,
-        phone
-    };
+    return { phone, email };
 }
 
+// Loads the active orders from the backend and displays them on the screen.
+// Orders already marked as "completed" in localStorage will be skipped.
 function LoadActiveOrders() {
     fetch('http://localhost:5000/get-active-orders')
         .then(res => res.json())
@@ -110,12 +106,11 @@ function LoadActiveOrders() {
         .catch(err => console.error("Failed to load active orders:", err));
 }
 
-
-
 // proceeds to the checkout page.
 function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"
 }
 
+// Makes GetCustomerInformation and BuildTruckList available globally for inline HTML scripts.
 window.GetCustomerInformation = GetCustomerInformation;
 window.BuildTruckList = BuildTruckList;
