@@ -201,12 +201,7 @@ def validate_fields():
     if not (zip_code.isdigit() and len(zip_code) == 5):
         messagebox.showerror("Invalid Zip", "Zip Code must be 5 digits.")
         return False
-    else:
-        messagebox.showinfo("Order Placed","Thank You For Your Purchase")
-
-        #Remove fields once item is paid
-        clear_fields()
-
+    
     return True
 
 
