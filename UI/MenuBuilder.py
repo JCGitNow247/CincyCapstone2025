@@ -31,55 +31,55 @@ def setup_ui():
                                   font=font1,
                                   width=250,
                                   height=40)
-    txtItemNameField.place(x=200,y=90)
+    txtItemNameField.place(x=200,y=125)
 
     txtItemPriceField = CTkTextbox(Window,
                                    font=font1,
                                     width=250,
                                     height=40)
-    txtItemPriceField.place(x=200,y=220)
+    txtItemPriceField.place(x=200,y=300)
 
     txtItemDescriptionField = CTkTextbox(Window,
                                          font=font1,
                                          width=250,
                                          height=150)
-    txtItemDescriptionField.place(x=683,y=110)
+    txtItemDescriptionField.place(x=648,y=130)
 
 
     #Label of the page
     CTkLabel(Window,
             font=titleFont,
             text="Menu Builder",
-            ).place(x=235,y=20)
+            ).place(x=235,y=45)
 
-    #Create Label & Textbox for "Item Name"
+    #Create Label for "Item Name"
     CTkLabel(Window, font=font1,
              text="Item Name:"
-             ).place(x=60,y=90)
+             ).place(x=60,y=125)
 
-    #Create Label & Textbox for "Item Price"
+    #Create Label for "Item Price"
     CTkLabel(Window,
             font=font1,
             text="Item Price:"
-            ).place(x=60,y=220)
+            ).place(x=60,y=300)
 
     CTkLabel(Window,
             font=font1,
             text="Add Description:"
-            ).place(x=690,y=80)
+            ).place(x=670,y=90)
 
     CTkLabel(Window,
             font=font1,
             text="Requires Sub Menu"
-            ).place(x=690,y=270)
+            ).place(x=668,y=300)
 
     btnCreateNew = CTkButton(Window,
                              font=font1,
                              text="Create New Item",
-                             width=200,
-                             height=50, 
+                             width=300,
+                             height=80, 
                              command=create_item)
-    btnCreateNew.place(x=690,y=525)
+    btnCreateNew.place(x=623,y=440)
 
 
 #CheckBox 
@@ -91,7 +91,7 @@ ChkBxIsTaxable = CTkCheckBox(Window,
                              variable=checkbox_var,
                              checkbox_height=25,
                              checkbox_width=25)
-ChkBxIsTaxable.place(x=200,y=270)
+ChkBxIsTaxable.place(x=200,y=360)
 
 
 
@@ -111,7 +111,7 @@ def DisplayComboBoxes():
                         width=250, 
                         height=40)
     
-    cboMenu.place(x=200,y=140)
+    cboMenu.place(x=200,y=175) ##################################################################
     cboMenu.set('Add To Existing Menu')
 
     SubMenus = DB.get_sub_menus()
@@ -126,7 +126,7 @@ def DisplayComboBoxes():
                             width=250, 
                             height=40)
 
-    cboAddSubMenu.place(x=680,y=300)  
+    cboAddSubMenu.place(x=648,y=340)  
     cboAddSubMenu.set('Add To Existing Sub Menu?')
 
 
