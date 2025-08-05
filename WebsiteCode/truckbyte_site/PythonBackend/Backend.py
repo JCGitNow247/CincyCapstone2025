@@ -6,7 +6,7 @@ import datetime
 import random
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["null", "http://localhost:5000"]}})  # This enables access from file:// and any other origins
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Path to here to start python backend servers.
 # cd WebsiteCode\truckbyte_site\PythonBackend
@@ -241,6 +241,7 @@ def submit_order():
     total = float(data.get("total", 0))
     customer_id = data.get("customerID")
     free_drink = data.get("freeDrink")
+    truck_id = int(data.get("truckID", 1))
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -252,11 +253,11 @@ def submit_order():
     """, (total,))
     sale_id = cursor.lastrowid
 
-    # Insert Order
+    # Insert Order 
     cursor.execute("""
-        INSERT INTO Orders (intTruckID, intSaleID, intCustomerID)
-        VALUES (1, %s, %s)
-    """, (sale_id, customer_id if customer_id else None))
+        INSERT INTO Orders (intTruckID, intSaleID, intCustomerID, strStatus)
+        VALUES (%s, %s, %s, %s)
+    """, (truck_id, sale_id, customer_id if customer_id else None, "Paid"))
     order_id = cursor.lastrowid
 
     conn.commit()
@@ -276,7 +277,7 @@ def submit_order():
         "description": description_html
     })
 
-    return jsonify({ "success": True })
+    return jsonify({ "success": True, "id": order_id })
 
 # Provides summary analytics including total sales, sales by day, and payroll info
 @app.route('/get-analytics-summary')
