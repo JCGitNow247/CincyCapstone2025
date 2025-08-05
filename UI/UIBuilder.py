@@ -50,7 +50,7 @@ def display_current_logo(img_path=None):
     truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250, 250))
 
     if imgLogo is None:
-        imgLogo = CTkLabel(Window, image=truck_logo, text="").place(x=683, y=115)
+        imgLogo = CTkLabel(Window, image=truck_logo, text="").place(x=683, y=150)
     else:
         imgLogo.configure(image=truck_logo)
 
@@ -91,37 +91,61 @@ def save_as_png():
 
 
 
-def DisplayLabels():
-    #Label of the page
-    CTkLabel(Window, text="Business Builder", font=('Arial', 32, 'bold')).place(x=235,y=20)
-    #Create Label for "Company Name"
-    CTkLabel(Window, text="Company\nName:", font=('Arial',24)).place(x=60,y=90)
-    #Create Label for "Location"
-    CTkLabel(Window, font=('Arial', 24), text="Current\nLocation").place(x=60,y=240)
-
-
-
-
-def DisplayFields():
+def setup_basic_ui():
+ 
     global txtCompanyNameField, txtLocationField
 
     #Create Textbox for "Location"
-    txtLocationField = CTkTextbox(Window, width=250,height=150, font=('Arial',24))
+    txtLocationField = CTkTextbox(Window,
+                                  font=font1,
+                                  width=250,
+                                  height=150)
     txtLocationField.place(x=200,y=240)
 
     #Create Textbox for "Company Name"
-    txtCompanyNameField = CTkTextbox(Window, width=250,height=40, font=('Arial',24))
-    
+    txtCompanyNameField = CTkTextbox(Window,
+                                     font=font1,
+                                     width=250,
+                                     height=40)
     txtCompanyNameField.place(x=200,y=90)
-    #txtCompanyNameField.insert(f"DEFAULT_COMPANY_NAME")
 
 
+   #Label of the page
+    CTkLabel(Window,
+             font=titleFont,
+             text="Business Builder"
+             ).place(x=235,y=20)
+    
+    #Create Label for "Company Name"
+    CTkLabel(Window,
+             font=font1,
+             text="Company\nName:"
+             ).place(x=60,y=90)
+    
+    #Create Label for "Location"
+    CTkLabel(Window,
+             font=font1,
+             text="Current\nLocation:"
+             ).place(x=60,y=240)
 
-def DisplayButtons():
+
     #Create Button to Add Logo
-    CTkButton(Window, font=('Arial', 24), text="Click To Add Logo", width=200, height=50, command=save_as_png).place(x=690,y=30)
+    CTkButton(Window, font=font1,
+              text="Click To Add Logo",
+              width=200,
+              height=50,
+              command=save_as_png
+              ).place(x=705,y=50)
+    
+
     #Create button to Update Info
-    CTkButton(Window, font=('Arial', 24), text="Update Info", width=200, height=50, command=update_company_name).place(x=690,y=525)
+    CTkButton(Window,
+              font=titleFont,
+              text="Update Info",
+              width=300,
+              height=80,
+              command=update_company_name
+              ).place(x=660,y=445)
 
 
 
@@ -133,11 +157,11 @@ def DisplayCurrentLogo():
 
         resized_logo = original_logo.resize((250, 250), Image.Resampling.LANCZOS)
         truck_logo = CTkImage(light_image=resized_logo, dark_image=resized_logo, size=(250, 250))
-        CTkLabel(Window, image=truck_logo, text="").place(x=683, y=115)
+        CTkLabel(Window, image=truck_logo, text="").place(x=683, y=150)
     else:
         print(f"Warning: Could not find image at {img_path}")
 
-    CTkLabel(Window,image=truck_logo, text="").place(x=683,y=115)
+    #CTkLabel(Window,image=truck_logo, text="").place(x=683,y=145)
 
 
 
@@ -171,9 +195,8 @@ Create_Menubar()
 
 #Intantiate UI specific to this page
 DisplayCurrentLogo()
-DisplayLabels()
-DisplayFields()
-DisplayButtons()
+setup_basic_ui()
+
 
 
 #Create mainloop to run program

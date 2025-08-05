@@ -161,10 +161,10 @@ def Create_Menubar():
                           font=14,
                           command=open_ordering_ui)
     
-    #Define Mgmt menu's submenu "KDS"
-    Mgmt_Menu.add_command(label="KDS",
+    #Define Mgmt menu's submenu "Mgmt"
+    Mgmt_Menu.add_command(label="Mgmt",
                           font=14,
-                          command=open_KDS_ui)
+                          command=open_Mgmt_ui)
 
 
 
@@ -184,7 +184,7 @@ def open_loyalty_ui(): _open_ui('Loyalty.py')
 def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
 def open_UIbuilder_ui(): _open_ui('UIBuilder.py')
 def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
-def open_KDS_ui(): _open_ui('KDS.py')
+def open_Mgmt_ui(): _open_ui('Mgmt.py')
 def open_log_out_ui(): _open_ui('ShiftLogOut.py')
 
 # Will log the user in upon success
