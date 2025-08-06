@@ -113,7 +113,7 @@ def Create_Menubar():
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
 
     #Define Employee menu's submenu "Open Loyalty"
-    Employee_Menu.add_command(label="Open Loyalty",
+    Employee_Menu.add_command(label="Loyalty Signup",
                                   font=14,
                                   command=open_loyalty_ui)
     
@@ -133,6 +133,11 @@ def Create_Menubar():
     menuBar.add_cascade(label="Management",
                         menu=Mgmt_Menu)
  
+     #Define Mgmt menu's submenu "Mgmt"
+    Mgmt_Menu.add_command(label="Mgmt",
+                          font=14,
+                          command=open_Mgmt_ui)
+    
     #Define Mgmt menu's submenu "Menu Builder"
     Mgmt_Menu.add_command(label="Menu Builder",
                           font=14,
@@ -161,11 +166,11 @@ def Create_Menubar():
                           font=14,
                           command=open_ordering_ui)
     
-    #Define Mgmt menu's submenu "KDS"
-    Mgmt_Menu.add_command(label="KDS",
+    
+    #Define Mgmt menu's submenu "Open Loyalty"
+    Mgmt_Menu.add_command(label="Beginning & Loyalty",
                           font=14,
-                          command=open_KDS_ui)
-
+                          command=open_loyalty_ui)
 
 
 # Fuctions to call other ui pages
@@ -184,7 +189,7 @@ def open_loyalty_ui(): _open_ui('Loyalty.py')
 def open_menu_builder_ui(): _open_ui('MenuBuilder.py')
 def open_UIbuilder_ui(): _open_ui('UIBuilder.py')
 def inventory_builder_ui(): _open_ui('InventoryBuilder.py')
-def open_KDS_ui(): _open_ui('KDS.py')
+def open_Mgmt_ui(): _open_ui('Mgmt.py')
 def open_log_out_ui(): _open_ui('ShiftLogOut.py')
 
 # Will log the user in upon success

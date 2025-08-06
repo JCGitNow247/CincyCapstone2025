@@ -112,6 +112,29 @@ def show_user_entrys(phone, email):
     return customerID
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #Used to open OrderingPage.py with validation
 def check_loyality():
     if validate_fields():

@@ -83,8 +83,8 @@ def setup_ui():
                                height=40)
     ZipCodeField.place(x=372,y=200)
 
-    #Data to beat validation
-    def dummyData():
+    #Data to beat Credit Card Validation
+    def dummyCCData():
         CustomerNameField.insert(0.0, "Tony Taco")
         CardNumberField.insert(0.0, "4444888844448888")
         Expiration_DateField.insert(0.0, "0813")
@@ -92,7 +92,7 @@ def setup_ui():
         ZipCodeField.insert(0.0, "55555")
         pass
    
-    dummyData()
+    dummyCCData()
 
     #Create Labels
     CTkLabel(Window,

@@ -22,9 +22,9 @@ def setup_ui():
     # Button configuration: (text, command)
     buttons = [
         ("Truckbytes Ordering", open_ordering_ui),
-        ("Analytics", open_analytics_ui),
-        ("Menu Builder", open_menu_builder_ui),
         ("UI & Location", open_UIbuilder_ui),
+        ("Menu Builder", open_menu_builder_ui),
+        ("Analytics", open_analytics_ui),
         ("Inventory", inventory_builder_ui),
     ]
 

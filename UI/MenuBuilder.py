@@ -66,12 +66,12 @@ def setup_ui():
     CTkLabel(Window,
             font=font1,
             text="Add Description:"
-            ).place(x=670,y=90)
+            ).place(x=685,y=90) #x=670
 
     CTkLabel(Window,
             font=font1,
             text="Requires Sub Menu"
-            ).place(x=668,y=300)
+            ).place(x=667,y=300)
 
     btnCreateNew = CTkButton(Window,
                              font=font1,
