@@ -343,5 +343,98 @@ def get_analytics_summary():
         "payroll": payroll
     })
 
+
+
+
+@app.route('/api/paid-orders')
+def get_paid_orders():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    # Query joins all relevant tables to get order, order items, and food components
+    query = """
+    SELECT 
+        o.intOrderID,
+        oi.intOrderItemID,
+        oi.strOrderITemName AS order_item_name,
+        f.intFoodID,
+        f.strFoodName AS food_name
+    FROM Orders o
+    JOIN OrderItemsOrders oio ON o.intOrderID = oio.intOrderID
+    JOIN OrderItems oi ON oio.intOrderItemID = oi.intOrderItemID
+    LEFT JOIN OrderItemsFoods oif ON oi.intOrderItemID = oif.intOrderItemID
+    LEFT JOIN Foods f ON oif.intFoodID = f.intFoodID
+    WHERE o.strStatus = 'Paid'
+    ORDER BY o.intOrderID, oi.intOrderItemID, f.strFoodName
+    """
+    
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    
+    # Organize data into nested structure: orders -> order items -> foods
+    orders = {}
+    for row in rows:
+        order_id = row['intOrderID']
+        item_id = row['intOrderItemID']
+        item_name = row['order_item_name']
+        food_name = row['food_name']
+        
+        if order_id not in orders:
+            orders[order_id] = {
+                'order_id': order_id,
+                'items': {}
+            }
+        
+        if item_id not in orders[order_id]['items']:
+            orders[order_id]['items'][item_id] = {
+                'item_id': item_id,
+                'item_name': item_name,
+                'foods': []
+            }
+        
+        # Add food name if present (could be null if no foods linked)
+        if food_name and food_name not in orders[order_id]['items'][item_id]['foods']:
+            orders[order_id]['items'][item_id]['foods'].append(food_name)
+    
+    # Convert to list and simplify items from dict to list
+    result = []
+    for order in orders.values():
+        items_list = []
+        for item in order['items'].values():
+            items_list.append({
+                'item_id': item['item_id'],
+                'item_name': item['item_name'],
+                'foods': item['foods']
+            })
+        result.append({
+            'order_id': order['order_id'],
+            'items': items_list
+        })
+    
+    return jsonify(result)
+
+
+
+@app.route('/api/complete-order', methods=['POST'])
+def complete_order():
+    data = request.get_json()
+    order_id = data.get('orderId')
+    print("Received JSON:", data)
+    print("Received order_id:", order_id)
+
+    if not order_id:
+        return jsonify({'error': 'Missing order ID'}), 400
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE Orders SET strStatus = 'Completed' WHERE intOrderID = %s", (order_id,))
+    conn.commit()
+
+    return jsonify({'message': f'Order {order_id} marked as completed'}), 200
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
