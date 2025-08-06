@@ -535,6 +535,9 @@ def delete_food_by_id(food_id):
     row = cursor.fetchone()
 
     if row is not None:
+            
+            cursor.execute("DELETE FROM OrderItemsFoods WHERE intFoodID = ?", (food_id,))
+
             cursor.execute("DELETE FROM SubMenusFoods WHERE intFoodID = ?", (food_id,))
             conn.commit()
 
@@ -708,7 +711,7 @@ def build_order(OrderItemsList, SQLTotal, customerID):
                 cursor.execute(f"INSERT INTO OrderItemsFoods (intOrderItemID, intFoodID) VALUES ({recent_order_itemID}, {foodID})")
                 conn.commit()
 
-        return recent_orderID
+    return recent_orderID
     
 
 
