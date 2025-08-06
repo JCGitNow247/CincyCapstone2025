@@ -61,6 +61,7 @@ CREATE TABLE Trucks (
 	intTruckNumber INT NOT NULL,
 	strTruckName VARCHAR(255) NOT NULL,
 	imgCompanyLogo LONGBLOB,
+	strLocation VARCHAR(255),
 	PRIMARY KEY (intTruckID)
 );
 
@@ -146,7 +147,7 @@ CREATE TABLE Orders (
 
 CREATE TABLE OrderItems (
 	intOrderItemID INT AUTO_INCREMENT,
-	strOrderITemName VARCHAR(255) NOT NULL,
+	strOrderItemName VARCHAR(255) NOT NULL,
 	intAmount INT NOT NULL,
 	PRIMARY KEY (intOrderItemID)
 );
@@ -587,10 +588,10 @@ INSERT INTO EmployeesShifts (intEmployeeID, intShiftID, dtmShiftStart, dtmShiftE
   (8, 3, '2025-07-03 08:00:00', '2025-07-03 16:00:00');
 
 -- Trucks
-INSERT INTO Trucks (intTruckNumber, strTruckName, imgCompanyLogo) VALUES
-  (1, 'SuperTruck', NULL),
-  (2, 'AwesomeTruck', NULL),
-  (3, 'MegaTruck', NULL);
+INSERT INTO Trucks (intTruckNumber, strTruckName, imgCompanyLogo, strLocation) VALUES
+  (1, 'SuperTruck', NULL, NULL),
+  (2, 'AwesomeTruck', NULL, NULL),
+  (3, 'MegaTruck', NULL, NULL);
 
 -- TrucksShifts
 INSERT INTO TrucksShifts (intShiftID, intTruckID) VALUES
@@ -642,21 +643,21 @@ INSERT INTO Sales (dblSaleAmount, dtmDate, intSalesPaymentTypeID) VALUES
 
 -- Orders
 INSERT INTO Orders (intTruckID, intSaleID, intCustomerID, strStatus) VALUES
-  (1, 1, NULL, 'Paid'),
-  (1, 2, 1, 'Paid'),
-  (1, 3, NULL, 'Paid'),
-  (1, 4, NULL, 'Paid'),
-  (1, 5, 2, 'Paid'),
-  (1, 6, NULL, 'Paid'),
-  (1, 7, 3, 'Paid'),
-  (1, 8, 1, 'Paid'),
-  (1, 9, NULL, 'Paid'),
-  (1, 10, NULL, 'Paid'),
-  (1, 11, NULL, 'Paid'),
-  (1, 12, 2, 'Paid'),
-  (1, 13, NULL, 'Paid'),
-  (1, 14, NULL, 'Paid'),
-  (1, 15, 3, 'Paid');
+  (1, 1, NULL, 'Completed'),
+  (1, 2, 1, 'Completed'),
+  (1, 3, NULL, 'Completed'),
+  (1, 4, NULL, 'Completed'),
+  (1, 5, 2, 'Completed'),
+  (1, 6, NULL, 'Completed'),
+  (1, 7, 3, 'Completed'),
+  (1, 8, 1, 'Completed'),
+  (1, 9, NULL, 'Completed'),
+  (1, 10, NULL, 'Completed'),
+  (1, 11, NULL, 'Completed'),
+  (1, 12, 2, 'Completed'),
+  (1, 13, NULL, 'Completed'),
+  (1, 14, NULL, 'Completed'),
+  (1, 15, 3, 'Completed');
 
 -- KitchenSupplyTypes
 INSERT INTO KitchenSupplyTypes (strKitchenSupplyTypeName) VALUES
@@ -868,3 +869,5 @@ INSERT INTO TrucksMenuItems (intTruckID, intMenuItemID) VALUES
     (1, 4),
     (1, 5),
     (1, 6);
+    
+    SELECT * FROM OrderItems
