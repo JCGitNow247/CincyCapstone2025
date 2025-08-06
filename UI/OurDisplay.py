@@ -113,7 +113,7 @@ def Create_Menubar():
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
 
     #Define Employee menu's submenu "Open Loyalty"
-    Employee_Menu.add_command(label="Open Loyalty",
+    Employee_Menu.add_command(label="Loyalty Signup",
                                   font=14,
                                   command=open_loyalty_ui)
     
@@ -133,6 +133,11 @@ def Create_Menubar():
     menuBar.add_cascade(label="Management",
                         menu=Mgmt_Menu)
  
+     #Define Mgmt menu's submenu "Mgmt"
+    Mgmt_Menu.add_command(label="Mgmt",
+                          font=14,
+                          command=open_Mgmt_ui)
+    
     #Define Mgmt menu's submenu "Menu Builder"
     Mgmt_Menu.add_command(label="Menu Builder",
                           font=14,
@@ -161,11 +166,11 @@ def Create_Menubar():
                           font=14,
                           command=open_ordering_ui)
     
-    #Define Mgmt menu's submenu "Mgmt"
-    Mgmt_Menu.add_command(label="Mgmt",
+    
+    #Define Mgmt menu's submenu "Open Loyalty"
+    Mgmt_Menu.add_command(label="Beginning & Loyalty",
                           font=14,
-                          command=open_Mgmt_ui)
-
+                          command=open_loyalty_ui)
 
 
 # Fuctions to call other ui pages

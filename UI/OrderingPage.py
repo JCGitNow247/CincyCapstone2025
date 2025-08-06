@@ -94,7 +94,7 @@ def open_sub_menu(ItemID):
     
     # Scrollable frame for checkboxes
     scroll_frame = CTkScrollableFrame(PopUpMenu, width=360, height=60)
-    scroll_frame.place(x=15, y=90)
+    scroll_frame.place(x=15, y=45)
 
 
     # Fetch submenu items
@@ -144,25 +144,25 @@ def open_sub_menu(ItemID):
     #Add Item button
     add_item = CTkButton(PopUpMenu,
                          text="Add Item",
-                         font=('Arial',20),
+                         font=font1,
                          width=button_width,
-                         height=50,
+                         height=80,
                          command=lambda: add_selected_items(PopUpMenu, checkboxes, options, selected_drink, is_drink, ItemID))
-    add_item.place(x=180,y=330)
+    add_item.place(x=180,y=295)
 
     # Close button
     my_button = CTkButton(PopUpMenu,
                           text="Cancel",
-                          font=('Arial',20),
-                          width=70,
-                          height=50,
+                          font=font1,
+                          width=80,
+                          height=80,
                           command=PopUpMenu.destroy)
-    my_button.place(x=55,y=330)
+    my_button.place(x=55,y=295)
 
     # Update sub menu name
     sub_menu_name = DB.get_sub_menu_name(ItemID)
 
-    PopUpMenu.title("This is the "+sub_menu_name+ " menu")
+    PopUpMenu.title("This Is The "+sub_menu_name+ " Menu")
 
 
 

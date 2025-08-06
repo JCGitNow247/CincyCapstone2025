@@ -23,6 +23,7 @@ if os.path.exists(CONFIG_FILE):
             contents = config_file.read()
             config_data = json.loads(contents) if contents.strip() else {}
             CompanyPlaceholder = config_data.get("CompanyPlaceholder", DEFAULT_COMPANY_NAME)
+            
     except Exception as e:
         print("Failed to read config.json:", e)
         CompanyPlaceholder = DEFAULT_COMPANY_NAME
@@ -167,16 +168,26 @@ def DisplayCurrentLogo():
 
 def update_company_name():
     global CompanyPlaceholder
+
+
     CompanyPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
+    LocationPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
     Window.title(CompanyPlaceholder + " Powered by TruckBytes")
 
-    # Save the updated name permanently in config.json
+    #Save both values to config.json
+    config = {
+        "CompanyPlaceholder": CompanyPlaceholder,
+        "LocationPlaceholder": LocationPlaceholder
+    }
     with open("config.json", "w") as f:
-        json.dump({"CompanyPlaceholder": CompanyPlaceholder}, f)
+        json.dump(config, f)
+
+    # Update window title
+    Window.title(f"{CompanyPlaceholder} - {LocationPlaceholder} Powered by TruckBytes")
     Window.title(CompanyPlaceholder + " Powered by TruckBytes")
 
 
-    
+    '''
 def update_company_Location():
     global LocationPlaceholder
     LocationPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
@@ -186,7 +197,7 @@ def update_company_Location():
     with open("config.json", "w") as f:
         json.dump({"CompanyPlaceholder": CompanyPlaceholder}, f)
     Window.title(CompanyPlaceholder + " Powered by TruckBytes")
-
+    '''
 
 
 #Intantiate UI options
