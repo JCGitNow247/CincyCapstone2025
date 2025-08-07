@@ -98,15 +98,33 @@ def validate_fields():
         messagebox.showerror("Login Failed", "Invalid last name or password")
         return False
     else:
-        #Sucessful Login
 
 
-        ###################################
-         ###################################
+        
+        #####################
+        ## Sucessful Login ##
+         ####################
+     
         messagebox.showinfo("Login Sucessful","Employee:\n"+ employee_name + "\nHas logged in.")
-        ## INSERT Coding to track hours here ??##
-        ###################################
-        ###################################
+
+       
+        #######################################
+        ## INSERT Coding to track hours here ##
+        #######################################
+      
+
+
+
+        open_ordering_ui()
+
+        #################################################
+        ## If the login was manager open a the mgmt.py ##
+        #################################################
+        '''
+        if   ###############    intEmployeeTypeID = 2
+            open_Mgmt_ui()
+        else: open_ordering_ui()
+        '''
 
 
     return True
