@@ -74,12 +74,20 @@ def setup_ui():
             ).place(x=667,y=300)
 
     btnCreateNew = CTkButton(Window,
-                             font=font1,
+                             font=titleFont,
                              text="Create New Item",
                              width=300,
                              height=80, 
                              command=create_item)
     btnCreateNew.place(x=623,y=440)
+
+    CTkButton(Window,
+            font=font1,
+            text="Return To\nMangemant Page",
+            width=80,
+            height=80,
+            command=open_Mgmt_ui
+            ).place(x=218,y=445)
 
 
 #CheckBox 

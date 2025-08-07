@@ -44,7 +44,13 @@ def display_analytics():
         text = f"{name}: {hours} hrs @ ${rate:.2f} = ${pay:.2f}"
         CTkLabel(analytics_frame, text=text, font=('Arial', 16)).pack(anchor="w", padx=40)
 
-
+        CTkButton(Window,
+            font=font1,
+            text="Return\nTo\nMangemant\nPage",
+            width=60,
+            height=60,
+            command=open_Mgmt_ui
+            ).place(x=18,y=45)
 
 #Intantiate UI options
 Create_Window()

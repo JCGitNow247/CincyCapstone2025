@@ -46,6 +46,12 @@ def create_input_fields():
     CTkButton(Window, text="Add Food", command=submit_food_item).place(x=820, y=50)
 
 
+    CTkButton(Window,
+        font=('Arial', 14),
+        text="Return To Mangemant Page",
+        command=open_Mgmt_ui
+        ).place(x=770, y=568)
+
 # ---------- STEP 2: Submit a New Food ----------
 def submit_food_item():
     global card_index

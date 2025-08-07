@@ -148,7 +148,13 @@ def setup_basic_ui():
               command=update_company_name
               ).place(x=660,y=445)
 
-
+    CTkButton(Window,
+              font=font1,
+              text="Return To\nMangemant Page",
+              width=80,
+              height=80,
+              command=open_Mgmt_ui
+              ).place(x=160,y=445)
 
 def DisplayCurrentLogo():
     #Display "Food.Image.png" file
