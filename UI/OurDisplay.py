@@ -58,7 +58,18 @@ else:
     pass
     #print(f"Warning: Could not find logo at {logo_path}")
 
+## May remove this later.
+def titlebar_display():
+    #Display Titlebar Message
+    Window.title(CompanyPlaceholder+" Powered by TruckBytes")
 
+    #Display Titlebar Icon
+    icon_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "TruckBytes.ico")
+    if os.path.exists(icon_path):
+        Window.iconbitmap(icon_path)
+    else:
+        print(f"Warning: Icon not found at {icon_path}. Skipping icon set.")
+    
 
 #Intantiate UI
 def Create_Window():
@@ -71,15 +82,8 @@ def Create_Window():
     #Forces light mode
     set_appearance_mode('light')
 
-    #Display Titlebar Message
-    Window.title(CompanyPlaceholder+" Powered by TruckBytes")
-
-    #Display Titlebar Icon
-    icon_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "TruckBytes.ico")
-    if os.path.exists(icon_path):
-        Window.iconbitmap(icon_path)
-    else:
-        print(f"Warning: Icon not found at {icon_path}. Skipping icon set.")
+    #Display Titlebar
+    #titlebar_display()
 
 
 
