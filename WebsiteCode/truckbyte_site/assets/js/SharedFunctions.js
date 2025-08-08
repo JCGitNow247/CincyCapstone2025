@@ -106,6 +106,42 @@ function LoadActiveOrders() {
         .catch(err => console.error("Failed to load active orders:", err));
 }
 
+
+function displayOrders(orders) {
+    const container = document.querySelector('.active-order-container');
+    container.innerHTML = ""; // Clear previous orders
+
+    orders.forEach(order => {
+        const orderDiv = document.createElement('div');
+        orderDiv.className = 'order-card';
+
+        // Start building order HTML
+        let orderHTML = `<h3>Order #${order.order_id}</h3>`;
+
+        // Render each item individually — no grouping!
+        order.items.forEach(item => {
+            orderHTML += `<p><strong>${item.item_name}</strong></p>`;
+            if (item.foods.length > 0) {
+                orderHTML += `<ul>`;
+                item.foods.forEach(food => {
+                    orderHTML += `<li>${food}</li>`;
+                });
+                orderHTML += `</ul>`;
+            }
+        });
+
+        orderDiv.innerHTML = orderHTML;
+
+        // Add Complete Order button
+        const button = document.createElement('button');
+        button.innerText = 'Complete Order';
+        button.onclick = () => completeOrder(order.order_id);
+        orderDiv.appendChild(button);
+
+        container.appendChild(orderDiv);
+    });
+}
+
 // proceeds to the checkout page.
 function ProceedToCheckout() {
   window.location.href = "../CheckoutPageFiles/CheckoutPage.html"

@@ -48,11 +48,17 @@ function handleCheckout(event) {
     const customerID = localStorage.getItem('customerID') || null;
 
     const orderPayload = {
-        items: cartItems,
-        total: finalTotal,
-        customerID,
-        freeDrink
+        customerID: customerID,
+        total: finalTotal, // finalTotal is already calculated
+        freeDrink: freeDrink,
+        items: cartItems.map(item => ({
+            name: item.name || "Unnamed Item",
+            modifiers: item.modifiers || [],
+            html: item.html || ""
+        }))
     };
+
+    console.log("Cart being sent:", JSON.stringify(cartItems, null, 2));
 
     fetch("http://localhost:5000/submit-order", {
         method: "POST",

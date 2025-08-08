@@ -162,12 +162,25 @@ function SaveCartToStorage() {
     const items = document.querySelectorAll('.Cart-Item');
     const savedItems = [];
 
-    items.forEach(item => {
+items.forEach(item => {
         const span = item.querySelector('span');
         const html = span.innerHTML;
         const price = item.getAttribute('data-price');
 
-        savedItems.push({ html, price }); // store both html and price
+        // Extract item name from <strong>
+        const nameMatch = html.match(/<strong>(.*?)<\/strong>/);
+        const name = nameMatch ? nameMatch[1] : "Unnamed Item";
+
+        // Extract modifiers from HTML
+        const modifierMatches = [...html.matchAll(/\+ (.*?)<br>?/g)];
+        const modifiers = modifierMatches.map(m => m[1]);
+
+        savedItems.push({
+            name,
+            modifiers,
+            html,
+            price
+        });
     });
 
     localStorage.setItem('cartItems', JSON.stringify(savedItems));

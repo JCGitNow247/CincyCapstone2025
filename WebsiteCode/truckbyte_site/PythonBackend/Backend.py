@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
-import mariadb
 
+import sys, os, mariadb, datetime, random
 from flask_cors import CORS
-import datetime
-import random
+
+# Add parent directory to path so we can import UI.DatabaseUtility
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
+from UI import DatabaseUtility as DB
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -239,43 +241,69 @@ def submit_order():
     data = request.get_json()
     items = data.get("items", [])
     total = float(data.get("total", 0))
-    customer_id = data.get("customerID")
+    customer_id = data.get("customerID") or None
     free_drink = data.get("freeDrink")
-    truck_id = int(data.get("truckID", 1))
+    truck_id = 1  # TODO: Replace with actual truck ID from session or frontend
 
     conn = get_connection()
     cursor = conn.cursor()
 
-    # Insert Sale
+    # STEP 1: Insert sale into Sales
+    sales_payment_type_id = 1  # You can change this to 1 = cash, 2 = card based on your frontend
     cursor.execute("""
         INSERT INTO Sales (dblSaleAmount, dtmDate, intSalesPaymentTypeID)
-        VALUES (%s, NOW(), 1)
-    """, (total,))
+        VALUES (%s, NOW(), %s)
+    """, (total, sales_payment_type_id))
     sale_id = cursor.lastrowid
 
-    # Insert Order 
+    # STEP 2: Insert into Orders
     cursor.execute("""
         INSERT INTO Orders (intTruckID, intSaleID, intCustomerID, strStatus)
-        VALUES (%s, %s, %s, %s)
-    """, (truck_id, sale_id, customer_id if customer_id else None, "Paid"))
+        VALUES (%s, %s, %s, 'Paid')
+    """, (truck_id, sale_id, customer_id))
     order_id = cursor.lastrowid
+    
+    # STEP 3: Add OrderItems and link to Orders
+    for item in items:
+        item_name = item.get('name', 'Unnamed Item')
+        modifiers = item.get("modifiers", [])
+        amount = 1
 
-    conn.commit()
-    conn.close()
+        cursor.execute("""
+            INSERT INTO OrderItems (strOrderItemName, intAmount)
+            VALUES (%s, %s)
+        """, (item_name, amount))
+        order_item_id = cursor.lastrowid
 
-    # Combine all items into 1 string description
+        cursor.execute("""
+            INSERT INTO OrderItemsOrders (intOrderID, intOrderItemID)
+            VALUES (%s, %s)
+        """, (order_id, order_item_id))
+
+        for mod in modifiers:
+            cursor.execute("SELECT intFoodID FROM Foods WHERE strFoodName = %s", (mod,))
+            result = cursor.fetchone()
+            if result:
+                food_id = result[0]
+                cursor.execute("""
+                    INSERT INTO OrderItemsFoods (intOrderItemID, intFoodID)
+                    VALUES (%s, %s)
+                """, (order_item_id, food_id))
+
+    # STEP 4: Update KDS cache (optional)
     description_lines = [item.get("html", "") for item in items]
     if free_drink:
         description_lines.append(f"<em>Free Drink: {free_drink}</em>")
 
     description_html = "<br>".join(description_lines)
-
-    # Store in the temporary cache
     active_orders_cache.append({
         "id": order_id,
         "time": datetime.datetime.now().isoformat(),
         "description": description_html
     })
+
+    conn.commit()
+    conn.close()
 
     return jsonify({ "success": True, "id": order_id })
 
@@ -350,14 +378,12 @@ def get_analytics_summary():
 def get_paid_orders():
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    
-    # Query joins all relevant tables to get order, order items, and food components
+
     query = """
     SELECT 
         o.intOrderID,
         oi.intOrderItemID,
-        oi.strOrderITemName AS order_item_name,
-        f.intFoodID,
+        oi.strOrderItemName AS order_item_name,
         f.strFoodName AS food_name
     FROM Orders o
     JOIN OrderItemsOrders oio ON o.intOrderID = oio.intOrderID
@@ -365,15 +391,15 @@ def get_paid_orders():
     LEFT JOIN OrderItemsFoods oif ON oi.intOrderItemID = oif.intOrderItemID
     LEFT JOIN Foods f ON oif.intFoodID = f.intFoodID
     WHERE o.strStatus = 'Paid'
-    ORDER BY o.intOrderID, oi.intOrderItemID, f.strFoodName
+    ORDER BY o.intOrderID, oi.intOrderItemID
     """
-    
+
     cursor.execute(query)
     rows = cursor.fetchall()
     cursor.close()
     conn.close()
-    
-    # Organize data into nested structure: orders -> order items -> foods
+
+    # Group by order -> item_id -> foods
     orders = {}
     for row in rows:
         order_id = row['intOrderID']
@@ -384,36 +410,36 @@ def get_paid_orders():
         if order_id not in orders:
             orders[order_id] = {
                 'order_id': order_id,
-                'items': {}
+                'items': []
             }
-        
-        if item_id not in orders[order_id]['items']:
-            orders[order_id]['items'][item_id] = {
+
+        # Check if this item_id already exists in the list
+        existing_item = next((i for i in orders[order_id]['items'] if i['item_id'] == item_id), None)
+
+        if existing_item:
+            if food_name and food_name not in existing_item['foods']:
+                existing_item['foods'].append(food_name)
+        else:
+            orders[order_id]['items'].append({
                 'item_id': item_id,
                 'item_name': item_name,
-                'foods': []
-            }
-        
-        # Add food name if present (could be null if no foods linked)
-        if food_name and food_name not in orders[order_id]['items'][item_id]['foods']:
-            orders[order_id]['items'][item_id]['foods'].append(food_name)
-    
-    # Convert to list and simplify items from dict to list
+                'foods': [food_name] if food_name else []
+            })
+
+        print(f"Order {order_id} → Item {item_id} = {item_name}, modifier = {food_name}")
+
+    # Convert nested dicts to list
     result = []
     for order in orders.values():
-        items_list = []
-        for item in order['items'].values():
-            items_list.append({
-                'item_id': item['item_id'],
-                'item_name': item['item_name'],
-                'foods': item['foods']
-            })
         result.append({
             'order_id': order['order_id'],
-            'items': items_list
+            'items': order['items']
         })
-    
+        
+
     return jsonify(result)
+
+
 
 
 
