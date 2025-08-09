@@ -105,8 +105,9 @@ function showOrderSummary() {
     cartItems.forEach(item => {
         summaryHTML += `<li style="margin-bottom: 5px;">${item.html || item}</li>`;
     });
+
     const freeDrink = localStorage.getItem("freeDrink");
-    if (freeDrink) {
+    if (freeDrink != '') {
         summaryHTML += `<li style="margin-bottom: 5px;"><em>Free Drink: ${freeDrink}</em></li>`;
     }
     summaryHTML += `</ul><p><strong>Total Paid:</strong> $${finalTotal}</p>`;
@@ -197,6 +198,7 @@ async function applyLoyalty() {
 
         if (reward.includes('%')) {
             rewardDiv.innerHTML = `<div style="text-align: center;"><em>Loyalty Reward: ${reward} discount applied.</em></div>`;
+            localStorage.setItem("freeDrink", "")
             applyPercentageDiscount(reward);
         } else if (reward.toLowerCase().includes('drink')) {
             rewardDiv.innerHTML = `
