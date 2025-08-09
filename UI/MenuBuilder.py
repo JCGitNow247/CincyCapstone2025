@@ -70,8 +70,8 @@ def setup_ui():
 
     CTkLabel(Window,
             font=font1,
-            text="Requires Sub Menu"
-            ).place(x=667,y=300)
+            text="Add Sub Menu To Item:"
+            ).place(x=650,y=300)
 
     btnCreateNew = CTkButton(Window,
                              font=titleFont,
@@ -83,7 +83,7 @@ def setup_ui():
 
     CTkButton(Window,
             font=font1,
-            text="Return To\nMangemant Page",
+            text="Return To\nMangement Page",
             width=80,
             height=80,
             command=open_Mgmt_ui
@@ -135,7 +135,7 @@ def DisplayComboBoxes():
                             height=40)
 
     cboAddSubMenu.place(x=648,y=340)  
-    cboAddSubMenu.set('Add To Existing Sub Menu?')
+    cboAddSubMenu.set('Prompt Existing Sub Menu')
 
 
 

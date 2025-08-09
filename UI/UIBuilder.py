@@ -135,7 +135,7 @@ def setup_basic_ui():
 
     CTkButton(Window,
               font=font1,
-              text="Return To\nMangemant Page",
+              text="Return To\nManagement Page",
               width=80,
               height=80,
               command=open_Mgmt_ui
