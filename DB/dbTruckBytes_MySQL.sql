@@ -554,7 +554,7 @@ INSERT INTO EmployeeTypes (strEmployeeType) VALUES
 INSERT INTO Employees (strFirstName, strLastName, strUserName, strPassword, dblHourlyRate, intEmployeeTypeID, strLicensedToDrive) VALUES
   ('Cole', 'Whitaker', 'CW', 'test1', 20.50, 2, 'Y'),
   ('Adam', 'Broderick', 'AB', 'test1', 20.50, 2, 'Y'),
-  ('Jason', 'Cope', 'JC', 'test1', 20.50, 2, 'Y'),
+  ('Jason', 'Cope', 'JC', '2895', 20.50, 2, 'Y'),
   ('Bruce', 'Wayne', 'BW', 'test1', 18.75, 3, 'N'),
   ('Cory', 'Stone', 'CS', '9524', 18.75, 3, 'Y'),
   ('Eric', 'Shepard', 'OQ', '2791', 18.75, 3, 'N'),
