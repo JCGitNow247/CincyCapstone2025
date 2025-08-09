@@ -100,32 +100,29 @@ def validate_fields():
     else:
 
 
-        
         #####################
         ## Sucessful Login ##
          ####################
      
         messagebox.showinfo("Login Sucessful","Employee:\n"+ employee_name + "\nHas logged in.")
 
-       
-        #######################################
-        ## INSERT Coding to track hours here ##
-        #######################################
-      
+    
+        # Fetch employee type ID
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT intEmployeeTypeID
+            FROM Employees
+            WHERE strLastName = %s AND strPassword = %s
+        """, (employee_name, password))
+        emp_type_id = cursor.fetchone()[0]
+        conn.close()
 
-
-
-        open_ordering_ui()
-
-        #################################################
-        ## If the login was manager open a the mgmt.py ##
-        #################################################
-        '''
-        if   ###############    intEmployeeTypeID = 2
+        # Open the correct UI
+        if emp_type_id == 2:
             open_Mgmt_ui()
-        else: open_ordering_ui()
-        '''
-
+        else:
+            open_ordering_ui()
 
     return True
   
