@@ -7,28 +7,17 @@ import shutil
 
 
 
-
-
-
-
-
-
-
-
-
-
 if os.path.exists(CONFIG_FILE):
     try:
         with open(CONFIG_FILE, "r") as config_file:
             contents = config_file.read()
             config_data = json.loads(contents) if contents.strip() else {}
             CompanyPlaceholder = config_data.get("CompanyPlaceholder", DEFAULT_COMPANY_NAME)
-            
+            LocationPlaceholder = config_data.get("LocationPlaceholder", DEFAULT_COMPANY_LOCATION)
     except Exception as e:
         print("Failed to read config.json:", e)
         CompanyPlaceholder = DEFAULT_COMPANY_NAME
-
-
+        LocationPlaceholder = DEFAULT_COMPANY_LOCATION
 
 
 
@@ -87,11 +76,6 @@ def save_as_png():
 
 
 
-
-
-
-
-
 def setup_basic_ui():
  
     global txtCompanyNameField, txtLocationField
@@ -102,6 +86,7 @@ def setup_basic_ui():
                                   width=250,
                                   height=150)
     txtLocationField.place(x=200,y=240)
+    txtLocationField.insert("1.0", LocationPlaceholder)
 
     #Create Textbox for "Company Name"
     txtCompanyNameField = CTkTextbox(Window,
@@ -109,7 +94,7 @@ def setup_basic_ui():
                                      width=250,
                                      height=40)
     txtCompanyNameField.place(x=200,y=90)
-
+    txtCompanyNameField.insert("1.0", CompanyPlaceholder)
 
    #Label of the page
     CTkLabel(Window,
@@ -175,9 +160,8 @@ def DisplayCurrentLogo():
 def update_company_name():
     global CompanyPlaceholder
 
-
     CompanyPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
-    LocationPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
+    LocationPlaceholder = txtLocationField.get("1.0", "end").strip()
     Window.title(CompanyPlaceholder + " Powered by TruckBytes")
 
     #Save both values to config.json
@@ -192,18 +176,6 @@ def update_company_name():
     Window.title(f"{CompanyPlaceholder} - {LocationPlaceholder} Powered by TruckBytes")
     Window.title(CompanyPlaceholder + " Powered by TruckBytes")
 
-
-    '''
-def update_company_Location():
-    global LocationPlaceholder
-    LocationPlaceholder = txtCompanyNameField.get("1.0", "end").strip()
-    Window.title(LocationPlaceholder + " Powered by TruckBytes")
-
-    # Save the updated name permanently in config.json
-    with open("config.json", "w") as f:
-        json.dump({"CompanyPlaceholder": CompanyPlaceholder}, f)
-    Window.title(CompanyPlaceholder + " Powered by TruckBytes")
-    '''
 
 
 #Intantiate UI options

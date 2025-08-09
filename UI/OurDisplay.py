@@ -30,7 +30,8 @@ fontsub = ('Arial', 20)
 #Variable to link back to json file
 CONFIG_FILE = "config.json"
 LOGIN_FILE = "login.json"
-DEFAULT_COMPANY_NAME = "<SQLCompanyName>"
+DEFAULT_COMPANY_NAME = "No Name Co"
+DEFAULT_COMPANY_LOCATION = "Earth"
 DEFAULT_LOGO_PATH = os.path.join("UI", "images", "our_logos", "CompanyLogo.png")
 
 CompanyPlaceholder = DEFAULT_COMPANY_NAME
@@ -83,7 +84,7 @@ def Create_Window():
     set_appearance_mode('light')
 
     #Display Titlebar
-    #titlebar_display()
+    titlebar_display()
 
 
 
