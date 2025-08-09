@@ -132,21 +132,34 @@ function LoadActiveOrders() {
 function displayOrders(orders) {
     const container = document.querySelector('.active-order-container');
     container.innerHTML = ""; // Clear previous orders
-
+    const freeDrink = localStorage.getItem('freeDrink') || null;
+    
     orders.forEach(order => {
         const orderDiv = document.createElement('div');
         orderDiv.className = 'order-card';
+        console.log(freeDrink)
 
         // Start building order HTML
         let orderHTML = `<h3>Order #${order.order_id}</h3>`;
 
         // Render each item individually — no grouping!
         order.items.forEach(item => {
-            orderHTML += `<p><strong>${item.item_name}</strong></p>`;
+
+            if (item.item_name.toLowerCase() === 'free drink') {
+                orderHTML += `<p style="color: green;"><strong>${item.item_name}</strong></p>`;
+            } else {
+                orderHTML += `<p><strong>${item.item_name}</strong></p>`;
+            }
+
             if (item.foods.length > 0) {
                 orderHTML += `<ul>`;
                 item.foods.forEach(food => {
-                    orderHTML += `<li>${food}</li>`;
+                    if (item.item_name.toLowerCase() === 'free drink') {
+                        orderHTML += `<li style="color: green;">${food}</li>`;
+                    } else {
+                        orderHTML += `<li>${food}</li>`;
+                    }
+                    
                 });
                 orderHTML += `</ul>`;
             }

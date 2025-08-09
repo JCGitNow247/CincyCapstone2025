@@ -261,69 +261,62 @@ def submit_order():
     total = float(data.get("total", 0))
     customer_id = data.get("customerID") or None
     free_drink = data.get("freeDrink")
-    truck_id = 1  # TODO: Replace with actual truck ID from session or frontend
+    truck_id = 1
 
     conn = get_connection()
     cursor = conn.cursor()
 
-    # STEP 1: Insert sale into Sales
-    sales_payment_type_id = 1  # You can change this to 1 = cash, 2 = card based on your frontend
+    # STEP 1: sale
     cursor.execute("""
         INSERT INTO Sales (dblSaleAmount, dtmDate, intSalesPaymentTypeID)
         VALUES (%s, NOW(), %s)
-    """, (total, sales_payment_type_id))
+    """, (total, 1))
     sale_id = cursor.lastrowid
 
-    # STEP 2: Insert into Orders
+    # STEP 2: order
     cursor.execute("""
         INSERT INTO Orders (intTruckID, intSaleID, intCustomerID, strStatus)
         VALUES (%s, %s, %s, 'Paid')
     """, (truck_id, sale_id, customer_id))
     order_id = cursor.lastrowid
-    
-    # STEP 3: Add OrderItems and link to Orders
+
+    # STEP 3: items
     for item in items:
         item_name = item.get('name', 'Unnamed Item')
         modifiers = item.get("modifiers", [])
-        amount = 1
-
-        cursor.execute("""
-            INSERT INTO OrderItems (strOrderItemName, intAmount)
-            VALUES (%s, %s)
-        """, (item_name, amount))
+        cursor.execute("INSERT INTO OrderItems (strOrderItemName, intAmount) VALUES (%s, %s)", (item_name, 1))
         order_item_id = cursor.lastrowid
-
-        cursor.execute("""
-            INSERT INTO OrderItemsOrders (intOrderID, intOrderItemID)
-            VALUES (%s, %s)
-        """, (order_id, order_item_id))
-
+        cursor.execute("INSERT INTO OrderItemsOrders (intOrderID, intOrderItemID) VALUES (%s, %s)", (order_id, order_item_id))
         for mod in modifiers:
             cursor.execute("SELECT intFoodID FROM Foods WHERE strFoodName = %s", (mod,))
-            result = cursor.fetchone()
-            if result:
-                food_id = result[0]
-                cursor.execute("""
-                    INSERT INTO OrderItemsFoods (intOrderItemID, intFoodID)
-                    VALUES (%s, %s)
-                """, (order_item_id, food_id))
+            r = cursor.fetchone()
+            if r:
+                cursor.execute("INSERT INTO OrderItemsFoods (intOrderItemID, intFoodID) VALUES (%s, %s)", (order_item_id, r[0]))
 
-    # STEP 4: Update KDS cache (optional)
+    # >>> NEW: persist free drink as $0 line item
+    if free_drink:
+        cursor.execute("INSERT INTO OrderItems (strOrderItemName, intAmount) VALUES (%s, %s)", ("Free Drink", 1))
+        free_item_id = cursor.lastrowid
+        cursor.execute("INSERT INTO OrderItemsOrders (intOrderID, intOrderItemID) VALUES (%s, %s)", (order_id, free_item_id))
+        cursor.execute("SELECT intFoodID FROM Foods WHERE strFoodName = %s", (free_drink,))
+        r = cursor.fetchone()
+        if r:
+            cursor.execute("INSERT INTO OrderItemsFoods (intOrderItemID, intFoodID) VALUES (%s, %s)", (free_item_id, r[0]))
+    # <<<
+
+    # STEP 4: KDS cache (display only)
     description_lines = [item.get("html", "") for item in items]
     if free_drink:
         description_lines.append(f"<em>Free Drink: {free_drink}</em>")
-
-    description_html = "<br>".join(description_lines)
     active_orders_cache.append({
         "id": order_id,
         "time": datetime.datetime.now().isoformat(),
-        "description": description_html
+        "description": "<br>".join(description_lines)
     })
 
     conn.commit()
     conn.close()
-
-    return jsonify({ "success": True, "id": order_id })
+    return jsonify({"success": True, "id": order_id})
 
 # Provides summary analytics including total sales, sales by day, and payroll info
 @app.route('/get-analytics-summary')
