@@ -97,30 +97,30 @@ def Create_Menubar():
     ########################################################
 
 
-    #File Menu Options
-    file_menu = Menu(menuBar, tearoff=0) #Define a Menubar
+    #Home Menu Options
+    home_menu = Menu(menuBar, tearoff=0) #Define a Menubar
 
-    menuBar.add_cascade(label="File",
+    menuBar.add_cascade(label="Home",
                         font=14, 
-                        menu=file_menu) #File Menu options
+                        menu=home_menu) #File Menu options
 
-    file_menu.add_command(label="About",
+
+    home_menu.add_command(label="Loyalty Signup",
+                                  font=14,
+                                  command=open_loyalty_ui)
+    
+    home_menu.add_command(label="About",
                           font=14, 
                           command=open_about_ui) #Define File Menu's submenu "About"
     
-    file_menu.add_command(label="Close Program",
-                          font=14,
-                          command=Window.quit) #Define File Menu's submenu "Close Program"
+
 
 
     #Employee Menu Options
     Employee_Menu = Menu(menuBar, tearoff=0)
     menuBar.add_cascade(label="Employee", menu=Employee_Menu)
 
-    #Define Employee menu's submenu "Open Loyalty"
-    Employee_Menu.add_command(label="Loyalty Signup",
-                                  font=14,
-                                  command=open_loyalty_ui)
+
     
     #Define Employee menu's submenu "Log In"
     Employee_Menu.add_command(label="Log In",
@@ -132,50 +132,98 @@ def Create_Menubar():
                                 font=14,
                                 command=open_log_out_ui)
 
+    def Mgmt_menubar():
 
-    # Show manager menu only 
-    Mgmt_Menu = Menu(menuBar, tearoff=0)
-    menuBar.add_cascade(label="Management",
-                        menu=Mgmt_Menu)
- 
-     #Define Mgmt menu's submenu "Mgmt"
-    Mgmt_Menu.add_command(label="Mgmt",
-                          font=14,
-                          command=open_Mgmt_ui)
-    
-    #Define Mgmt menu's submenu "Menu Builder"
-    Mgmt_Menu.add_command(label="Menu Builder",
-                          font=14,
-                          command=open_menu_builder_ui)
-    
-    #Adds a separator bar
-    file_menu.add_separator()
-    
-    #Define Mgmt menu's submenu "Business Profile"
-    Mgmt_Menu.add_command(label="Business Profile",
-                          font=14,
-                          command=open_UIbuilder_ui)
+        # Show manager menu only 
+        Mgmt_Menu = Menu(menuBar, tearoff=0)
+        menuBar.add_cascade(label="Management",
+                            menu=Mgmt_Menu)
 
-    #Define Mgmt menu's submenu "Analytics"
-    Mgmt_Menu.add_command(label="Analytics",
-                          font=14,
-                          command=open_analytics_ui)
-    
-    #Define Mgmt menu's submenu "Inventory"
-    Mgmt_Menu.add_command(label="Inventory",
-                          font=14,
-                          command=inventory_builder_ui)
+            #Define Mgmt menu's submenu "Mgmt"
+        Mgmt_Menu.add_command(label="Mgmt",
+                                font=14,
+                                command=open_Mgmt_ui)
 
-    #Define Mgmt menu's submenu "Order Menu"
-    Mgmt_Menu.add_command(label="Order Menu",
-                          font=14,
-                          command=open_ordering_ui)
+        #Define Mgmt menu's submenu "Menu Builder"
+        Mgmt_Menu.add_command(label="Menu Builder",
+                                font=14,
+                                command=open_menu_builder_ui)
+
+        #Adds a separator bar
+        home_menu.add_separator()
+
+        #Define Mgmt menu's submenu "Business Profile"
+        Mgmt_Menu.add_command(label="Business Profile",
+                                font=14,
+                                command=open_UIbuilder_ui)
+
+        #Define Mgmt menu's submenu "Analytics"
+        Mgmt_Menu.add_command(label="Analytics",
+                                font=14,
+                                command=open_analytics_ui)
+
+        #Define Mgmt menu's submenu "Inventory"
+        Mgmt_Menu.add_command(label="Inventory",
+                                font=14,
+                                command=inventory_builder_ui)
+
+        #Define Mgmt menu's submenu "Order Menu"
+        Mgmt_Menu.add_command(label="Order Menu",
+                                font=14,
+                                command=open_ordering_ui)
+
+
+        #Define Mgmt menu's submenu "Open Loyalty"
+        Mgmt_Menu.add_command(label="Beginning & Loyalty",
+                                font=14,
+                                command=open_loyalty_ui)
+
+        Mgmt_Menu.add_command(label="Close Program",
+                            font=14,
+                            command=Window.quit)
+
+
+
+    '''
+        # Check login.json for employee_type_id
+    try:
+        if os.path.exists(LOGIN_FILE):
+            with open(LOGIN_FILE, "r") as login_file:
+                login_data = json.load(login_file)
+                if login_data.get("employee_type_id") == 2:
+                    Mgmt_menubar()
+    except Exception as e:
+        print("Error reading login.json:", e)
+    '''
     
-    
-    #Define Mgmt menu's submenu "Open Loyalty"
-    Mgmt_Menu.add_command(label="Beginning & Loyalty",
-                          font=14,
-                          command=open_loyalty_ui)
+    Mgmt_menubar()
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Fuctions to call other ui pages
