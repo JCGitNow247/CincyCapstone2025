@@ -9,13 +9,13 @@ import os
 
 
 #SQL Variables
-SQLItem1 = "SQL SubMenu1"
-SQLItem2 = "SQL SubMenu2"
-SQLItem3 = "SQL SubMenu3"
+#SQLItem1 = "SQL SubMenu1"
+#SQLItem2 = "SQL SubMenu2"
+#SQLItem3 = "SQL SubMenu3"
 
-SQLSubMenu1 = "intSubMenuID1"
-SQLSubMenu2 = "intSubMenuID2"
-SQLSubMenu3 = "intSubMenuID3"
+#SQLSubMenu1 = "intSubMenuID1"
+#SQLSubMenu2 = "intSubMenuID2"
+#SQLSubMenu3 = "intSubMenuID3"
 
 
 truck_logo = None
@@ -42,7 +42,8 @@ def setup_ui():
     txtItemDescriptionField = CTkTextbox(Window,
                                          font=font1,
                                          width=250,
-                                         height=150)
+                                         height=150,
+                                         wrap=WORD)
     txtItemDescriptionField.place(x=648,y=130)
 
 
@@ -106,10 +107,9 @@ ChkBxIsTaxable.place(x=200,y=360)
 #### I may need to move this up so the drop down menu does not fall off screen.
 def DisplayComboBoxes():
 
-    global cboMenu, cboAddSubMenu
+    global cboMenu, cboAddSubMenu, cboAddSubMenu2
 
     Menus = DB.get_menus()
-
     menu_names = [item["name"] for item in Menus.values()]
 
     cboMenu = CTkComboBox(Window,
@@ -118,24 +118,48 @@ def DisplayComboBoxes():
                         justify="center", 
                         width=250, 
                         height=40)
-    
-    cboMenu.place(x=200,y=175) ##################################################################
-    cboMenu.set('Add To Existing Menu')
+    cboMenu.place(x=200,y=175)
+    cboMenu.set('Add To ExistingMenu')
 
     SubMenus = DB.get_sub_menus()
-
     sub_menu_names = ["None"]
     sub_menu_names += [item["name"] for item in SubMenus.values()]
-
+  
+    
     cboAddSubMenu = CTkComboBox(Window,
                             values=sub_menu_names, 
                             font=('Arial', 14),
                             justify="center",
                             width=250, 
                             height=40)
-
     cboAddSubMenu.place(x=648,y=340)  
     cboAddSubMenu.set('Prompt Existing Sub Menu')
+
+
+
+    ########################################################
+    ########################################################
+
+
+    #sub_menu_names2 = [""]
+    sub_menu_names2 = [item["name"] for item in SubMenus.values()]
+  
+
+
+
+
+
+    cboAddSubMenu2 = CTkComboBox(Window,
+                            values=sub_menu_names2, 
+                            font=('Arial', 14),
+                            justify="center",
+                            width=250, 
+                            height=40)
+    cboAddSubMenu2.place(x=200,y=215)  
+    cboAddSubMenu2.set('Add To Existing Sub Menu')
+    ########################################################
+    ########################################################
+
 
 
 
@@ -143,7 +167,7 @@ def create_item():
     name = txtItemNameField.get("0.0", "end-1c").strip()
     description = txtItemDescriptionField.get("0.0", "end-1c").strip()
     price_text = txtItemPriceField.get("0.0", "end-1c").strip()
-    menu_type = cboMenu.get()
+    menu_type = cboAddSubMenu2.get()
 
     if check_field_error(name, message="Enter menu item name") == True: return
     if check_field_error(description, message="Enter menu item description") == True: return
@@ -153,7 +177,7 @@ def create_item():
     menu_item = MenuItem()
     menu_item.set_name(name)
     menu_item.set_image("NULL")
-    typeID = DB.get_menu_id(cboMenu.get())
+    typeID = DB.get_menu_id(cboAddSubMenu2.get())
     menu_item.set_typeID(typeID)
     menu_item.set_description(txtItemDescriptionField.get("0.0", "end-1c"))
 
@@ -163,7 +187,7 @@ def create_item():
             raise ValueError
         menu_item.set_price(price)
     except ValueError:
-        print("Invalid Price")
+        messagebox.showinfo("Invalid Price","Please Enter A Valid Price")
         return
 
     sub_menuID = DB.get_sub_menu_id(cboAddSubMenu.get())

@@ -84,7 +84,8 @@ def setup_basic_ui():
     txtLocationField = CTkTextbox(Window,
                                   font=font1,
                                   width=250,
-                                  height=150)
+                                  height=150,
+                                  wrap=WORD)
     txtLocationField.place(x=200,y=240)
     txtLocationField.insert("1.0", LocationPlaceholder)
 
@@ -95,6 +96,7 @@ def setup_basic_ui():
                                      height=40)
     txtCompanyNameField.place(x=200,y=90)
     txtCompanyNameField.insert("1.0", CompanyPlaceholder)
+
 
    #Label of the page
     CTkLabel(Window,
