@@ -32,22 +32,45 @@ function AddFoodTruckTitleName() {
     }
 }
 
-// Fetches the list of available food trucks from the backend and populates the dropdown menu.
+// Fetch location from backend-served config.json and populate dropdown (1 entry)
 function BuildTruckList() {
-    fetch('http://localhost:5000/get-trucks')
-        .then(response => response.json())
-        .then(trucks => {
-            const dropdown = document.getElementById('foodTruckDropdown');
-            if (!dropdown) return;
+    const dropdown = document.getElementById('foodTruckDropdown');
+    if (!dropdown) return;
 
-            trucks.forEach(truck => {
-                const option = document.createElement('option');
-                option.value = truck.id;
-                option.textContent = truck.name;
-                dropdown.appendChild(option);
-            });
+    // Reset with placeholder
+    dropdown.innerHTML = '<option value="" disabled selected>Select a Location</option>';
+
+    fetch('http://localhost:5000/config', { cache: 'no-cache' })
+        .then(response => {
+            if (!response.ok) throw new Error(`config endpoint failed (${response.status})`);
+            return response.json();
         })
-        .catch(err => console.error("Error loading trucks:", err));
+        .then(cfg => {
+            const loc = cfg?.LocationPlaceholder || cfg?.CompanyPlaceholder;
+            if (!loc) return; // silently keep only the placeholder if key missing
+
+            const opt = document.createElement('option');
+            opt.value = loc;
+            opt.textContent = loc;
+            dropdown.appendChild(opt);
+        })
+        .catch(err => {
+            console.error("Error loading location from config:", err);
+            // optional fallback to DB:
+            // fetch('http://localhost:5000/get-trucks')
+            //   .then(r => r.json())
+            //   .then(trucks => trucks.forEach(t => {
+            //       const o = document.createElement('option');
+            //       o.value = t.id; o.textContent = t.name; dropdown.appendChild(o);
+            //   }))
+            //   .catch(e => console.error("Error loading trucks:", e));
+        });
+
+    dropdown.onchange = () => {
+        const text = dropdown.options[dropdown.selectedIndex]?.textContent || '';
+        localStorage.setItem("selectedTruckName", text);
+        localStorage.setItem("selectedTruckValue", dropdown.value);
+    };
 }
 
 // Retrieves the customer's phone number and email from the checkout form.
@@ -105,7 +128,6 @@ function LoadActiveOrders() {
         })
         .catch(err => console.error("Failed to load active orders:", err));
 }
-
 
 function displayOrders(orders) {
     const container = document.querySelector('.active-order-container');

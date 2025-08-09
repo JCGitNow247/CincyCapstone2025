@@ -24,7 +24,7 @@ function OpenModificationMenu(itemName, itemPrice) {
                 const label = document.createElement('label');
                 label.className = 'option-box';
                 label.innerHTML = `
-                    <input type="checkbox" name="mod" value="${mod}" data-price="${mod.price}"/>
+                    <input type="checkbox" name="mod" value="${mod.name}" data-price="${mod.price}"/>
                     <span>${mod.name}</span><br>
                     <small>$${mod.price.toFixed(2)}</small>
                 `;
@@ -76,13 +76,6 @@ function AddToCart(baseName = "Item", basePrice = 0) {
     })
 
     const itemTotal = basePrice + modTotal;
-
-    //Build display name
-    let itemText = selectedBaseItem || "Item";
-    if (selectedMods.length > 0) {
-        const formattedMods = selectedMods.map(mod => `+ ${mod}`).join('<br>');
-        itemText += `<br><small>${formattedMods}</small>`;
-    }
 
     // Create the outer container
     const cartItem = document.createElement('div');

@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
-
-import sys, os, mariadb, datetime, random
+import sys, os, mariadb, datetime, random, json
 from flask_cors import CORS
 
 # Add parent directory to path so we can import UI.DatabaseUtility
@@ -28,10 +27,28 @@ def get_connection():
     except mariadb.Error as e:
         return jsonify({"error": str(e)})
 
+# --- NEW: Serve config.json so frontend can fetch it over HTTP ---
+@app.route('/config')
+def get_config():
+    try:
+        here = os.path.dirname(__file__)
+        candidates = [
+            os.path.join(here, '..', '..', '..', 'config.json'),  # repo root
+            os.path.join(here, '..', 'config.json'),              # truckbyte_site/
+            os.path.join(here, 'config.json'),                    # PythonBackend/
+        ]
+        for p in map(os.path.abspath, candidates):
+            if os.path.exists(p):
+                with open(p, 'r', encoding='utf-8') as f:
+                    return jsonify(json.load(f))
+        return jsonify({"error": f"config.json not found in: {candidates}"}), 500
+    except Exception as e:
+        return jsonify({"error": f"Unable to read config.json: {e}"}), 500
+
+
 # Gets a list of all menu items
 @app.route('/get-menu')
 def get_menu():
-
     conn = get_connection()
     cursor = conn.cursor(named_tuple=True)
     cursor.execute("SELECT MenuItemID, MenuItemName, MenuItemDescription, MenuItemPrice FROM VMenuItems")
@@ -93,7 +110,7 @@ def get_modifiers():
 def get_trucks():
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT intTruckNumber, strTruckName FROM Trucks");
+    cursor.execute("SELECT intTruckNumber, strTruckName FROM Trucks")
     rows = cursor.fetchall()
     trucks = [{"id": row[0], "name": row[1]} for row in rows]
     return jsonify(trucks)
@@ -191,7 +208,7 @@ def apply_loyalty():
 def get_drinks():
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT strFoodName FROM foods WHERE intFoodTypeID = 3")
+    cursor.execute("SELECT strFoodName FROM Foods WHERE intFoodTypeID = 3")  # fixed case
     drinks = [row[0] for row in cursor.fetchall()]
     cursor.close()
     conn.close()
@@ -371,9 +388,6 @@ def get_analytics_summary():
         "payroll": payroll
     })
 
-
-
-
 @app.route('/api/paid-orders')
 def get_paid_orders():
     conn = get_connection()
@@ -391,7 +405,7 @@ def get_paid_orders():
     LEFT JOIN OrderItemsFoods oif ON oi.intOrderItemID = oif.intOrderItemID
     LEFT JOIN Foods f ON oif.intFoodID = f.intFoodID
     WHERE o.strStatus = 'Paid'
-    ORDER BY o.intOrderID, oi.intOrderItemID
+    ORDER BY o.intOrderID, oi.intOrderItemID, f.strFoodName
     """
 
     cursor.execute(query)
@@ -413,7 +427,6 @@ def get_paid_orders():
                 'items': []
             }
 
-        # Check if this item_id already exists in the list
         existing_item = next((i for i in orders[order_id]['items'] if i['item_id'] == item_id), None)
 
         if existing_item:
@@ -428,7 +441,6 @@ def get_paid_orders():
 
         print(f"Order {order_id} → Item {item_id} = {item_name}, modifier = {food_name}")
 
-    # Convert nested dicts to list
     result = []
     for order in orders.values():
         result.append({
@@ -436,12 +448,7 @@ def get_paid_orders():
             'items': order['items']
         })
         
-
     return jsonify(result)
-
-
-
-
 
 @app.route('/api/complete-order', methods=['POST'])
 def complete_order():
@@ -459,8 +466,6 @@ def complete_order():
     conn.commit()
 
     return jsonify({'message': f'Order {order_id} marked as completed'}), 200
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
