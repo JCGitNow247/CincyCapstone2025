@@ -1,58 +1,64 @@
 let selectedBaseItem = null;
 
 function OpenModificationMenu(itemName, itemPrice) {
-
-    selectedBaseItem = { name: itemName, price: itemPrice}
-    // Open the correct menu
-    ToggleMenu('.Modification-Menu', 'Modification-overlay');
-
-    // Load modifiers dynamically
+    // Fetch modifiers first (don’t open the menu yet)
     fetch(`http://localhost:5000/get-modifiers?item=${encodeURIComponent(itemName)}`)
         .then(res => res.json())
         .then(modifiers => {
-            console.log("Fetched modifiers:", modifiers)
-            
-            const optionGrid = document.querySelector('.Modification-Menu .option-grid');
-            if (!optionGrid) {
-                console.error("Missing .option-grid inside .Modification-Menu!");
+            // No modifiers? Just add item and bail.
+            if (!Array.isArray(modifiers) || modifiers.length === 0) {
+                AddToCart(itemName, itemPrice);
+                // Optional: briefly open/close the cart to make it obvious something was added
+                // ToggleMenu('.Cart-Menu', 'Cart-overlay'); setTimeout(() => ToggleMenu('.Cart-Menu','Cart-overlay'), 400);
                 return;
             }
 
-            optionGrid.innerHTML = ''; // Clear old options
+            // We have modifiers — build the menu like before
+            selectedBaseItem = { name: itemName, price: itemPrice };
 
+            const optionGrid = document.querySelector('.Modification-Menu .option-grid');
+            const bottomButtons = document.querySelector('.Modification-Menu .Bottom-Menu-Buttons');
+
+            if (!optionGrid || !bottomButtons) {
+                console.error("Missing .option-grid or .Bottom-Menu-Buttons inside .Modification-Menu!");
+                return;
+            }
+
+            // Clear and render options
+            optionGrid.innerHTML = '';
             modifiers.forEach(mod => {
                 const label = document.createElement('label');
                 label.className = 'option-box';
                 label.innerHTML = `
                     <input type="checkbox" name="mod" value="${mod.name}" data-price="${mod.price}"/>
                     <span>${mod.name}</span><br>
-                    <small>$${mod.price.toFixed(2)}</small>
+                    <small>$${Number(mod.price).toFixed(2)}</small>
                 `;
                 optionGrid.appendChild(label);
             });
 
-            const bottomButtons = document.querySelector('.Modification-Menu .Bottom-Menu-Buttons');
-            if (bottomButtons) {
-                bottomButtons.innerHTML = '';
+            // Build bottom buttons
+            bottomButtons.innerHTML = '';
+            const closeBtn = document.createElement('button');
+            closeBtn.type = 'button';
+            closeBtn.textContent = 'Close';
+            closeBtn.onclick = () => ToggleMenu('.Modification-Menu', 'Modification-overlay');
 
-                const closeBtn = document.createElement('button');
-                closeBtn.type = 'submit';
-                closeBtn.textContent = 'Close';
-                closeBtn.onclick = () => ToggleMenu('.Modification-Menu', 'Modification-overlay');
+            const addBtn = document.createElement('button');
+            addBtn.type = 'button';
+            addBtn.textContent = 'Add To Cart';
+            addBtn.onclick = () => {
+                if (selectedBaseItem) {
+                    AddToCart(selectedBaseItem.name, selectedBaseItem.price);
+                    ToggleMenu('.Modification-Menu', 'Modification-overlay');
+                }
+            };
 
-                const addBtn = document.createElement('button');
-                addBtn.type = 'submit';
-                addBtn.textContent = 'Add To Cart';
-                addBtn.onclick = () => {
-                    if (selectedBaseItem) {
-                        AddToCart(selectedBaseItem.name, selectedBaseItem.price);
-                        ToggleMenu('.Modification-Menu', 'Modification-overlay');
-                    }
-                };
+            bottomButtons.appendChild(closeBtn);
+            bottomButtons.appendChild(addBtn);
 
-                bottomButtons.appendChild(closeBtn);
-                bottomButtons.appendChild(addBtn);
-            }         
+            // Finally open the menu (only when we know there are options)
+            ToggleMenu('.Modification-Menu', 'Modification-overlay');
         })
         .catch(err => console.error("Error loading modifiers:", err));
 }
@@ -203,6 +209,7 @@ function restoreCartFromStorage() {
             cartItem.remove();
             updateCartCount();
             SaveCartToStorage();
+            updateTotalPrice();
         });
 
         const span = document.createElement('span');
@@ -224,42 +231,66 @@ function restoreCartFromStorage() {
 // Loads the menu cards for the specified food truck.
 function LoadMenuCards() {
     fetch('http://localhost:5000/get-menu')
-    .then(response => response.json())
-    .then(menuItems => {
-        const container = document.querySelector('.menu-container');
+        .then(r => r.json())
+        .then(menuItems => {
+            const container = document.querySelector('.menu-container');
 
-        menuItems.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'menu-card';
+            menuItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'menu-card';
 
-            if(item.name == "Drinks") {
-                card.innerHTML = `
-                    <h2> ${item.name} </h2>
-                    <p>
-                        ${item.description}
-                    </p>
-                    <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Add Drinks</button><br>
+                // --- DRINKS: always show "Add Drinks" and skip modifier check (your exception) ---
+                if (item.name === "Drinks") {
+                    card.innerHTML = `
+                        <h2>${item.name}</h2>
+                        <p>${item.description}</p>
+                        <button type="button" onclick='OpenModificationMenu(${JSON.stringify(item.name)}, ${item.price})'>Add Drinks</button><br>
+                    `;
+                    container.appendChild(card);
+                    return; // done with this card
+                }
+
+                // Base content for non-drinks
+                let baseHTML = `
+                    <h2>${item.name}</h2>
+                    <p>${item.description}</p>
+                    <p>$${item.price.toFixed(2)}</p>
                 `;
-            } else {
-                card.innerHTML = `
-                    <h2> ${item.name} </h2>
-                    <p>
-                        ${item.description}
-                    </p>
-                    <p> $${item.price.toFixed(2)} </p>
-                    <button onclick="OpenModificationMenu('${item.name}', ${item.price})">Modify Item</button><br>
-                    <button onclick="AddToCart('${item.name}', ${item.price})">Add To Cart</button>
-                `;
-            }
 
+                // --- NON-DRINKS: check if the item has modifiers ---
+                fetch(`http://localhost:5000/get-modifiers?item=${encodeURIComponent(item.name)}`)
+                    .then(res => res.json())
+                    .then(modifiers => {
+                        // Build the right buttons based on whether modifiers exist
+                        if (Array.isArray(modifiers) && modifiers.length > 0) {
+                            // Has modifiers → show Modify + Add to Cart
 
+                        baseHTML += `
+                            <button type="button" onclick='OpenModificationMenu(${JSON.stringify(item.name)}, ${item.price})'>Modify Item</button><br>
+                            <button type="button" onclick='AddToCart(${JSON.stringify(item.name)}, ${item.price})'>Add To Cart</button>
+                        `;
+                        } else {
+                            // No modifiers → only Add to Cart
+                            baseHTML += `
+                                <button type="button" onclick='AddToCart(${JSON.stringify(item.name)}, ${item.price})'>Add To Cart</button>
+                            `;
+                        }
 
-            container.appendChild(card);
-        });
-    })
-    .catch(err => {
-        console.error("Error fetching menu data", err)
-    });
+                        card.innerHTML = baseHTML;
+                        container.appendChild(card);
+                    })
+                    .catch(err => {
+                        console.error(`Error checking modifiers for ${item.name}:`, err);
+                        // Fallback: just show Add To Cart
+                        baseHTML += `
+                            <button type="button" onclick='AddToCart(${JSON.stringify(item.name)}, ${item.price})'>Add To Cart</button>
+                        `;
+                        card.innerHTML = baseHTML;
+                        container.appendChild(card);
+                    });
+            });
+        })
+        .catch(err => console.error("Error fetching menu data", err));
 }
 
 // Recalculates and updates the total cart price.

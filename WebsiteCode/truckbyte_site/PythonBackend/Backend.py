@@ -180,7 +180,7 @@ def apply_loyalty():
     phone = data['strPhoneNumber'].strip()
 
     conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(named_tuple=True)
 
     # Corrected query using actual column names
     cursor.execute("""
@@ -222,7 +222,7 @@ def login_employee():
     password = data['password'].strip()
 
     conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(named_tuple=True)
 
     cursor.execute("""
         SELECT e.intEmployeeID, et.strEmployeeType
@@ -328,7 +328,7 @@ def submit_order():
 @app.route('/get-analytics-summary')
 def get_analytics_summary():
     conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(named_tuple=True)
 
     # Total Sales + By Day
     cursor.execute("""
@@ -391,7 +391,7 @@ def get_analytics_summary():
 @app.route('/api/paid-orders')
 def get_paid_orders():
     conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(named_tuple=True)
 
     query = """
     SELECT 
