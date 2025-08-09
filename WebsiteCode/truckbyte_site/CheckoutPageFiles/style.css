@@ -4,6 +4,7 @@
 }
 
 .Checkout-Form input[type="text"] {width: 120%; height: 50%;}
+.Checkout-Form input[type="email"] {width: 120%; height: 50%;}
 .Checkout-Form input[type="date"] {width: 120%; height: 50%;}
 .Checkout-Form input[type="number"] {width: 120%; height: 50%;}
 .Checkout-Form input[type="tel"] {width: 120%; height: 50%;}

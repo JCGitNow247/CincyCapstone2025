@@ -50,17 +50,18 @@ def get_config():
 @app.route('/get-menu')
 def get_menu():
     conn = get_connection()
-    cursor = conn.cursor(named_tuple=True)
+    cursor = conn.cursor(dictionary=True)
+    
     cursor.execute("SELECT MenuItemID, MenuItemName, MenuItemDescription, MenuItemPrice FROM VMenuItems")
     rows = cursor.fetchall()
 
     items = []
     for row in rows:
         items.append({
-            'id': row.MenuItemID,
-            'name': row.MenuItemName,
-            'description': row.MenuItemDescription if row.MenuItemDescription is not None else '',
-            'price': float(row.MenuItemPrice)
+            'id': row["MenuItemID"],
+            'name': row["MenuItemName"],
+            'description': row["MenuItemDescription"] if row["MenuItemDescription"] is not None else '',
+            'price': float(row["MenuItemPrice"])
         })
 
     conn.close()
@@ -74,7 +75,7 @@ def get_modifiers():
         return jsonify([])
 
     conn = get_connection()
-    cursor = conn.cursor(named_tuple=True)
+    cursor = conn.cursor(dictionary=True)
 
     # Get submenu ID from menu item name
     cursor.execute("""
@@ -84,11 +85,11 @@ def get_modifiers():
     """, (item_name,))
     result = cursor.fetchone()
 
-    if not result or not result[0]:
+    if not result or not result["intSubMenuID"]:
         conn.close()
         return jsonify([])
 
-    submenu_id = result[0]
+    submenu_id = result["intSubMenuID"]
 
     # Get foods from that submenu
     cursor.execute("""
@@ -102,7 +103,7 @@ def get_modifiers():
     rows = cursor.fetchall()
     conn.close()
 
-    modifiers = [{"name": row.strFoodName, "price": float(row.dblSellPrice)} for row in rows]
+    modifiers = [{"name": row["strFoodName"], "price": float(row["dblSellPrice"])} for row in rows]
     return jsonify(modifiers)
 
 # Returns a list of available trucks
@@ -180,7 +181,7 @@ def apply_loyalty():
     phone = data['strPhoneNumber'].strip()
 
     conn = get_connection()
-    cursor = conn.cursor(named_tuple=True)
+    cursor = conn.cursor(dictionary=True)
 
     # Corrected query using actual column names
     cursor.execute("""
@@ -222,7 +223,7 @@ def login_employee():
     password = data['password'].strip()
 
     conn = get_connection()
-    cursor = conn.cursor(named_tuple=True)
+    cursor = conn.cursor(dictionary=True)
 
     cursor.execute("""
         SELECT e.intEmployeeID, et.strEmployeeType
@@ -328,7 +329,7 @@ def submit_order():
 @app.route('/get-analytics-summary')
 def get_analytics_summary():
     conn = get_connection()
-    cursor = conn.cursor(named_tuple=True)
+    cursor = conn.cursor(dictionary=True)
 
     # Total Sales + By Day
     cursor.execute("""
@@ -391,7 +392,7 @@ def get_analytics_summary():
 @app.route('/api/paid-orders')
 def get_paid_orders():
     conn = get_connection()
-    cursor = conn.cursor(named_tuple=True)
+    cursor = conn.cursor(dictionary=True)
 
     query = """
     SELECT 

@@ -27,14 +27,27 @@ function OpenModificationMenu(itemName, itemPrice) {
             // Clear and render options
             optionGrid.innerHTML = '';
             modifiers.forEach(mod => {
-                const label = document.createElement('label');
-                label.className = 'option-box';
-                label.innerHTML = `
-                    <input type="checkbox" name="mod" value="${mod.name}" data-price="${mod.price}"/>
-                    <span>${mod.name}</span><br>
-                    <small>$${Number(mod.price).toFixed(2)}</small>
-                `;
-                optionGrid.appendChild(label);
+                if (selectedBaseItem.name == "Drinks") {
+                    const label = document.createElement('label');
+                    label.className = 'option-box';
+                    label.innerHTML = `
+                        <input type="checkbox" name="mod" value="${mod.name}" data-price="${mod.price}"/>
+                        <span>${mod.name}</span><br>
+                    `;
+                    optionGrid.appendChild(label);                    
+                } else {
+                    const label = document.createElement('label');
+                    label.className = 'option-box';
+                    label.innerHTML = `
+                        <input type="checkbox" name="mod" value="${mod.name}" data-price="${mod.price}"/>
+                        <span>${mod.name}</span><br>
+                        <small>$${Number(mod.price).toFixed(2)}</small>
+                    `;
+                    optionGrid.appendChild(label);
+                }
+                
+
+
             });
 
             // Build bottom buttons
@@ -239,7 +252,7 @@ function LoadMenuCards() {
                 const card = document.createElement('div');
                 card.className = 'menu-card';
 
-                // --- DRINKS: always show "Add Drinks" and skip modifier check (your exception) ---
+                // --- DRINKS: always show "Add Drinks" and skip modifier check ---
                 if (item.name === "Drinks") {
                     card.innerHTML = `
                         <h2>${item.name}</h2>
