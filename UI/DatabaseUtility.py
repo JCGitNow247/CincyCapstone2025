@@ -795,3 +795,63 @@ def insert_new_sub_menu(subMenuName):
     conn.commit()
     cursor.close()
     conn.close()
+
+
+def get_employeeID(lastName, password):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"SELECT intEmployeeID FROM Employees WHERE strLastName = '{lastName}' AND strPassword = '{password}'")
+    row = cursor.fetchone()
+
+    employeeID = row[0]
+
+    return employeeID
+
+
+def insert_login_record(employeeID, shiftID):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"""
+        INSERT INTO EmployeesShifts (intEmployeeID, intShiftID, dtmShiftStart, dtmShiftEnd)
+        VALUES ({employeeID}, {shiftID}, NOW(), NULL)
+    """)
+    conn.commit()
+
+
+def create_shift():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("INSERT INTO Shifts (dtmShiftDate) VALUES (NOW())")
+    conn.commit()
+    last_id = cursor.lastrowid
+
+    cursor.execute(f"INSERT INTO TrucksShifts (intShiftID, intTruckID) VALUES ({last_id}, 1)")
+    conn.commit()
+
+    return last_id
+
+
+def check_employee_logged_out(employeeID):
+    conn = get_connection()
+    cursor= conn.cursor()
+
+    cursor.execute("SELECT intEmployeeShiftID FROM EmployeesShifts WHERE intEmployeeID = ? AND dtmShiftEnd is NULL", (employeeID,))
+
+    row = cursor.fetchone()
+
+    if row is None:
+        return True
+    else:
+        return False
+    
+
+
+def logout_employee(employeeID):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"UPDATE EmployeesShifts SET dtmShiftEnd = NOW() WHERE intEmployeeID = {employeeID} AND dtmShiftEnd is NULL")
+    conn.commit()
