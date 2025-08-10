@@ -27,7 +27,7 @@ def setup_ui():
 
     global txtItemNameField, txtItemPriceField, txtItemDescriptionField
 
-    #txtItemNameField = CTkTextbox(Window, font=font1,width=250,height=40)
+    txtItemNameField = CTkTextbox(Window, font=font1,width=250,height=40)
     #txtItemNameField.place(x=200,y=125)
 
     txtItemPriceField = CTkTextbox(Window,
