@@ -21,14 +21,12 @@ import os
 truck_logo = None
 imgLogo = None
 
-
-
 def setup_ui():
 
     global txtItemNameField, txtItemPriceField, txtItemDescriptionField
 
     txtItemNameField = CTkTextbox(Window, font=font1,width=250,height=40)
-    #txtItemNameField.place(x=200,y=125)
+    txtItemNameField.place(x=200,y=95)
 
     txtItemPriceField = CTkTextbox(Window,
                                    font=font1,
@@ -143,7 +141,7 @@ def DisplayComboBoxes():
                             justify="center",
                             width=250, 
                             height=40)
-    cboAddSubMenu2.place(x=200,y=215)  
+    # cboAddSubMenu2.place(x=200,y=215)  
     cboAddSubMenu2.set('Add Item To Existing Sub Menu')
     ########################################################
     ########################################################
@@ -219,11 +217,11 @@ def DisplayComboBoxes():
                     ).place(x=80,y=150)
 
         else:
-            txtItemNameField = CTkTextbox(Window,
-                                  font=font1,
-                                  width=250,
-                                  height=40)
-            txtItemNameField.place(x=200,y=125)
+            # txtItemNameField = CTkTextbox(Window,
+            #                       font=font1,
+            #                       width=250,
+            #                       height=40)
+            # txtItemNameField.place(x=200,y=125)
 
             #Create Label for "Item Name"
             CTkLabel(Window, font=font1,
@@ -254,7 +252,7 @@ def create_item():
     name = txtItemNameField.get("0.0", "end-1c").strip()
     description = txtItemDescriptionField.get("0.0", "end-1c").strip()
     price_text = txtItemPriceField.get("0.0", "end-1c").strip()
-    menu_type = cboAddSubMenu2.get()
+    menu_type = cboMenu.get()
 
     if check_field_error(name, message="Enter menu item name") == True: return
     if check_field_error(description, message="Enter menu item description") == True: return
@@ -264,7 +262,7 @@ def create_item():
     menu_item = MenuItem()
     menu_item.set_name(name)
     menu_item.set_image("NULL")
-    typeID = DB.get_menu_id(cboAddSubMenu2.get())
+    typeID = DB.get_menu_id(menu_type)
     menu_item.set_typeID(typeID)
     menu_item.set_description(txtItemDescriptionField.get("0.0", "end-1c"))
 
