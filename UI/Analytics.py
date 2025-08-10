@@ -9,12 +9,29 @@ def display_analytics():
     total_hours = DB.get_total_hours_worked()
     payroll_data = DB.get_employee_payroll()
 
+    avg_sale = DB.get_average_sale()
+    top_items = DB.get_top_selling_items(limit=5)
+    repeat_customers = DB.get_repeat_customer_count()
+    sales_this_week = DB.get_sales_this_week()
+    sales_last_year_week = DB.get_sales_same_week_last_year()
+
+
+
+
+
     # Create a centered scrollable frame
     analytics_frame = CTkScrollableFrame(Window, width=600, height=500, corner_radius=15)
     analytics_frame.place(relx=0.5, rely=0.5, anchor="center")
 
     # Total Sales
     CTkLabel(analytics_frame, text=f"Total Sales: ${total_sales:.2f}", font=('Arial', 28, 'bold')).pack(pady=(20, 10))
+
+
+   #CTkLabel(analytics_frame, text=f"Total Sales: ${total_sales:.2f}", font=('Arial', 28, 'bold')).pack(pady=(20, 10))
+    CTkLabel(analytics_frame, text=f"Average Sale: ${avg_sale:.2f}", font=('Arial', 20)).pack()
+
+
+
 
     # Two-column Sales (wrap in a frame)
     sales_frame = CTkFrame(analytics_frame)
@@ -34,6 +51,31 @@ def display_analytics():
     CTkLabel(right_col, text="Sales by Payment Type", font=('Arial', 20, 'bold')).pack(anchor="w")
     for pay_type, amount in sales_by_payment:
         CTkLabel(right_col, text=f"Type {pay_type}: ${amount:.2f}", font=('Arial', 16)).pack(anchor="w")
+
+
+
+
+    # Top-selling items
+    CTkLabel(analytics_frame, text="Top Selling Items", font=('Arial', 20, 'bold')).pack(pady=(20, 5))
+    for item, qty in top_items:
+        CTkLabel(analytics_frame, text=f"{item}: {qty} sold", font=('Arial', 16)).pack(anchor="w", padx=40)
+
+    # Repeat customers
+    CTkLabel(analytics_frame, text=f"Repeat Customers: {repeat_customers}", font=('Arial', 20, 'bold')).pack(pady=(20, 5))
+
+
+    CTkLabel(analytics_frame,
+            text=f"Sales This Week: ${sales_this_week:.2f}",
+            font=('Arial', 20, 'bold')).pack(pady=(5, 5))
+
+    CTkLabel(analytics_frame,
+            text=f"Same Week Last Year: ${sales_last_year_week:.2f}",
+            font=('Arial', 20, 'bold')).pack(pady=(5, 20))
+
+
+
+
+
 
     # Total Hours Worked
     CTkLabel(analytics_frame, text=f"Total Hours Worked: {total_hours} hrs", font=('Arial', 20, 'bold')).pack(pady=(20, 5))

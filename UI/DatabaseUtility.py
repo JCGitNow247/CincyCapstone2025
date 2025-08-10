@@ -19,7 +19,21 @@ def get_connection():
 
     return conn
 
+def fetch_one(query, params=None):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(query, params or ())
+    row = cursor.fetchone()
+    conn.close()
+    return row
 
+def fetch_all(query, params=None):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(query, params or ())
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
 
 def insert_menu_item(menu_item):
     
@@ -113,8 +127,7 @@ def get_menu_item_price(ItemID):
     return price
 
 
-####################################################
-####################################################
+
 def get_menu_item_description(ItemID):
     """
     <b>Name:</b> get_menu_item_description<br>
@@ -134,6 +147,54 @@ def get_menu_item_description(ItemID):
     menu_item_description = row[0]
 
     return menu_item_description
+
+
+####################################################
+####################################################
+def get_average_sale():
+    return fetch_one("SELECT AVG(dblSaleAmount) FROM Sales")[0]
+
+def get_top_selling_items(limit=5):
+    return fetch_all("""
+        SELECT strOrderItemName, SUM(intAmount) as qty
+        FROM OrderItems
+        GROUP BY strOrderItemName
+        ORDER BY qty DESC
+        LIMIT %s
+    """, (limit,))
+
+def get_repeat_customer_count():
+    return fetch_one("""
+        SELECT COUNT(DISTINCT intCustomerID)
+        FROM Orders
+        WHERE intCustomerID IN (
+            SELECT intCustomerID
+            FROM Orders
+            GROUP BY intCustomerID
+            HAVING COUNT(*) > 1
+        )
+    """)[0]
+
+def get_sales_this_week():
+    query = """
+        SELECT COALESCE(SUM(dblSaleAmount), 0)
+        FROM Sales
+        WHERE YEARWEEK(dtmDate, 1) = YEARWEEK(CURDATE(), 1)
+    """
+    row = fetch_one(query)
+    return row[0] if row and row[0] is not None else 0.0
+
+
+def get_sales_same_week_last_year():
+    query = """
+        SELECT COALESCE(SUM(dblSaleAmount), 0)
+        FROM Sales
+        WHERE YEARWEEK(dtmDate, 1) = YEARWEEK(DATE_SUB(CURDATE(), INTERVAL 1 YEAR), 1)
+    """
+    row = fetch_one(query)
+    return row[0] if row and row[0] is not None else 0.0
+
+
 ####################################################
 ####################################################
 
