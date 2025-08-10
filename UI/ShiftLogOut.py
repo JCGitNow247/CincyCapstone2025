@@ -98,16 +98,16 @@ def validate_fields():
         messagebox.showerror("Login Failed", "Invalid last name or password")
         return False
     else:
+        employeeID = DB.get_employeeID(employee_name, password)
+
+        if check_employee_logged_out(employeeID):
+            messagebox.showerror("Logout Failed", f"Employee:\n{employee_name}\nis already logged out")
+            return
+
+        DB.logout_employee(employeeID)
+
         #Sucessful Log Out
         messagebox.showinfo("Log Out Sucessful","Employee:\n"+ employee_name + "\nHas Logged Out.")
-
-
-        #########################################
-        #########################################
-        ## INSERT Coding to track hours here ??##
-        #########################################
-        #########################################
-
 
         open_loyalty_ui()
 
