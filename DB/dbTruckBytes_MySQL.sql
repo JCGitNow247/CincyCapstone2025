@@ -126,7 +126,7 @@ CREATE TABLE EmployeesShifts (
 	intEmployeeID INT NOT NULL,
 	intShiftID INT NOT NULL,
 	dtmShiftStart DATETIME NOT NULL,
-	dtmShiftEnd DATETIME NOT NULL,
+	dtmShiftEnd DATETIME,
 	PRIMARY KEY (intEmployeeShiftID)
 );
 
@@ -552,10 +552,10 @@ INSERT INTO EmployeeTypes (strEmployeeType) VALUES
 
 -- Employees
 INSERT INTO Employees (strFirstName, strLastName, strUserName, strPassword, dblHourlyRate, intEmployeeTypeID, strLicensedToDrive) VALUES
-  ('Cole', 'Whitaker', 'CW', 'test1', 25.50, 2, 'Y'),
-  ('Adam', 'Broderick', 'AB', 'test1', 25.50, 2, 'Y'),
+  ('Cole', 'Whitaker', 'CW', '3691', 25.50, 2, 'Y'),
+  ('Adam', 'Broderick', 'AB', '2474', 25.50, 2, 'Y'),
   ('Jason', 'Cope', 'JC', '2895', 25.50, 2, 'Y'),
-  ('Bruce', 'Wayne', 'BW', 'test1', 8.50, 3, 'N'),
+  ('Bruce', 'Wayne', 'BW', '5555', 8.50, 3, 'N'),
   ('Cory', 'Stone', 'CS', '9524', 19.00, 3, 'Y'),
   ('Eric', 'Shepard', 'OQ', '2791', 18.75, 3, 'N'),
   ('Tyler', 'Hauestein', 'BA', '7421', 18.75, 1, 'Y'),
@@ -900,5 +900,3 @@ INSERT INTO TrucksMenuItems (intTruckID, intMenuItemID) VALUES
     (1, 4),
     (1, 5),
     (1, 6);
-    
-    SELECT * FROM OrderItems
