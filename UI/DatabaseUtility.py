@@ -784,3 +784,14 @@ def mark_recent_order_paid(orderID):
 
     cursor.execute(f"UPDATE Orders SET strStatus = 'Paid' WHERE intOrderID = {orderID}")
     conn.commit()
+
+
+
+def insert_new_sub_menu(subMenuName):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"INSERT INTO SubMenus (strSubMenuName) VALUES ('{subMenuName}')")
+    conn.commit()
+    cursor.close()
+    conn.close()
