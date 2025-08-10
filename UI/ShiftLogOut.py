@@ -17,7 +17,7 @@ def setup_ui():
     CTkLabel(Window,
              font=titleFont,
              text="Employee Log Out"
-             ).place(x=400, y=50)
+             ).place(x=370, y=50)
     
     CTkLabel(Window,
              font=font1,
@@ -99,15 +99,17 @@ def validate_fields():
         return False
     else:
         #Sucessful Log Out
-
-
-        ###################################
-         ###################################
         messagebox.showinfo("Log Out Sucessful","Employee:\n"+ employee_name + "\nHas Logged Out.")
-        ## INSERT Coding to track hours here ??##
-        ###################################
-        ###################################
 
+
+        #########################################
+        #########################################
+        ## INSERT Coding to track hours here ??##
+        #########################################
+        #########################################
+
+
+        open_loyalty_ui()
 
     return True
   
