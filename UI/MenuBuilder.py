@@ -27,11 +27,8 @@ def setup_ui():
 
     global txtItemNameField, txtItemPriceField, txtItemDescriptionField
 
-    txtItemNameField = CTkTextbox(Window,
-                                  font=font1,
-                                  width=250,
-                                  height=40)
-    txtItemNameField.place(x=200,y=125)
+    #txtItemNameField = CTkTextbox(Window, font=font1,width=250,height=40)
+    #txtItemNameField.place(x=200,y=125)
 
     txtItemPriceField = CTkTextbox(Window,
                                    font=font1,
@@ -53,16 +50,10 @@ def setup_ui():
             text="Menu Builder",
             ).place(x=235,y=45)
 
-    #Create Label for "Item Name"
-    CTkLabel(Window, font=font1,
-             text="Item Name:"
-             ).place(x=60,y=125)
+
 
     #Create Label for "Item Price"
-    CTkLabel(Window,
-            font=font1,
-            text="Item Price:"
-            ).place(x=60,y=300)
+    CTkLabel(Window, font=font1,text="Item Price:").place(x=60,y=300)
 
     CTkLabel(Window,
             font=font1,
@@ -137,29 +128,123 @@ def DisplayComboBoxes():
 
 
 
-    ########################################################
-    ########################################################
 
 
-    #sub_menu_names2 = [""]
+    ########################################################
+    ###  This is how I think the menubuilder should work ###
+    ###  Not making a selection would make it an "item"  ###
+    ###  (like pizza) otherwise it is added to a submenu ###
+    ########################################################
     sub_menu_names2 = [item["name"] for item in SubMenus.values()]
-  
-
-
-
-
 
     cboAddSubMenu2 = CTkComboBox(Window,
                             values=sub_menu_names2, 
-                            font=('Arial', 14),
+                            font=('Arial', 12),
                             justify="center",
                             width=250, 
                             height=40)
     cboAddSubMenu2.place(x=200,y=215)  
-    cboAddSubMenu2.set('Add To Existing Sub Menu')
+    cboAddSubMenu2.set('Add Item To Existing Sub Menu')
     ########################################################
     ########################################################
 
+
+
+
+
+
+
+
+
+
+
+
+
+    ###########################################################
+    ### This is for choosing to create an item or subMenu  ####
+    ###########################################################
+
+    def on_itemOrMenu_selected(cboItemOrMenu):
+        #values = ('Create Menu',)
+        #if value == 'Create Menu':
+        if cboItemOrMenu == "Create Menu":
+
+            #This is where they would create a submenu
+
+            #messagebox.showinfo("hello Menu","This gets us here")
+
+            PopUpMenu = Toplevel()
+            PopUpMenu.grab_set()
+            PopUpMenu.focus_force()
+            PopUpMenu.transient(Window)
+            PopUpMenu.geometry("600x600") 
+            PopUpMenu.resizable(False, False)
+
+            Description = CTkLabel(PopUpMenu,
+                                   font=font1,
+                                #width=360,
+                               # height=10,
+                                text="Name of New Menu")
+            Description.place(x=20,y=10)
+
+            submenu_field = CTkTextbox(PopUpMenu,
+                                      font=font1,
+                                      width=200,
+                                      height=40)
+            submenu_field.place(x=50,y=80)
+
+            def create_new_submenu():
+                    
+                    
+                    #Just here for easy breakpoint
+                    messagebox.showinfo("New Submenu","You have created a new submenu")
+
+                    ########################################
+                    ## create new submenu in db code here ##
+                    ########################################
+
+                    #Closes all windows and begin menu_builder fresh
+                    Window.destroy()
+                    open_menu_builder_ui()
+
+
+            CTkButton(PopUpMenu,
+                    font=font1,
+                    text="Create New\nMenu",
+                    width=80,
+                    height=50,
+                    command=create_new_submenu #THIS NEEDS TO CREATE NEW SubMenu
+                    ).place(x=80,y=150)
+
+        else:
+            txtItemNameField = CTkTextbox(Window,
+                                  font=font1,
+                                  width=250,
+                                  height=40)
+            txtItemNameField.place(x=200,y=125)
+
+            #Create Label for "Item Name"
+            CTkLabel(Window, font=font1,
+                    text="Item Name:"
+                    ).place(x=60,y=125)
+
+
+    itemOrMenu = ['Create Item', 'Create Menu']
+
+    cboItemOrMenu = CTkComboBox(Window,
+                            values=itemOrMenu, 
+                            font=('Arial', 14),
+                            justify="center",
+                            width=250, 
+                            height=40,
+                            command = on_itemOrMenu_selected)
+    
+    #cboItemOrMenu.place(x=200,y=255)
+    cboItemOrMenu.place(x=200,y=125) 
+    cboItemOrMenu.set('Create Item or Menu')
+
+    ########################################################
+    ########################################################
 
 
 
