@@ -99,6 +99,10 @@ def validate_fields():
         return False
     else:
 
+        employeeID = get_employeeID(employee_name, password)
+        if check_employee_logged_out(employeeID) == False:
+            messagebox.showerror("Login Failed", f"Employee:\n{employee_name}\nis already logged in")
+            return
 
         #####################
         ## Sucessful Login ##
@@ -106,6 +110,9 @@ def validate_fields():
      
         messagebox.showinfo("Login Sucessful","Employee:\n"+ employee_name + "\nHas logged in.")
 
+        #Insert login record
+        shiftID = create_shift()
+        insert_login_record(employeeID, shiftID)
     
         # Fetch employee type ID
         conn = get_connection()
