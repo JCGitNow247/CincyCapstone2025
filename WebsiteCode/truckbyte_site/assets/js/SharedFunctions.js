@@ -40,7 +40,7 @@ function BuildTruckList() {
     // Reset with placeholder
     dropdown.innerHTML = '<option value="" disabled selected>Select a Location</option>';
 
-    fetch('http://localhost:5000/config', { cache: 'no-cache' })
+    fetch(GetSiteHost() + '/config', { cache: 'no-cache' })
         .then(response => {
             if (!response.ok) throw new Error(`config endpoint failed (${response.status})`);
             return response.json();
@@ -56,14 +56,6 @@ function BuildTruckList() {
         })
         .catch(err => {
             console.error("Error loading location from config:", err);
-            // optional fallback to DB:
-            // fetch('http://localhost:5000/get-trucks')
-            //   .then(r => r.json())
-            //   .then(trucks => trucks.forEach(t => {
-            //       const o = document.createElement('option');
-            //       o.value = t.id; o.textContent = t.name; dropdown.appendChild(o);
-            //   }))
-            //   .catch(e => console.error("Error loading trucks:", e));
         });
 
     dropdown.onchange = () => {
@@ -91,7 +83,7 @@ function GetCustomerInformation() {
 // Loads the active orders from the backend and displays them on the screen.
 // Orders already marked as "completed" in localStorage will be skipped.
 function LoadActiveOrders() {
-    fetch('http://localhost:5000/get-active-orders')
+    fetch(GetSiteHost() + '/get-active-orders')
         .then(res => res.json())
         .then(orders => {
             const completed = JSON.parse(localStorage.getItem("completedOrders") || "[]");
@@ -175,6 +167,10 @@ function displayOrders(orders) {
 
         container.appendChild(orderDiv);
     });
+}
+
+function GetSiteHost() {
+    return 'http://localhost:5000'
 }
 
 // proceeds to the checkout page.

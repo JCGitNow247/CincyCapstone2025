@@ -1,6 +1,6 @@
 async function fetchPaidOrders() {
     try {
-        const response = await fetch('http://localhost:5000/api/paid-orders');
+        const response = await fetch(GetSiteHost() + '/api/paid-orders');
         const orders = await response.json();
         displayOrders(orders);
     } catch (err) {
@@ -11,7 +11,7 @@ async function fetchPaidOrders() {
 
 async function completeOrder(orderId) {
     try {
-        const response = await fetch('http://localhost:5000/api/complete-order', {
+        const response = await fetch(GetSiteHost() + '/api/complete-order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -32,6 +32,12 @@
   height: auto;
 }
 
+.Loyalty-Member-Check button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
 .AccountBlock {
   display: none;
   width: 85vw;
@@ -152,3 +158,4 @@
 #loyaltyRewardInfo {
   text-align: center;
 }
+

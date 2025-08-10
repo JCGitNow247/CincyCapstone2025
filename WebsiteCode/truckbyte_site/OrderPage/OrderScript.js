@@ -2,7 +2,7 @@ let selectedBaseItem = null;
 
 function OpenModificationMenu(itemName, itemPrice) {
     // Fetch modifiers first (don’t open the menu yet)
-    fetch(`http://localhost:5000/get-modifiers?item=${encodeURIComponent(itemName)}`)
+    fetch(GetSiteHost() + `/get-modifiers?item=${encodeURIComponent(itemName)}`)
         .then(res => res.json())
         .then(modifiers => {
             // No modifiers? Just add item and bail.
@@ -243,7 +243,7 @@ function restoreCartFromStorage() {
 
 // Loads the menu cards for the specified food truck.
 function LoadMenuCards() {
-    fetch('http://localhost:5000/get-menu')
+    fetch(GetSiteHost() + '/get-menu')
         .then(r => r.json())
         .then(menuItems => {
             const container = document.querySelector('.menu-container');
@@ -271,7 +271,7 @@ function LoadMenuCards() {
                 `;
 
                 // --- NON-DRINKS: check if the item has modifiers ---
-                fetch(`http://localhost:5000/get-modifiers?item=${encodeURIComponent(item.name)}`)
+                fetch(GetSiteHost() + `/get-modifiers?item=${encodeURIComponent(item.name)}`)
                     .then(res => res.json())
                     .then(modifiers => {
                         // Build the right buttons based on whether modifiers exist

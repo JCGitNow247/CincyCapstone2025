@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', loadAnalyticsData);
 
 function loadAnalyticsData() {
-    fetch('http://localhost:5000/get-analytics-summary')
+    fetch(GetSiteHost() + '/get-analytics-summary')
         .then(res => res.json())
         .then(data => {
             const wrapper = document.querySelector('.analytics-wrapper');
