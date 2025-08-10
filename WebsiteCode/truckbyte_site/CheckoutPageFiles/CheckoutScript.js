@@ -1,3 +1,6 @@
+
+
+
 // Handles the final checkout process:
 // - Validates input fields and drink selection
 // - Calculates final total including tip
@@ -60,7 +63,7 @@ function handleCheckout(event) {
 
     console.log("Cart being sent:", JSON.stringify(cartItems, null, 2));
 
-    fetch("http://localhost:5000/submit-order", {
+    fetch(GetSiteHost() + "/submit-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderPayload)
@@ -123,7 +126,7 @@ async function checkLoyalty() {
     if (!customerInformation) return; 
 
     try {
-    const res = await fetch('http://localhost:5000/check-customer', {
+    const res = await fetch(GetSiteHost() + '/check-customer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(customerInformation)
@@ -155,7 +158,7 @@ async function submitRegistration() {
         return;
     }
 
-    const res = await fetch('http://localhost:5000/register-customer', {
+    const res = await fetch(GetSiteHost() + '/register-customer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(info)
@@ -174,9 +177,10 @@ async function submitRegistration() {
 // Retrieves and applies the customer's loyalty reward to the UI and pricing
 async function applyLoyalty() {
     const customerInformation = GetCustomerInformation();
+    
     if (!customerInformation) return;
 
-    const res = await fetch("http://localhost:5000/apply-loyalty", {
+    const res = await fetch(GetSiteHost() + "/apply-loyalty", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -194,12 +198,14 @@ async function applyLoyalty() {
 
         const reward = data.reward || "None";
         const rewardDiv = document.getElementById('loyaltyRewardInfo');
+        const CheckLoyaltyButton = document.getElementById('LoyaltyButton');
         rewardDiv.style.display = 'block';
 
         if (reward.includes('%')) {
             rewardDiv.innerHTML = `<div style="text-align: center;"><em>Loyalty Reward: ${reward} discount applied.</em></div>`;
             localStorage.setItem("freeDrink", "")
             applyPercentageDiscount(reward);
+            CheckLoyaltyButton.disabled = true;
         } else if (reward.toLowerCase().includes('drink')) {
             rewardDiv.innerHTML = `
                 <div class="loyaltyBlock" style="text-align: center; margin-bottom: 30px;">
@@ -210,6 +216,7 @@ async function applyLoyalty() {
                 </div>
             `;
             populateDrinkDropdown();
+            CheckLoyaltyButton.disabled = true;
         }
     } else {
         alert("Could not apply loyalty reward.");
@@ -249,7 +256,7 @@ function populateDrinkDropdown() {
         return;
     }
 
-    fetch("http://localhost:5000/get-drinks")
+    fetch(GetSiteHost() + "/get-drinks")
         .then(res => res.json())
         .then(drinks => {
             drinks.forEach(drink => {
