@@ -552,21 +552,21 @@ INSERT INTO EmployeeTypes (strEmployeeType) VALUES
 
 -- Employees
 INSERT INTO Employees (strFirstName, strLastName, strUserName, strPassword, dblHourlyRate, intEmployeeTypeID, strLicensedToDrive) VALUES
-  ('Cole', 'Whitaker', 'CW', '3691', 25.50, 2, 'Y'),
-  ('Adam', 'Broderick', 'AB', '2474', 25.50, 2, 'Y'),
+  ('Cole', 'Whitaker', 'CW', '3691', 40.50, 2, 'Y'),
+  ('Adam', 'Broderick', 'AB', '2474', 39.50, 2, 'Y'),
   ('Jason', 'Cope', 'JC', '2895', 25.50, 2, 'Y'),
   ('Bruce', 'Wayne', 'BW', '5555', 8.50, 3, 'N'),
   ('Cory', 'Stone', 'CS', '9524', 19.00, 3, 'Y'),
   ('Eric', 'Shepard', 'OQ', '2791', 18.75, 3, 'N'),
-  ('Tyler', 'Hauestein', 'BA', '7421', 18.75, 1, 'Y'),
+  ('Tyler', 'Hauestein', 'BA', '7421', 18.80, 1, 'Y'),
   ('Brandon', 'Brinkman', 'BG', '5417', 18.75, 1, 'N'),
   ('Enzo', 'Ekouevi', 'HD', '7071', 18.75, 1, 'Y'),
   ('Brenden', 'McMillin', 'OQ', '1735', 18.75, 3, 'N'),
   ('David', 'Davis', 'BA', '4567', 20.75, 1, 'Y'),
-  ('Seth', 'Niefield', 'BG', '4949', 18.75, 1, 'N'),
+  ('Seth', 'Niefield', 'BG', '4949', 19.25, 1, 'N'),
   ('Seth', 'Brown', 'HD', '1782', 28.75, 1, 'Y'),
   ('Brandon', 'Burton', 'OQ', '1181', 18.75, 3, 'N'),
-  ('James', 'Glenn', 'BA', '2882', 18.75, 1, 'Y'),
+  ('James', 'Glenn', 'BA', '2882', 21.00, 1, 'Y'),
   ('Bob', 'Nields', 'BN', '2063', 20.75, 1, 'N');
 
 -- Shifts
@@ -598,21 +598,18 @@ INSERT INTO EmployeesShifts (intEmployeeID, intShiftID, dtmShiftStart, dtmShiftE
   (2, 2, '2025-07-02 08:00:00', '2025-07-02 16:00:00'),
   (5, 2, '2025-07-02 08:00:00', '2025-07-02 16:00:00'),
   (7, 2, '2025-07-02 08:00:00', '2025-07-02 13:00:00'),
-  (3, 3, '2025-07-03 08:00:00', '2025-07-03 14:00:00'),
+  (3, 3, '2025-07-03 08:00:00', '2025-07-03 10:00:00'),
   (6, 3, '2025-07-03 08:00:00', '2025-07-03 16:00:00'),
   (2, 4, '2025-07-02 08:00:00', '2025-07-02 16:00:00'),
   (13, 5, '2025-07-02 08:00:00', '2025-07-02 16:00:00'),
   (13, 6, '2025-07-02 08:00:00', '2025-07-02 16:00:00'),
-  (3, 7, '2025-07-03 08:00:00', '2025-07-03 16:00:00'),
+  (3, 7, '2025-07-03 08:00:00', '2025-07-03 10:00:00'),
   (15, 8, '2025-07-03 09:00:00', '2025-07-03 14:45:00'),
-
   (10, 2, '2025-07-12 08:00:00', '2025-07-12 13:00:00'),
   (12, 3, '2025-07-23 08:00:00', '2025-07-23 16:00:00'),
-
   (11, 3, '2025-07-23 08:00:00', '2025-07-23 16:10:00'),
   (14, 4, '2025-07-22 08:00:00', '2025-07-22 16:00:00'),
   (8, 5, '2025-07-22 08:00:00', '2025-07-22 16:30:00'),
-
   (13, 6, '2025-07-22 08:00:00', '2025-07-22 16:00:00'),
   (3, 7, '2025-07-23 08:00:00', '2025-07-23 16:00:00'),
   (16, 8, '2025-07-03 08:00:00', '2025-07-03 14:45:00'),
@@ -640,6 +637,12 @@ INSERT INTO LoyaltyRewards (strLoyaltyRewardType) VALUES
 INSERT INTO Customers (strEmail, strPhoneNumber) VALUES
   ('hjordan@gmail.com', '5131111111'),
   ('lluthor@gmail.com', '5132222222'),
+  ('noname@gmail.com', '5133432222'),
+  ('fakename@gmail.com', '5132225422'),
+  ('realfakename@gmail.com', '5132932222'),
+
+  ('lebowski@gmail.com', '5130002222'),
+  ('thedude@gmail.com', '5132224681'),
   ('asmith@gmail.com', '8593334444'),
   ('jtodd@gmail.com', '5133333333');
 
@@ -661,16 +664,60 @@ INSERT INTO Sales (dblSaleAmount, dtmDate, intSalesPaymentTypeID) VALUES
   (22.50, '2025-07-01 11:00:00', 2),
   (7.25, '2025-07-01 12:00:00', 1),
   (28.75, '2025-07-01 13:00:00', 2),
+
   (21.50, '2025-07-02 09:00:00', 1),
   (4.50, '2025-07-02 10:00:00', 1),
   (14.25, '2025-07-02 11:00:00', 1),
   (25.15, '2025-07-02 12:00:00', 2),
   (2.50, '2025-07-02 13:00:00', 1),
+
   (17.50, '2025-07-03 09:00:00', 2),
   (31.75, '2025-07-03 10:00:00', 2),
   (11.60, '2025-07-03 11:00:00', 1),
   (18.50, '2025-07-03 12:00:00', 2),
-  (6.30, '2025-07-03 13:00:00', 1);
+  (25.15, '2025-07-04 12:00:00', 2),
+
+  (12.55, '2025-07-04 13:00:00', 1),
+  (47.50, '2025-07-04 09:00:00', 2),
+  (31.75, '2025-07-04 10:00:00', 2),
+  (50.60, '2025-07-04 11:00:00', 1),
+  (19.50, '2025-07-04 12:00:00', 2),
+
+  (25.75, '2025-07-05 12:00:00', 2),
+  (17.55, '2025-07-06 13:00:00', 1),
+  (32.50, '2025-07-06 09:00:00', 2),
+  (9.75, '2025-07-06 10:00:00', 2),
+  (30.60, '2025-07-06 11:00:00', 1),
+
+  (16.00, '2025-07-06 12:00:00', 2),
+  (60.15, '2025-07-07 12:00:00', 2),
+  (7.55, '2025-07-07 13:00:00', 1),
+  (22.50, '2025-07-07 09:00:00', 2),
+  (111.75, '2025-07-07 10:00:00', 1),
+
+  (32.60, '2025-07-07 11:00:00', 1),
+  (11.50, '2025-07-07 12:00:00', 1),
+  (25.75, '2025-07-08 12:00:00', 2),
+  (17.55, '2025-07-08 13:00:00', 1),
+  (32.50, '2025-07-08 09:00:00', 1),
+
+  (9.75, '2025-07-08 10:00:00', 2),
+  (30.60, '2025-07-08 11:00:00', 1),
+  (16.00, '2025-07-08 12:00:00', 2),
+  (25.15, '2025-07-09 12:00:00', 2),
+  (12.55, '2025-07-09 13:00:00', 1),
+
+  (47.50, '2025-07-09 09:00:00', 2),
+  (31.75, '2025-07-09 10:00:00', 2),
+  (52.60, '2025-07-09 11:00:00', 1),
+  (19.50, '2025-07-09 12:00:00', 2),
+  (25.75, '2025-07-09 12:00:00', 2),
+  
+  (31.50, '2025-07-10 09:00:00', 2),
+  (9.75, '2025-07-10 10:00:00', 2),
+  (32.60, '2025-07-10 11:00:00', 1),
+  (16.00, '2025-07-10 12:00:00', 2),
+  (12.30, '2025-07-11 13:00:00', 1);
 
 -- Orders
 INSERT INTO Orders (intTruckID, intSaleID, intCustomerID, strStatus) VALUES
@@ -679,15 +726,59 @@ INSERT INTO Orders (intTruckID, intSaleID, intCustomerID, strStatus) VALUES
   (1, 3, NULL, 'Completed'),
   (1, 4, NULL, 'Completed'),
   (1, 5, 2, 'Completed'),
+
   (1, 6, NULL, 'Completed'),
   (1, 7, 3, 'Completed'),
   (1, 8, 1, 'Completed'),
   (1, 9, NULL, 'Completed'),
-  (1, 10, NULL, 'Completed'),
+  (1, 10, 4, 'Completed'),
+
   (1, 11, NULL, 'Completed'),
   (1, 12, 2, 'Completed'),
   (1, 13, NULL, 'Completed'),
   (1, 14, NULL, 'Completed'),
+  (1, 15, 5, 'Completed'),
+
+  (1, 16, 1, 'Completed'),
+  (1, 17, NULL, 'Completed'),
+  (1, 18, NULL, 'Completed'),
+  (1, 19, 2, 'Completed'),
+  (1, 20, 6, 'Completed'),
+
+  (1, 21, NULL, 'Completed'),
+  (1, 22, 2, 'Completed'),
+  (1, 23, NULL, 'Completed'),
+  (1, 24, 7, 'Completed'),
+  (1, 25, NULL, 'Completed'),
+
+  (1, 26, 1, 'Completed'),
+  (1, 27, NULL, 'Completed'),
+  (1, 28, NULL, 'Completed'),
+  (1, 29, 2, 'Completed'),  
+  (1, 30, 8, 'Completed'),
+
+  (1, 31, NULL, 'Completed'),
+  (1, 32, 2, 'Completed'),
+  (1, 33, NULL, 'Completed'),
+  (1, 34, 9, 'Completed'),
+  (1, 35, NULL, 'Completed'),
+
+  (1, 36, 1, 'Completed'),
+  (1, 37, NULL, 'Completed'),
+  (1, 38, NULL, 'Completed'),
+  (1, 39, 2, 'Completed'),  
+  (1, 40, NULL, 'Completed'),
+
+  (1, 41, NULL, 'Completed'),
+  (1, 42, 2, 'Completed'),
+  (1, 43, 9, 'Completed'),
+  (1, 44, NULL, 'Completed'),
+  (1, 45, NULL, 'Completed'),
+
+  (1, 46, 1, 'Completed'),
+  (1, 47, NULL, 'Completed'),
+  (1, 48, 1, 'Completed'),
+  (1, 49, 2, 'Completed'),  
   (1, 15, 3, 'Completed');
 
 -- KitchenSupplyTypes
@@ -859,9 +950,9 @@ INSERT INTO TrucksFoods (intTruckID, intFoodID) VALUES
 
 -- MenuItemsTypes
 INSERT INTO MenuItemsTypes (strMenuItemType) VALUES
-  ('Mains'),
-  ('Sides'),
-  ('Drinks');
+  ('Main'),
+  ('Side'),
+  ('Drink');
 
 -- MenuItems
 INSERT INTO MenuItems (strMenuItemName, intMenuItemTypeID, strDescription, dblPrice, intSubMenuID, strTaxableItem) VALUES
