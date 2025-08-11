@@ -205,7 +205,7 @@ def DisplayComboBoxes():
                     ########################################
                     ## create new submenu in db code here ##
                     ########################################
-                    newSubMenu = submenu_field.get('0.0', 'end')
+                    newSubMenu = submenu_field.get('0.0', 'end').strip()
                     DB.insert_new_sub_menu(newSubMenu)
 
                     #Closes all windows and begin menu_builder fresh
