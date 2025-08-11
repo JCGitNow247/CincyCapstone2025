@@ -20,6 +20,9 @@ from customtkinter import * ##--## #To istall, run the following on terminal: pi
 #Instantiate a window
 Window = CTk()
 
+# Starts the program in fullscreen -- will be used on the pi
+#Window.attributes("-fullscreen", True)
+
 def enter_fullscreen(event=None):
     Window.attributes("-fullscreen", True)
 
