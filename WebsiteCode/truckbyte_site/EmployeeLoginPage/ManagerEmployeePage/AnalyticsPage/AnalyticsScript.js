@@ -1,46 +1,53 @@
 window.addEventListener('DOMContentLoaded', loadAnalyticsData);
 
-function loadAnalyticsData() {
-    fetch(GetSiteHost() + '/get-analytics-summary')
-        .then(res => res.json())
-        .then(data => {
-            const wrapper = document.querySelector('.analytics-wrapper');
-            if (!wrapper) return;
+const money = n => `$${Number(n || 0).toFixed(2)}`;
+const dateLabel = s => (s || '').slice(0, 10);
 
-            wrapper.innerHTML = `
-                <h2>Total Sales: $${Number(data.total_sales || 0).toFixed(2)}</h2>
-                <div class="analytics-grid>
-                    <div>
-                        <h3>Sales by Day</h3>
-                        <div class="analytics-inner-box">
-                            ${data.sales_by_day.map(row => `
-                                <p>${row.sale_date}: $${Number(row.amount || 0).toFixed(2)}</p>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div>
-                        <h3>Sales by Payment Type</h3>
-                        <div class="analytics-inner-box">
-                            ${data.payment_breakdown.map(p => `
-                                <p>Type ${p.type}: $${Number(p.total || 0).toFixed(2)}</p>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-                <h3>Total Hours Worked: ${Number(data.total_hours || 0)} hrs</h3>
-                <h3>Employee Payroll</h3>
-                <div class="payroll">
-                ${data.payroll.map(e => {
-                    const hours = Number(e.hours || 0);
-                    const rate = Number(e.rate || 0);
-                    const totalPay = hours * rate;
-                    return `${e.name}: ${hours} hrs @ $${rate.toFixed(2)} = $${totalPay.toFixed(2)}<br>`;
-                }).join('')}
-                </div>
-            `;
-            
-        })
-        .catch(err => {
-            console.error("Analytics error:", err);
-        });
+async function loadAnalyticsData() {
+  try {
+    const res = await fetch(GetSiteHost() + '/get-analytics-summary');
+    const data = await res.json();
+
+    const byDay = data.sales_by_day ?? [];
+    const payTypes = data.payment_breakdown ?? [];
+    const payroll = data.payroll ?? [];
+
+    const wrapper = document.querySelector('.analytics-wrapper');
+    if (!wrapper) return;
+
+    wrapper.innerHTML = `
+      <h2>Total Sales: ${money(data.total_sales)}</h2>
+      <div>Average Sale: <span>${money(data.average_sale)}</span></div>
+      <div><strong>Sales This Week:</strong> <span>${money(data.sales_this_week)}</span></div>
+      <div>Same Week Last Year: <span>${money(data.same_week_last_year)}</span></div>
+
+      <div class="analytics-grid">
+        <div>
+          <h3>Last 7 Days</h3>
+          <div class="analytics-inner-box">
+            ${byDay.map(r => `<p>${dateLabel(r.sale_date)}: ${money(r.amount)}</p>`).join('')}
+          </div>
+        </div>
+        <div>
+          <h3>Sales by Payment Type</h3>
+          <div class="analytics-inner-box">
+            ${payTypes.map(p => `<p>${p.type}: ${money(p.total)}</p>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <h3>Total Hours Worked: ${Number(data.total_hours || 0)} hrs</h3>
+      <div><strong>Repeat Customers:</strong> ${Number(data.repeat_customers || 0)}</div>
+
+      <h3>Employee Payroll</h3>
+      <div class="payroll">
+        ${payroll.map(e => {
+          const hrs = Number(e.hours || 0), rate = Number(e.rate || 0);
+          return `${e.name}: ${hrs} hrs @ ${money(rate)} = ${money(hrs * rate)}`;
+        }).join('<br>')}
+      </div>
+    `;
+  } catch (err) {
+    console.error('Analytics error:', err);
+  }
 }

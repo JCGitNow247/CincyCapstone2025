@@ -321,128 +321,104 @@ def submit_order():
 # Provides summary analytics including total sales, sales by day, and payroll info
 @app.route('/get-analytics-summary')
 def get_analytics_summary():
-    conn = get_connection()
+    conn = get_connection(); 
     cursor = conn.cursor(dictionary=True)
 
-    # Total Sales + By Day
+    # Totals & average
     cursor.execute("""
-        SELECT 
-            SUM(dblSaleAmount) AS total_sales
+        SELECT SUM(dblSaleAmount) AS total_sales,
+               AVG(dblSaleAmount) AS average_sale,
+               COUNT(*) AS sale_count
         FROM Sales
     """)
-    total_sales = cursor.fetchone()['total_sales'] or 0
+    totals = cursor.fetchone() or {}
+    total_sales = float(totals.get('total_sales') or 0)
+    average_sale = float(totals.get('average_sale') or 0)
+
+    # Sales this week & same week last year
+    cursor.execute("""
+        SELECT SUM(dblSaleAmount) AS amt
+        FROM Sales
+        WHERE YEARWEEK(dtmDate, 3) = YEARWEEK(CURDATE(), 3)
+    """)
+    sales_this_week = float((cursor.fetchone() or {}).get('amt') or 0)
 
     cursor.execute("""
-        SELECT 
-            DATE(dtmDate) AS sale_date,
+        SELECT SUM(dblSaleAmount) AS amt
+        FROM Sales
+        WHERE YEARWEEK(dtmDate, 3) = YEARWEEK(DATE_SUB(CURDATE(), INTERVAL 1 YEAR), 3)
+    """)
+    same_week_last_year = float((cursor.fetchone() or {}).get('amt') or 0)
+
+    # Last 7 sale dates that have sales
+    cursor.execute("""
+    SELECT DATE_FORMAT(DATE(dtmDate),'%Y-%m-%d') AS sale_date,
             SUM(dblSaleAmount) AS amount
-        FROM Sales
-        GROUP BY sale_date
-        ORDER BY sale_date
+    FROM Sales
+    GROUP BY DATE(dtmDate)
+    ORDER BY DATE(dtmDate) DESC
+    LIMIT 7
     """)
-    sales_by_day = cursor.fetchall()
+    rows = cursor.fetchall()
+    sales_by_day = list(([
+    {"sale_date": r["sale_date"], "amount": float(r["amount"] or 0)}
+    for r in rows
+    ]))
 
-    # Sales by Payment Type
+
+    # Payment breakdown
     cursor.execute("""
-        SELECT 
-            spt.strSalesPaymentType AS type,
-            SUM(s.dblSaleAmount) AS total
+        SELECT spt.strSalesPaymentType AS type,
+               SUM(s.dblSaleAmount) AS total
         FROM Sales s
         JOIN SalesPaymentTypes spt ON s.intSalesPaymentTypeID = spt.intSalesPaymentTypeID
         GROUP BY spt.strSalesPaymentType
     """)
     payment_breakdown = cursor.fetchall()
 
-    # Total Hours Worked
-    cursor.execute("""
-        SELECT 
-            SUM(TIMESTAMPDIFF(HOUR, dtmShiftStart, dtmShiftEnd)) AS total_hours
-        FROM EmployeesShifts
-    """)
-    total_hours = cursor.fetchone()['total_hours']
+    # Total hours worked
+    cursor.execute("""SELECT SUM(TIMESTAMPDIFF(HOUR, dtmShiftStart, dtmShiftEnd)) AS total_hours
+                   FROM EmployeesShifts""")
+    total_hours = (cursor.fetchone() or {}).get('total_hours') or 0
 
-    # Employee Payroll Breakdown
+    # Employee payroll
     cursor.execute("""
-        SELECT 
-            CONCAT(e.strFirstName, ' ', e.strLastName) AS name,
-            e.dblHourlyRate AS rate,
-            SUM(TIMESTAMPDIFF(HOUR, es.dtmShiftStart, es.dtmShiftEnd)) AS hours
+        SELECT CONCAT(e.strFirstName, ' ', e.strLastName) AS name,
+               e.dblHourlyRate AS rate,
+               SUM(TIMESTAMPDIFF(HOUR, es.dtmShiftStart, es.dtmShiftEnd)) AS hours
         FROM EmployeesShifts es
         JOIN Employees e ON es.intEmployeeID = e.intEmployeeID
         GROUP BY e.intEmployeeID
+        ORDER BY name
     """)
     payroll = cursor.fetchall()
+
+    # Repeat customers (customers with >1 order)
+    cursor.execute("""
+        SELECT COUNT(*) AS repeat_count
+        FROM (
+          SELECT o.intCustomerID
+          FROM Orders o
+          WHERE o.intCustomerID IS NOT NULL
+          GROUP BY o.intCustomerID
+          HAVING COUNT(*) > 1
+        ) x
+    """)
+    repeat_customers = int((cursor.fetchone() or {}).get('repeat_count') or 0)
 
     conn.close()
     return jsonify({
         "total_sales": total_sales,
-        "sales_by_day": sales_by_day,
-        "payment_breakdown": payment_breakdown,
+        "average_sale": average_sale,
+        "sales_this_week": sales_this_week,
+        "same_week_last_year": same_week_last_year,
+        "sales_by_day": sales_by_day,          # [{sale_date, amount}]
+        "payment_breakdown": payment_breakdown, # [{type, total}]
         "total_hours": total_hours,
-        "payroll": payroll
+        "payroll": payroll,                     # [{name, rate, hours}]
+        "repeat_customers": repeat_customers
     })
 
-@app.route('/api/paid-orders')
-def get_paid_orders():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    query = """
-    SELECT 
-        o.intOrderID,
-        oi.intOrderItemID,
-        oi.strOrderItemName AS order_item_name,
-        f.strFoodName AS food_name
-    FROM Orders o
-    JOIN OrderItemsOrders oio ON o.intOrderID = oio.intOrderID
-    JOIN OrderItems oi ON oio.intOrderItemID = oi.intOrderItemID
-    LEFT JOIN OrderItemsFoods oif ON oi.intOrderItemID = oif.intOrderItemID
-    LEFT JOIN Foods f ON oif.intFoodID = f.intFoodID
-    WHERE o.strStatus = 'Paid'
-    ORDER BY o.intOrderID, oi.intOrderItemID, f.strFoodName
-    """
-
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    cursor.close()
-    conn.close()
-
-    # Group by order -> item_id -> foods
-    orders = {}
-    for row in rows:
-        order_id = row['intOrderID']
-        item_id = row['intOrderItemID']
-        item_name = row['order_item_name']
-        food_name = row['food_name']
-        
-        if order_id not in orders:
-            orders[order_id] = {
-                'order_id': order_id,
-                'items': []
-            }
-
-        existing_item = next((i for i in orders[order_id]['items'] if i['item_id'] == item_id), None)
-
-        if existing_item:
-            if food_name and food_name not in existing_item['foods']:
-                existing_item['foods'].append(food_name)
-        else:
-            orders[order_id]['items'].append({
-                'item_id': item_id,
-                'item_name': item_name,
-                'foods': [food_name] if food_name else []
-            })
-
-        print(f"Order {order_id} → Item {item_id} = {item_name}, modifier = {food_name}")
-
-    result = []
-    for order in orders.values():
-        result.append({
-            'order_id': order['order_id'],
-            'items': order['items']
-        })
-        
-    return jsonify(result)
 
 @app.route('/api/complete-order', methods=['POST'])
 def complete_order():
