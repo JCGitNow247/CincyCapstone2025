@@ -621,14 +621,15 @@ def get_total_sales():
 
 
 
-def get_sales_by_day():
+def get_sales_by_last_7_day():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
         SELECT DATE(dtmDate), SUM(dblSaleAmount)
-        FROM sales
+        FROM Sales
         GROUP BY DATE(dtmDate)
-        ORDER BY DATE(dtmDate)
+        ORDER BY DATE(dtmDate) DESC
+        LIMIT 7
     """)
     rows = cursor.fetchall()
     conn.close()
