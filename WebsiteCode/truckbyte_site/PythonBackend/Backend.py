@@ -18,6 +18,7 @@ def get_connection():
     try:
         conn = mariadb.connect(
             host='localhost',
+            #host='192.168.1.236',      # Use this to connect to the pi's DB
             user='truckbytesdev',
             password='tb001',
             port=3306,
@@ -436,6 +437,68 @@ def complete_order():
     conn.commit()
 
     return jsonify({'message': f'Order {order_id} marked as completed'}), 200
+
+
+
+@app.route('/api/paid-orders')
+def get_paid_orders():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    query = """
+    SELECT
+        o.intOrderID,
+        oi.intOrderItemID,
+        oi.strOrderItemName AS order_item_name,
+        f.strFoodName AS food_name
+    FROM Orders o
+    JOIN OrderItemsOrders oio ON o.intOrderID = oio.intOrderID
+    JOIN OrderItems oi ON oio.intOrderItemID = oi.intOrderItemID
+    LEFT JOIN OrderItemsFoods oif ON oi.intOrderItemID = oif.intOrderItemID
+    LEFT JOIN Foods f ON oif.intFoodID = f.intFoodID
+    WHERE o.strStatus = 'Paid'
+    ORDER BY o.intOrderID, oi.intOrderItemID, f.strFoodName
+    """
+
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    orders = {}
+    for row in rows:
+        order_id = row['intOrderID']
+        item_id = row['intOrderItemID']
+        item_name = row['order_item_name']
+        food_name = row['food_name']
+
+        if order_id not in orders:
+            orders[order_id] = {
+                'order_id': order_id,
+                'items': []
+            }
+
+        existing_item = next((i for i in orders[order_id]['items'] if i['item_id'] == item_id), None)
+
+        if existing_item:
+            if food_name and food_name not in existing_item['foods']:
+                existing_item['foods'].append(food_name)
+        else:
+            orders[order_id]['items'].append({
+                'item_id': item_id,
+                'item_name': item_name,
+                'foods': [food_name] if food_name else []
+            })
+
+    result = []
+    for order in orders.values():
+        result.append({
+            'order_id': order['order_id'],
+            'items': order['items']
+        })
+
+    return jsonify(result)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
