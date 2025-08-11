@@ -50,6 +50,10 @@ def open_credit_ui():
     Window.destroy()
 
 
+def open_sub_menu_delayed(ItemID):
+    Window.after(200, lambda: open_sub_menu(ItemID))
+
+
 def open_sub_menu(ItemID):
 
     PopUpMenu = Toplevel()
