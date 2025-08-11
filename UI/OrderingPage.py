@@ -55,8 +55,8 @@ def open_sub_menu(ItemID):
     MenuItemType = DB.get_menu_item_type(ItemID)
 
     is_drink = MenuItemType == "Drink"
-    has_subMenu = DB.get_food_card_sub_menu(ItemID)
-    
+    has_subMenu = DB.get_sub_menu_name(ItemID)
+
     if has_subMenu is None:
         has_subMenu = False
     else:
