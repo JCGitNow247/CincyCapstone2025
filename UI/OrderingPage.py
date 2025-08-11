@@ -52,6 +52,9 @@ def open_credit_ui():
 
 def open_sub_menu(ItemID):
 
+    PopUpMenu = Toplevel()
+    PopUpMenu.transient(Window)
+
     MenuItemType = DB.get_menu_item_type(ItemID)
 
     is_drink = MenuItemType == "Drink"
@@ -82,7 +85,6 @@ def open_sub_menu(ItemID):
     x = main_x + (main_width // 2) - (scaled_width // 2)
     y = main_y + (main_height // 2) - (scaled_height // 2)
 
-    PopUpMenu = Toplevel()
     PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") 
     PopUpMenu.resizable(False, False)
 
@@ -130,7 +132,7 @@ def open_sub_menu(ItemID):
                         sticky="w")
             checkboxes.append(checkbox)
     else:
-        PopUpMenu.geometry("400x200")
+        PopUpMenu.geometry(f"400x200+{x}+{y}")
 
     #Add Item button
     add_item = CTkButton(PopUpMenu,
