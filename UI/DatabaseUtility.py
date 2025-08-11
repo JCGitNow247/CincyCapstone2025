@@ -234,7 +234,10 @@ def get_sub_menu_name(ItemID):
 
     row = cursor.fetchone()
 
-    sub_menu_name = row[0]
+    if row != None:
+        sub_menu_name = row[0]
+    else:
+        sub_menu_name = None
 
     return sub_menu_name
 
