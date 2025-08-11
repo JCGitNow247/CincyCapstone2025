@@ -215,11 +215,11 @@ def get_drinks():
     conn.close()
     return jsonify(drinks)
 
-# Handles employee login by matching username and password
+# Handles employee login by matching last name and password
 @app.route('/login-employee', methods=['POST'])
 def login_employee():
     data = request.get_json()
-    username = data['username'].strip()
+    LastName = data['LastName'].strip()
     password = data['password'].strip()
 
     conn = get_connection()
@@ -229,8 +229,8 @@ def login_employee():
         SELECT e.intEmployeeID, et.strEmployeeType
         FROM Employees e
         JOIN EmployeeTypes et ON e.intEmployeeTypeID = et.intEmployeeTypeID
-        WHERE e.strUserName = %s AND e.strPassword = %s
-    """, (username, password))
+        WHERE e.strLastName = %s AND e.strPassword = %s
+    """, (LastName, password))
 
     result = cursor.fetchone()
     conn.close()

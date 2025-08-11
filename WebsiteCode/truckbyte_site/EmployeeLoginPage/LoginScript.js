@@ -2,11 +2,11 @@
 // Redirects the user to the appropriate page based on their role.
 async function submitEmployeeLogin() {
     // Get and trim input values
-    const username = document.getElementById('employeeUsername').value.trim();
+    const LastName = document.getElementById('employeeLastName').value.trim();
     const password = document.getElementById('employeePassword').value.trim();
 
     // Validate fields are not empty
-    if (!username || !password) {
+    if (!LastName || !password) {
         alert("Please enter your credentials.");
         return;
     }
@@ -15,7 +15,7 @@ async function submitEmployeeLogin() {
     const res = await fetch(GetSiteHost() + "/login-employee", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ LastName, password })
     });
 
     const data = await res.json();
