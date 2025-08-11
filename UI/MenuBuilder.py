@@ -26,7 +26,8 @@ def setup_ui():
     global txtItemNameField, txtItemPriceField, txtItemDescriptionField
 
     txtItemNameField = CTkTextbox(Window, font=font1,width=250,height=40)
-    txtItemNameField.place(x=200,y=95)
+    txtItemNameField.insert(0.0,'')
+    #txtItemNameField.place (x=200,y=175) ########################################################################
 
     txtItemPriceField = CTkTextbox(Window,
                                    font=font1,
@@ -96,7 +97,7 @@ ChkBxIsTaxable.place(x=200,y=360)
 #### I may need to move this up so the drop down menu does not fall off screen.
 def DisplayComboBoxes():
 
-    global cboMenu, cboAddSubMenu, cboAddSubMenu2
+    global cboMenu, cboAddSubMenu #, cboAddSubMenu2
 
     Menus = DB.get_menus()
     menu_names = [item["name"] for item in Menus.values()]
@@ -107,14 +108,14 @@ def DisplayComboBoxes():
                         justify="center", 
                         width=250, 
                         height=40)
-    cboMenu.place(x=200,y=175)
-    cboMenu.set('Add To ExistingMenu')
+    cboMenu.place(x=200,y=225)       # (x=200,y=175)#############################################################################
+    cboMenu.set(' ')
 
     SubMenus = DB.get_sub_menus()
     sub_menu_names = ["None"]
     sub_menu_names += [item["name"] for item in SubMenus.values()]
   
-    
+
     cboAddSubMenu = CTkComboBox(Window,
                             values=sub_menu_names, 
                             font=('Arial', 14),
@@ -128,21 +129,25 @@ def DisplayComboBoxes():
 
 
 
+
+
+
+
     ########################################################
     ###  This is how I think the menubuilder should work ###
     ###  Not making a selection would make it an "item"  ###
     ###  (like pizza) otherwise it is added to a submenu ###
     ########################################################
-    sub_menu_names2 = [item["name"] for item in SubMenus.values()]
+    #sub_menu_names2 = [item["name"] for item in SubMenus.values()]
 
-    cboAddSubMenu2 = CTkComboBox(Window,
-                            values=sub_menu_names2, 
-                            font=('Arial', 12),
-                            justify="center",
-                            width=250, 
-                            height=40)
+    #cboAddSubMenu2 = CTkComboBox(Window,
+     #                       values=sub_menu_names2, 
+    #                        font=('Arial', 12),
+    #                       justify="center",
+     #                       width=250, 
+        #                    height=40)
     # cboAddSubMenu2.place(x=200,y=215)  
-    cboAddSubMenu2.set('Add Item To Existing Sub Menu')
+    #cboAddSubMenu2.set('Add Item To Existing Sub Menu')
     ########################################################
     ########################################################
 
@@ -170,7 +175,7 @@ def DisplayComboBoxes():
             #This is where they would create a submenu
 
             #messagebox.showinfo("hello Menu","This gets us here")
-
+            
             PopUpMenu = Toplevel()
             PopUpMenu.grab_set()
             PopUpMenu.focus_force()
@@ -224,11 +229,13 @@ def DisplayComboBoxes():
             # txtItemNameField.place(x=200,y=125)
 
             #Create Label for "Item Name"
-            CTkLabel(Window, font=font1,
+            CTkLabel(Window,
+                     font=font1,
                     text="Item Name:"
-                    ).place(x=60,y=125)
-
-
+                    ).place(x=60,y=175)
+            
+            txtItemNameField.place (x=200,y=175) ########################################################################
+            cboMenu.set('Type Of Item')
     itemOrMenu = ['Create Item', 'Create Menu']
 
     cboItemOrMenu = CTkComboBox(Window,
@@ -239,7 +246,7 @@ def DisplayComboBoxes():
                             height=40,
                             command = on_itemOrMenu_selected)
     
-    #cboItemOrMenu.place(x=200,y=255)
+
     cboItemOrMenu.place(x=200,y=125) 
     cboItemOrMenu.set('Create Item or Menu')
 
@@ -311,7 +318,7 @@ def clear_fields():
     txtItemDescriptionField.delete(0.0, 'end')
     ChkBxIsTaxable.deselect()
     cboAddSubMenu.set("Add To Existing Sub Menu?")
-    cboMenu.set('Add To Existing Menu')
+    cboMenu.set('Type of Item')
 
 
 
