@@ -65,12 +65,14 @@ def titlebar_display():
     Window.title(CompanyPlaceholder+" Powered by TruckBytes")
 
     #Display Titlebar Icon
-    icon_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "TruckBytes.ico")
-    if os.path.exists(icon_path):
-        Window.iconbitmap(icon_path)
-    else:
-        print(f"Warning: Icon not found at {icon_path}. Skipping icon set.")
-    
+    try:
+        icon_path = os.path.join(os.path.dirname(__file__), "images", "our_logos", "TruckBytes.ico")
+        if os.path.exists(icon_path):
+            Window.iconbitmap(icon_path)
+        else:
+            print(f"Warning: Icon not found at {icon_path}. Skipping icon set.")
+    except:
+        print("icon not found")    
 
 #Intantiate UI
 def Create_Window():
