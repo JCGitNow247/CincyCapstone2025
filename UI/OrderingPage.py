@@ -53,9 +53,11 @@ def open_credit_ui():
 def open_sub_menu(ItemID):
 
     MenuItemType = DB.get_menu_item_type(ItemID)
-    if MenuItemType == "Sides":
-        add_side_item(ItemID)
-        return
+
+    is_side = MenuItemType == "Side"
+    is_drink = MenuItemType == "Drink"
+
+    checkboxes = []
     
     scale = Window.tk.call('tk', 'scaling')
 
@@ -76,9 +78,6 @@ def open_sub_menu(ItemID):
     y = main_y + (main_height // 2) - (scaled_height // 2)
 
     PopUpMenu = Toplevel()
-    PopUpMenu.grab_set()
-    PopUpMenu.focus_force()
-    PopUpMenu.transient(Window)
     PopUpMenu.geometry(f"{scaled_width}x{scaled_height}+{x}+{y}") 
     PopUpMenu.resizable(False, False)
 
@@ -89,44 +88,29 @@ def open_sub_menu(ItemID):
                            width=360,
                            height=10,
                            text=MenuItemDescription)
-    Description.place(x=15,y=5)
-
-    
-    # Scrollable frame for checkboxes
-    scroll_frame = CTkScrollableFrame(PopUpMenu, width=360, height=60)
-    scroll_frame.place(x=15, y=45)
-
-
-    # Fetch submenu items
-    SubMenuRows = DB.get_sub_menu_items(ItemID)
-
-    is_drink = MenuItemType == "Drinks"
-    selected_drink = tk.StringVar() if is_drink else None
-    options = []
-    checkboxes = []
-    if is_drink:
-        for i, row in enumerate(SubMenuRows):
-            item_id = row[0]
-            item_name = row[1]
-
-            radio = CTkRadioButton(scroll_frame,
-                                   text=f"{item_name}",
-                                   variable=selected_drink,
-                                   value=str(item_id))
-            radio.item_id = item_id
-            radio.item_name = item_name
-
-            row_num = i // 2
-            col_num = i % 2
-
-            radio.grid(row=row_num, column=col_num, padx=10, pady=5, sticky="w")
-            options.append(radio)
+    if not is_side:
+        Description.place(x=15,y=15)
     else:
+        Description.place(x=15, y=40)
+
+    if not is_side:
+        # Scrollable frame for checkboxes
+        scroll_frame = CTkScrollableFrame(PopUpMenu, width=360, height=60)
+        scroll_frame.place(x=15, y=45)
+
+
+        # Fetch submenu items
+        SubMenuRows = DB.get_sub_menu_items(ItemID)
+
         for i, row in enumerate(SubMenuRows):
             item_id = row[0]
             item_name = row[1]
             portion_price = row[2]
-            checkbox = CTkCheckBox(scroll_frame, text=f"(${portion_price}) {item_name}")
+
+            if is_drink:
+                checkbox = CTkCheckBox(scroll_frame, text=f"{item_name}")
+            else:
+                checkbox = CTkCheckBox(scroll_frame, text=f"(${portion_price}) {item_name}")
             checkbox.item_id = item_id
             checkbox.item_name = item_name
             checkbox.portion_price = portion_price
@@ -140,6 +124,8 @@ def open_sub_menu(ItemID):
                         pady=5, 
                         sticky="w")
             checkboxes.append(checkbox)
+    else:
+        PopUpMenu.geometry("400x200")
 
     #Add Item button
     add_item = CTkButton(PopUpMenu,
@@ -147,8 +133,11 @@ def open_sub_menu(ItemID):
                          font=font1,
                          width=button_width,
                          height=80,
-                         command=lambda: add_selected_items(PopUpMenu, checkboxes, options, selected_drink, is_drink, ItemID))
-    add_item.place(x=180,y=295)
+                         command=lambda: add_selected_items(PopUpMenu, checkboxes, is_drink, ItemID))
+    if not is_side:
+        add_item.place(x=180,y=295)
+    else:
+        add_item.place(x=180,y=100)
 
     # Close button
     my_button = CTkButton(PopUpMenu,
@@ -157,12 +146,19 @@ def open_sub_menu(ItemID):
                           width=80,
                           height=80,
                           command=PopUpMenu.destroy)
-    my_button.place(x=55,y=295)
+    if not is_side:
+        my_button.place(x=55,y=295)
+    else:
+        my_button.place(x=55,y=100)
 
     # Update sub menu name
-    sub_menu_name = DB.get_sub_menu_name(ItemID)
+    if not is_side:
+        sub_menu_name = DB.get_sub_menu_name(ItemID)
+        PopUpMenu.title("This Is The "+sub_menu_name+ " Menu")
 
-    PopUpMenu.title("This Is The "+sub_menu_name+ " Menu")
+    PopUpMenu.grab_set()
+    PopUpMenu.focus_force()
+    PopUpMenu.transient(Window)
 
 
 
@@ -187,7 +183,7 @@ def add_side_item(ItemID):
 
 
 
-def add_selected_items(PopUpMenu, checkboxes, options, selected_drink, is_drink, ItemID):
+def add_selected_items(PopUpMenu, checkboxes, is_drink, ItemID):
 
     global OrderDisplay, SQLTotal, lblOrderTotal
     
@@ -196,21 +192,18 @@ def add_selected_items(PopUpMenu, checkboxes, options, selected_drink, is_drink,
     order_item.set_name(DB.get_menu_item_name(ItemID))
 
     item_price = 0
+
+    for checkbox in checkboxes:
+        if checkbox.get():
+            order_item.add_food_item(checkbox.item_id, checkbox.item_name)
+            if not is_drink:
+                item_price += checkbox.portion_price
+
     if is_drink:
-        selected_id = selected_drink.get()
-        if selected_id:
-            for radio in options:
-                if str(radio.item_id) == selected_id:
-                    order_item.add_food_item(radio.item_id, radio.item_name)
-                    item_price += DB.get_menu_item_price(ItemID)
-                    break
-        else:
-            return
-    else:
         for checkbox in checkboxes:
             if checkbox.get():
-                order_item.add_food_item(checkbox.item_id, checkbox.item_name)
-                item_price += checkbox.portion_price
+                item_price += DB.get_menu_item_price(ItemID)
+    else:
         item_price += DB.get_menu_item_price(ItemID)
 
     order_item.set_price(item_price)
