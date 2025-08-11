@@ -754,8 +754,16 @@ def build_order(OrderItemsList, SQLTotal, customerID):
     for OrderItem in OrderItemsList:
 
         name = OrderItem.get_name()
+        amount = 0
 
-        cursor.execute(f"INSERT INTO OrderItems (strOrderItemName, intAmount) VALUES ('{name}', 1)")
+        if name == 'Drinks':
+            for food in OrderItem.get_food_items():
+                amount += 1
+        else:
+            amount = 1
+
+
+        cursor.execute(f"INSERT INTO OrderItems (strOrderItemName, intAmount) VALUES ('{name}', {amount})")
         conn.commit()
 
         cursor.execute("SELECT intOrderItemID FROM OrderItems ORDER BY intOrderItemID DESC LIMIT 1")
