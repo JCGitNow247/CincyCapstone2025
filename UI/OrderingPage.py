@@ -54,8 +54,13 @@ def open_sub_menu(ItemID):
 
     MenuItemType = DB.get_menu_item_type(ItemID)
 
-    is_side = MenuItemType == "Side"
     is_drink = MenuItemType == "Drink"
+    has_subMenu = DB.get_food_card_sub_menu(ItemID)
+    
+    if has_subMenu is None:
+        has_subMenu = False
+    else:
+        has_subMenu = True
 
     checkboxes = []
     
@@ -88,12 +93,12 @@ def open_sub_menu(ItemID):
                            width=360,
                            height=10,
                            text=MenuItemDescription)
-    if not is_side:
+    if has_subMenu:
         Description.place(x=15,y=15)
     else:
         Description.place(x=15, y=40)
 
-    if not is_side:
+    if has_subMenu:
         # Scrollable frame for checkboxes
         scroll_frame = CTkScrollableFrame(PopUpMenu, width=360, height=60)
         scroll_frame.place(x=15, y=45)
@@ -134,7 +139,7 @@ def open_sub_menu(ItemID):
                          width=button_width,
                          height=80,
                          command=lambda: add_selected_items(PopUpMenu, checkboxes, is_drink, ItemID))
-    if not is_side:
+    if has_subMenu:
         add_item.place(x=180,y=295)
     else:
         add_item.place(x=180,y=100)
@@ -146,13 +151,13 @@ def open_sub_menu(ItemID):
                           width=80,
                           height=80,
                           command=PopUpMenu.destroy)
-    if not is_side:
+    if has_subMenu:
         my_button.place(x=55,y=295)
     else:
         my_button.place(x=55,y=100)
 
     # Update sub menu name
-    if not is_side:
+    if has_subMenu:
         sub_menu_name = DB.get_sub_menu_name(ItemID)
         PopUpMenu.title("This Is The "+sub_menu_name+ " Menu")
 
