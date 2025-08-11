@@ -27,7 +27,7 @@ def display_analytics():
     CTkLabel(analytics_frame, text=f"Total Sales: ${total_sales:.2f}", font=('Arial', 28, 'bold')).pack(pady=(20, 10))
 
 
-   #CTkLabel(analytics_frame, text=f"Total Sales: ${total_sales:.2f}", font=('Arial', 28, 'bold')).pack(pady=(20, 10))
+   # Average Sales
     CTkLabel(analytics_frame, text=f"Average Sale: ${avg_sale:.2f}", font=('Arial', 20)).pack()
 
 
@@ -73,10 +73,6 @@ def display_analytics():
             font=('Arial', 20, 'bold')).pack(pady=(5, 20))
 
 
-
-
-
-
     # Total Hours Worked
     CTkLabel(analytics_frame, text=f"Total Hours Worked: {total_hours} hrs", font=('Arial', 20, 'bold')).pack(pady=(20, 5))
     
@@ -88,7 +84,7 @@ def display_analytics():
 
         CTkButton(Window,
             font=font1,
-            text="Return\nTo\nMangemant\nPage",
+            text="Return\nTo\nMangement\nPage",
             width=60,
             height=60,
             command=open_Mgmt_ui
