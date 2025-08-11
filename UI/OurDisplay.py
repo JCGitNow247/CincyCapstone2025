@@ -20,6 +20,15 @@ from customtkinter import * ##--## #To istall, run the following on terminal: pi
 #Instantiate a window
 Window = CTk()
 
+def enter_fullscreen(event=None):
+    Window.attributes("-fullscreen", True)
+
+def exit_fullscreen(event=None):
+    Window.attributes("-fullscreen", False)
+
+Window.bind("<Escape>", exit_fullscreen)
+Window.bind("<F12>", enter_fullscreen)
+
 
 ## Global UI Variables ##
 font1 = ('Arial', 24)
