@@ -136,7 +136,8 @@ def open_sub_menu(ItemID):
                         sticky="w")
             checkboxes.append(checkbox)
     else:
-        PopUpMenu.geometry(f"400x200+{x}+{y}")
+        pass
+        #PopUpMenu.geometry(f"400x200+{x}+{y}")
 
     #Add Item button
     add_item = CTkButton(PopUpMenu,
@@ -145,10 +146,12 @@ def open_sub_menu(ItemID):
                          width=button_width,
                          height=80,
                          command=lambda: add_selected_items(PopUpMenu, checkboxes, is_drink, ItemID))
-    if has_subMenu:
-        add_item.place(x=180,y=295)
-    else:
-        add_item.place(x=180,y=100)
+    # if has_subMenu:
+    #     add_item.place(x=180,y=295)
+    # else:
+    #     add_item.place(x=180,y=100)
+
+    add_item.place(x=180,y=295)
 
     # Close button
     my_button = CTkButton(PopUpMenu,
@@ -157,10 +160,12 @@ def open_sub_menu(ItemID):
                           width=80,
                           height=80,
                           command=PopUpMenu.destroy)
-    if has_subMenu:
-        my_button.place(x=55,y=295)
-    else:
-        my_button.place(x=55,y=100)
+    # if has_subMenu:
+    #     my_button.place(x=55,y=295)
+    # else:
+    #     my_button.place(x=55,y=100)
+
+    my_button.place(x=55,y=295)
 
     # Update sub menu name
     if has_subMenu:
