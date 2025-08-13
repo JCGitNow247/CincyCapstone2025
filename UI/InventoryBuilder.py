@@ -82,9 +82,24 @@ def submit_food_item():
     food_id = DB.insert_food(name, amount, purchase_price, sell_price, type_id, sub_menu_id)
     food_data = DB.get_food_by_id(food_id)
 
+    messagebox.showinfo("Action Complete", f"{name} has been added to the inventory")
+
     if food_data:
         display_food_card(food_data, card_index, scroll_frame)
         card_index += 1
+
+    clear_fields()
+
+
+def clear_fields():
+
+    entry_name.delete(0,'end')
+    entry_amount.delete(0,'end')
+    entry_purchase_price.delete(0,'end')
+    entry_sell_price.delete(0,'end')
+
+    cbo_food_type.set("Select Type")
+    cbo_sub_menus.set("Link Sub Menu")
 
 
 # ---------- STEP 3: Display a Single Food Card ----------
@@ -152,6 +167,8 @@ def display_food_card(data, index, parent_frame):
             print(f"Food ID {data['id']} updated.")
         except Exception as e:
             print("Update failed:", e)
+
+        messagebox.showinfo("Update Complete", f" Item {data['id']}: {data['name']}\nhas been updated")
 
     CTkButton(card, text="Update", command=update_action).place(x=750, y=30)
 
