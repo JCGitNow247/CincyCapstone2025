@@ -88,8 +88,20 @@ def titlebar_display():
 
 #Intantiate UI
 def Create_Window():
+
+    # Open the Window in the center of the screen
+    Window_width = 1024
+    Window_height = 600
+
+    screen_width = Window.winfo_screenwidth()
+    screen_height = Window.winfo_screenheight()
+
+    x = (screen_width // 2) - (Window_width // 2)
+    y = (screen_height // 2) - (Window_height // 2)
+
+
     #Create size of window
-    Window.geometry("1024x600")
+    Window.geometry(f"{Window_width}x{Window_height}+{x}+{y}")
 
     #Prevents the resizing of the window
     Window.resizable(False, False)
@@ -210,7 +222,7 @@ def Create_Menubar():
         print("Error reading login.json:", e)
     '''
     
-    Mgmt_menubar()
+    #Mgmt_menubar()
 
 
 
