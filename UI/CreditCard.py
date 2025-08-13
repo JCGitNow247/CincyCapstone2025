@@ -3,6 +3,7 @@ from OurDisplay import *
 import re
 import sys
 import DatabaseUtility as DB
+from decimal import Decimal, ROUND_FLOOR
 
 
 # Get cost passed from OrderingPage.py or fallback to 0.00
@@ -16,6 +17,12 @@ try:
     orderID = int(sys.argv[2])
 except (IndexError, ValueError):
     orderID = 0
+
+# Get customerID from OrderingPage.py or fallback to 0
+try:
+    customerID = int(sys.argv[3])
+except (IndexError, ValueError):
+    customerID = 0
 
 print(orderID)
 
@@ -210,9 +217,20 @@ def pay_for_order(orderID):
 
     if validate_fields() == True:
         DB.mark_recent_order_paid(orderID)
-        messagebox.showinfo("Purchase Complete", "Thank you for your purchase, your order will be ready soon")
+        rewards_points = get_rewards_points(total_with_tip)
+        if customerID > 0:
+            messagebox.showinfo("Purchase Complete", f"Thank you for your purchase, your order will be ready soon\n\n Your order number is: #{orderID}\n\n You earned {rewards_points} points with this purchase!")
+        else:
+            messagebox.showinfo("Purchase Complete", f"Thank you for your purchase, your order will be ready soon\n\n Your order number is: #{orderID}")
         open_loyalty()
 
+
+def get_rewards_points(total: str) -> int:
+    amount = Decimal(total)
+
+    amount = int(amount.to_integral_value(rounding=ROUND_FLOOR))
+
+    return amount
 
 def open_loyalty():
     subprocess.Popen(['python', 'UI/Loyalty.py'])
