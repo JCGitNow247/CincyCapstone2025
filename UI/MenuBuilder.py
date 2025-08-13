@@ -175,12 +175,22 @@ def DisplayComboBoxes():
             #This is where they would create a submenu
 
             #messagebox.showinfo("hello Menu","This gets us here")
+
+            # open the PopUpMenu center of the main Window
+            PopUp_width = 600
+            PopUp_height = 600
+
+            Window_width = Window.winfo_width()
+            Window_height = Window.winfo_height()
+
+            x = Window.winfo_x() + (Window_width // 2) - (PopUp_width // 2)
+            y = Window.winfo_y() + (Window_height // 2) - (PopUp_height // 2)
             
             PopUpMenu = Toplevel()
             PopUpMenu.grab_set()
             PopUpMenu.focus_force()
             PopUpMenu.transient(Window)
-            PopUpMenu.geometry("600x600") 
+            PopUpMenu.geometry(f"{PopUp_width}x{PopUp_height}+{x}+{y}") 
             PopUpMenu.resizable(False, False)
 
             Description = CTkLabel(PopUpMenu,
