@@ -46,7 +46,7 @@ def open_credit_ui():
     orderID = DB.build_order(OrderItemsList, SQLTotal, customerID)
 
     """Open CreditCard.py and pass the current total as an argument."""
-    subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal), str(orderID)])
+    subprocess.Popen(['python', 'UI/CreditCard.py', str(SQLTotal), str(orderID), str(customerID)])
     Window.destroy()
 
 
