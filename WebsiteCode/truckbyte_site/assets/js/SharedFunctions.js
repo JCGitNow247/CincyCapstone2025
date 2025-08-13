@@ -20,50 +20,47 @@ function ToggleMenu(menuSelector, overlayId) {
 // Adds the selected truck name from localStorage to the page header.
 // If the label doesn't exist yet, it creates and appends it to the .Top-Buttons div.
 function AddFoodTruckTitleName() {
-    const name = localStorage.getItem("selectedTruckName");
-    if (name) {
-        let label = document.getElementById("foodTruckNameLabel");
-        if (!label) {
-            label = document.createElement("label");
-            label.id = "foodTruckNameLabel";
-            document.querySelector(".Top-Buttons")?.appendChild(label);
-        }
-        label.textContent = name;
+    const companyName = localStorage.getItem("selectedCompanyName");
+    const label = document.getElementById("foodTruckNameLabel"); // must already exist on page
+    if (companyName && label) {
+        label.textContent = companyName;
     }
 }
+
 
 // Fetch location from backend-served config.json and populate dropdown (1 entry)
 function BuildTruckList() {
     const dropdown = document.getElementById('foodTruckDropdown');
     if (!dropdown) return;
 
-    // Reset with placeholder
     dropdown.innerHTML = '<option value="" disabled selected>Select a Location</option>';
 
     fetch(GetSiteHost() + '/config', { cache: 'no-cache' })
-        .then(response => {
-            if (!response.ok) throw new Error(`config endpoint failed (${response.status})`);
-            return response.json();
-        })
+        .then(r => { if (!r.ok) throw new Error(`config endpoint failed (${r.status})`); return r.json(); })
         .then(cfg => {
-            const loc = cfg?.LocationPlaceholder || cfg?.CompanyPlaceholder;
-            if (!loc) return; // silently keep only the placeholder if key missing
+            const company  = cfg?.CompanyPlaceholder || '';
+            const location = cfg?.LocationPlaceholder || '';
 
-            const opt = document.createElement('option');
-            opt.value = loc;
-            opt.textContent = loc;
-            dropdown.appendChild(opt);
+            localStorage.setItem("selectedCompanyName", company);
+            localStorage.setItem("selectedLocationName", location);
+
+            if (location) {
+                const opt = document.createElement('option');
+                opt.value = location;
+                opt.textContent = location;
+                dropdown.appendChild(opt);
+            }
+            // NOTE: no AddFoodTruckTitleName() here
         })
-        .catch(err => {
-            console.error("Error loading location from config:", err);
-        });
+        .catch(err => console.error("Error loading location from config:", err));
 
-    dropdown.onchange = () => {
+        dropdown.onchange = () => {
         const text = dropdown.options[dropdown.selectedIndex]?.textContent || '';
-        localStorage.setItem("selectedTruckName", text);
+        localStorage.setItem("selectedLocationName", text);
         localStorage.setItem("selectedTruckValue", dropdown.value);
     };
 }
+
 
 // Retrieves the customer's phone number and email from the checkout form.
 // If either field is empty, it shows an alert and returns null.
