@@ -141,7 +141,7 @@ def validate_employee_credentials(last_name, password):
     cursor = conn.cursor()
 
     query = """
-        SELECT COUNT(*) FROM employees
+        SELECT COUNT(*) FROM Employees
         WHERE strLastName = %s AND strPassword = %s
     """
     cursor.execute(query, (last_name, password))
