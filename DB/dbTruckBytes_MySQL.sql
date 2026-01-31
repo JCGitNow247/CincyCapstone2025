@@ -1072,7 +1072,8 @@ INSERT INTO TrucksFoods (intTruckID, intFoodID) VALUES
   (1, 24),
   (1, 25),
   (1, 26),
-  (1, 27);
+  (1, 27),
+  (1, 28);
 
 -- MenuItemsTypes
 INSERT INTO MenuItemsTypes (strMenuItemType) VALUES
